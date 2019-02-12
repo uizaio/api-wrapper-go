@@ -1,8 +1,8 @@
 package client
 
 import (
-	uiza "uiza-api-wrapper"
-	entity "uiza-api-wrapper/entity"
+	uiza "api-wrapper-go"
+	entity "api-wrapper-go/entity"
 )
 
 // API is the Uiza client. It contains all the different resources available.
@@ -11,7 +11,7 @@ type API struct {
 	Entity *entity.Client
 }
 
-// Init initializes the Stripe client with the appropriate secret key
+// Init initializes the Uiza client with the appropriate secret key
 // as well as providing the ability to override the backend as needed.
 func (a *API) Init(key string, backends *uiza.Backends) {
 	if backends == nil {

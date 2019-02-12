@@ -8,5 +8,5 @@ type EntitySpecParams struct {
 
 // EntitySpec defined
 type EntitySpec struct {
-	RequestID string `json:"requestId"`
+	Data map[string]string `json:"data"`
 }

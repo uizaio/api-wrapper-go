@@ -1,7 +1,8 @@
-// Package uiza provides the binding for Stripe REST APIs.
+// Package uiza provides the binding for Uiza REST APIs.
 package uiza
 
 import (
+	"api-wrapper-go/form"
 	"bytes"
 	"encoding/json"
 	"errors"
@@ -19,7 +20,6 @@ import (
 	"strings"
 	"sync"
 	"time"
-	"uiza-api-wrapper/form"
 )
 
 //
@@ -49,7 +49,7 @@ const (
 //
 
 // EnableTelemetry is a global override for enabling client telemetry, which
-// sends request performance metrics to Stripe via the `X-Stripe-Client-Telemetry`
+// sends request performance metrics to Uiza via the `X-Uiza-Client-Telemetry`
 // header. If set to true, all clients will send telemetry metrics. Defaults to
 // false.
 //
@@ -57,7 +57,7 @@ const (
 // `BackendConfig` with `EnableTelemetry: true`.
 var EnableTelemetry = false
 
-// Key is the Stripe API key used globally in the binding.
+// Key is the Uiza API key used globally in the binding.
 var Key string
 
 // LogLevel is the logging level for this library.
@@ -67,7 +67,7 @@ var Key string
 // 3: errors + informational + debug
 var LogLevel = 3
 
-// Logger controls how stripe performs logging at a package level. It is useful
+// Logger controls how uiza performs logging at a package level. It is useful
 // to customise if you need it prefixed for your application to meet other
 // requirements.
 //
@@ -81,7 +81,7 @@ var Logger Printfer
 
 // AppInfo contains information about the "app" which this integration belongs
 // to. This should be reserved for plugins that wish to identify themselves
-// with Stripe.
+// with Uiza.
 type AppInfo struct {
 	Name      string `json:"name"`
 	PartnerID string `json:"partner_id"`
@@ -103,19 +103,19 @@ func (a *AppInfo) formatUserAgent() string {
 	return str
 }
 
-// Backend is an interface for making calls against a Stripe service.
+// Backend is an interface for making calls against a Uiza service.
 // This interface exists to enable mocking for during testing if needed.
 type Backend interface {
-	Call(method, path, key string, params ParamsContainer, v interface{}) error
-	CallRaw(method, path, key string, body *form.Values, params *Params, v interface{}) error
-	CallMultipart(method, path, key, boundary string, body *bytes.Buffer, params *Params, v interface{}) error
+	Call(method, path, key string, params ParamsContainer, v *string) error
+	CallRaw(method, path, key string, body *form.Values, params *Params, v *string) error
+	CallMultipart(method, path, key, boundary string, body *bytes.Buffer, params *Params, v *string) error
 	SetMaxNetworkRetries(maxNetworkRetries int)
 }
 
-// BackendConfig is used to configure a new Stripe backend.
+// BackendConfig is used to configure a new Uiza backend.
 type BackendConfig struct {
 	// EnableTelemetry allows request metrics (request id and duration) to be sent
-	// to Stripe in subsequent requests via the `X-Stripe-Client-Telemetry` header.
+	// to Uiza in subsequent requests via the `X-Uiza-Client-Telemetry` header.
 	//
 	// Defaults to false.
 	EnableTelemetry bool
@@ -155,7 +155,7 @@ type BackendConfig struct {
 }
 
 // BackendImplementation is the internal implementation for making HTTP calls
-// to Stripe.
+// to Uiza.
 //
 // The public use of this struct is deprecated. It will be unexported in a
 // future version.
@@ -178,8 +178,8 @@ type BackendImplementation struct {
 	requestMetricsBuffer chan requestMetrics
 }
 
-// Call is the Backend.Call implementation for invoking Stripe APIs.
-func (s *BackendImplementation) Call(method, path, key string, params ParamsContainer, v interface{}) error {
+// Call is the Backend.Call implementation for invoking Uiza APIs.
+func (s *BackendImplementation) Call(method, path, key string, params ParamsContainer, v *string) error {
 	var body *form.Values
 	var commonParams *Params
 
@@ -204,8 +204,8 @@ func (s *BackendImplementation) Call(method, path, key string, params ParamsCont
 	return s.CallRaw(method, path, key, body, commonParams, v)
 }
 
-// CallMultipart is the Backend.CallMultipart implementation for invoking Stripe APIs.
-func (s *BackendImplementation) CallMultipart(method, path, key, boundary string, body *bytes.Buffer, params *Params, v interface{}) error {
+// CallMultipart is the Backend.CallMultipart implementation for invoking Uiza APIs.
+func (s *BackendImplementation) CallMultipart(method, path, key, boundary string, body *bytes.Buffer, params *Params, v *string) error {
 	contentType := "multipart/form-data; boundary=" + boundary
 
 	req, err := s.NewRequest(method, path, key, contentType, params)
@@ -220,8 +220,8 @@ func (s *BackendImplementation) CallMultipart(method, path, key, boundary string
 	return nil
 }
 
-// CallRaw is the implementation for invoking Stripe APIs internally without a backend.
-func (s *BackendImplementation) CallRaw(method, path, key string, form *form.Values, params *Params, v interface{}) error {
+// CallRaw is the implementation for invoking Uiza APIs internally without a backend.
+func (s *BackendImplementation) CallRaw(method, path, key string, form *form.Values, params *Params, v *string) error {
 	var body string
 	if form != nil && !form.Empty() {
 		body = form.Encode()
@@ -259,7 +259,7 @@ func (s *BackendImplementation) NewRequest(method, path, key, contentType string
 	req, err := http.NewRequest(method, path, nil)
 	if err != nil {
 		if s.LogLevel > 0 {
-			s.Logger.Printf("Cannot create Stripe request: %v\n", err)
+			s.Logger.Printf("Cannot create Uiza request: %v\n", err)
 		}
 		return nil, err
 	}
@@ -268,9 +268,7 @@ func (s *BackendImplementation) NewRequest(method, path, key, contentType string
 
 	req.Header.Add("Authorization", authorization)
 	req.Header.Add("Content-Type", contentType)
-	req.Header.Add("Stripe-Version", apiversion)
 	req.Header.Add("User-Agent", encodedUserAgent)
-	req.Header.Add("X-Stripe-Client-User-Agent", encodedStripeUserAgent)
 
 	if params != nil {
 		if params.Context != nil {
@@ -288,9 +286,9 @@ func (s *BackendImplementation) NewRequest(method, path, key, contentType string
 			req.Header.Add("Idempotency-Key", NewIdempotencyKey())
 		}
 
-		if params.StripeAccount != nil {
-			req.Header.Add("Stripe-Account", strings.TrimSpace(*params.StripeAccount))
-		}
+		// if params.UizaAccount != nil {
+		// 	req.Header.Add("Uiza-Account", strings.TrimSpace(*params.UizaAccount))
+		// }
 
 		for k, v := range params.Headers {
 			for _, line := range v {
@@ -305,25 +303,9 @@ func (s *BackendImplementation) NewRequest(method, path, key, contentType string
 // Do is used by Call to execute an API request and parse the response. It uses
 // the backend's HTTP client to execute the request and unmarshals the response
 // into v. It also handles unmarshaling errors returned by the API.
-func (s *BackendImplementation) Do(req *http.Request, body *bytes.Buffer, v interface{}) error {
+func (s *BackendImplementation) Do(req *http.Request, body *bytes.Buffer, v *string) error {
 	if s.LogLevel > 1 {
 		s.Logger.Printf("Requesting %v %v%v\n", req.Method, req.URL.Host, req.URL.Path)
-	}
-
-	if s.enableTelemetry {
-		select {
-		case metrics := <-s.requestMetricsBuffer:
-			metricsJSON, err := json.Marshal(&requestTelemetry{LastRequestMetrics: metrics})
-			if err == nil {
-				req.Header.Set("X-Stripe-Client-Telemetry", string(metricsJSON))
-			} else if s.LogLevel > 2 {
-				s.Logger.Printf("Unable to encode client telemetry: %s", err)
-			}
-		default:
-			// There are no metrics available, so don't send any.
-			// This default case  needs to be here to prevent Do from blocking on an
-			// empty requestMetricsBuffer.
-		}
 	}
 
 	var res *http.Response
@@ -332,26 +314,6 @@ func (s *BackendImplementation) Do(req *http.Request, body *bytes.Buffer, v inte
 	for retry := 0; ; {
 		start := time.Now()
 
-		// This might look a little strange, but we set the request's body
-		// outside of `NewRequest` so that we can get a fresh version every
-		// time.
-		//
-		// The background is that back in the era of old style HTTP, it was
-		// safe to reuse `Request` objects, but with the addition of HTTP/2,
-		// it's now only sometimes safe. Reusing a `Request` with a body will
-		// break.
-		//
-		// See some details here:
-		//
-		//     https://github.com/golang/go/issues/19653#issuecomment-341539160
-		//
-		// And our original bug report here:
-		//
-		//     https://github.com/stripe/stripe-go/issues/642
-		//
-		// To workaround the problem, we put a fresh `Body` onto the `Request`
-		// every time we execute it, and this seems to empirically resolve the
-		// problem.
 		if body != nil {
 			// We can safely reuse the same buffer that we used to encode our body,
 			// but return a new reader to it everytime so that each read is from
@@ -363,10 +325,8 @@ func (s *BackendImplementation) Do(req *http.Request, body *bytes.Buffer, v inte
 			// And also add the same thing to `Request.GetBody`, which allows
 			// `net/http` to get a new body in cases like a redirect. This is
 			// usually not used, but it doesn't hurt to set it in case it's
-			// needed. See:
-			//
-			//     https://github.com/stripe/stripe-go/issues/710
-			//
+			// needed.
+
 			req.GetBody = func() (io.ReadCloser, error) {
 				reader := bytes.NewReader(body.Bytes())
 				return nopReadCloser{reader}, nil
@@ -461,13 +421,14 @@ func (s *BackendImplementation) Do(req *http.Request, body *bytes.Buffer, v inte
 	}
 
 	if v != nil {
-		return json.Unmarshal(resBody, v)
+		*v = string(resBody)
+		// return json.Unmarshal(resBody, v)
 	}
 
 	return nil
 }
 
-// ResponseToError converts a stripe response to an Error.
+// ResponseToError converts a uiza response to an Error.
 func (s *BackendImplementation) ResponseToError(res *http.Response, resBody []byte) error {
 	var raw rawError
 	if err := json.Unmarshal(resBody, &raw); err != nil {
@@ -477,7 +438,7 @@ func (s *BackendImplementation) ResponseToError(res *http.Response, resBody []by
 	if raw.E == nil {
 		err := errors.New(string(resBody))
 		if s.LogLevel > 0 {
-			s.Logger.Printf("Unparsable error returned from Stripe: %v\n", err)
+			s.Logger.Printf("Unparsable error returned from Uiza: %v\n", err)
 		}
 		return err
 	}
@@ -487,28 +448,28 @@ func (s *BackendImplementation) ResponseToError(res *http.Response, resBody []by
 	var typedError error
 	switch raw.E.Type {
 	case ErrorTypeAPI:
-		typedError = &APIError{stripeErr: raw.E.Error}
+		typedError = &APIError{uizaErr: raw.E.Error}
 	case ErrorTypeAPIConnection:
-		typedError = &APIConnectionError{stripeErr: raw.E.Error}
+		typedError = &APIConnectionError{uizaErr: raw.E.Error}
 	case ErrorTypeAuthentication:
-		typedError = &AuthenticationError{stripeErr: raw.E.Error}
+		typedError = &AuthenticationError{uizaErr: raw.E.Error}
 	case ErrorTypeCard:
-		cardErr := &CardError{stripeErr: raw.E.Error}
+		cardErr := &CardError{uizaErr: raw.E.Error}
 		if raw.E.DeclineCode != nil {
 			cardErr.DeclineCode = *raw.E.DeclineCode
 		}
 		typedError = cardErr
 	case ErrorTypeInvalidRequest:
-		typedError = &InvalidRequestError{stripeErr: raw.E.Error}
+		typedError = &InvalidRequestError{uizaErr: raw.E.Error}
 	case ErrorTypePermission:
-		typedError = &PermissionError{stripeErr: raw.E.Error}
+		typedError = &PermissionError{uizaErr: raw.E.Error}
 	case ErrorTypeRateLimit:
-		typedError = &RateLimitError{stripeErr: raw.E.Error}
+		typedError = &RateLimitError{uizaErr: raw.E.Error}
 	}
 	raw.E.Err = typedError
 
 	if s.LogLevel > 0 {
-		s.Logger.Printf("Error encountered from Stripe: %v\n", raw.E.Error)
+		s.Logger.Printf("Error encountered from Uiza: %v\n", raw.E.Error)
 	}
 	return raw.E.Error
 }
@@ -586,7 +547,7 @@ type Printfer interface {
 	Printf(format string, v ...interface{})
 }
 
-// SupportedBackend is an enumeration of supported Stripe endpoints.
+// SupportedBackend is an enumeration of supported Uiza endpoints.
 // Currently supported values are "api" and "uploads".
 type SupportedBackend string
 
@@ -631,7 +592,7 @@ func Float64Value(v *float64) float64 {
 // formatted improperly; for example, a string pointer instead of a string.
 //
 // It also URL-escapes every given parameter. This usually isn't necessary for
-// a standard Stripe ID, but is needed in places where user-provided IDs are
+// a standard Uiza ID, but is needed in places where user-provided IDs are
 // allowed, like in coupons or plans. We apply it broadly for extra safety.
 func FormatURLPath(format string, params ...string) string {
 	// Convert parameters to interface{} and URL-escape them
@@ -752,7 +713,7 @@ func NewBackends(httpClient *http.Client) *Backends {
 // second return value.
 //
 // The purpose of this function is to detect whether a given value in a
-// response from the Stripe API is a string ID or an expanded object.
+// response from the Uiza API is a string ID or an expanded object.
 func ParseID(data []byte) (string, bool) {
 	s := string(data)
 
@@ -814,17 +775,17 @@ func StringValue(v *string) string {
 // Private constants
 //
 
-const apiURL = "https://api.stripe.com"
+const apiURL = "https://apiwrapper.uiza.co"
 
 // apiversion is the currently supported API version
-const apiversion = "2018-11-08"
+const apiversion = "3.0.2"
 
 // clientversion is the binding version
-const clientversion = "55.14.0"
+const clientversion = "0.0.1"
 
 // defaultHTTPTimeout is the default timeout on the http.Client used by the library.
-// This is chosen to be consistent with the other Stripe language libraries and
-// to coordinate with other timeouts configured in the Stripe infrastructure.
+// This is chosen to be consistent with the other Uiza language libraries and
+// to coordinate with other timeouts configured in the Uiza infrastructure.
 const defaultHTTPTimeout = 80 * time.Second
 
 // maxNetworkRetriesDelay and minNetworkRetriesDelay defines sleep time in milliseconds between
@@ -836,7 +797,7 @@ const minNetworkRetriesDelay = 500 * time.Millisecond
 // buffer is full, new requestMetrics are dropped.
 const telemetryBufferSize = 16
 
-const uploadsURL = "https://uploads.stripe.com"
+const uploadsURL = "https://apiwrapper.uiza.co"
 
 //
 // Private types
@@ -852,10 +813,10 @@ type nopReadCloser struct {
 
 func (nopReadCloser) Close() error { return nil }
 
-// stripeClientUserAgent contains information about the current runtime which
-// is serialized and sent in the `X-Stripe-Client-User-Agent` as additional
+// uizaClientUserAgent contains information about the current runtime which
+// is serialized and sent in the `X-Uiza-Client-User-Agent` as additional
 // debugging information.
-type stripeClientUserAgent struct {
+type uizaClientUserAgent struct {
 	Application     *AppInfo `json:"application"`
 	BindingsVersion string   `json:"bindings_version"`
 	Language        string   `json:"lang"`
@@ -870,19 +831,13 @@ type requestMetrics struct {
 	RequestID         string `json:"request_id"`
 }
 
-// requestTelemetry contains the payload sent in the
-// `X-Stripe-Client-Telemetry` header when BackendConfig.EnableTelemetry = true.
-type requestTelemetry struct {
-	LastRequestMetrics requestMetrics `json:"last_request_metrics"`
-}
-
 //
 // Private variables
 //
 
 var appInfo *AppInfo
 var backends Backends
-var encodedStripeUserAgent string
+var encodedAzuiUserAgent string
 var encodedUserAgent string
 var httpClient = &http.Client{Timeout: defaultHTTPTimeout}
 
@@ -917,26 +872,26 @@ func init() {
 }
 
 func initUserAgent() {
-	encodedUserAgent = "Stripe/v1 GoBindings/" + clientversion
+	encodedUserAgent = "Azui/v1 GoBindings/" + clientversion
 	if appInfo != nil {
 		encodedUserAgent += " " + appInfo.formatUserAgent()
 	}
 
-	stripeUserAgent := &stripeClientUserAgent{
+	uizaUserAgent := &uizaClientUserAgent{
 		Application:     appInfo,
 		BindingsVersion: clientversion,
 		Language:        "go",
 		LanguageVersion: runtime.Version(),
-		Publisher:       "stripe",
+		Publisher:       "azui",
 		Uname:           getUname(),
 	}
-	marshaled, err := json.Marshal(stripeUserAgent)
+	marshaled, err := json.Marshal(uizaUserAgent)
 	// Encoding this struct should never be a problem, so we're okay to panic
 	// in case it is for some reason.
 	if err != nil {
 		panic(err)
 	}
-	encodedStripeUserAgent = string(marshaled)
+	encodedAzuiUserAgent = string(marshaled)
 }
 
 func isHTTPWriteMethod(method string) bool {

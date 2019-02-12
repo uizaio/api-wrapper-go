@@ -38,7 +38,7 @@ const (
 )
 
 // Error is the response returned when a call is unsuccessful.
-// For more details see  https://stripe.com/docs/api#errors.
+// For more details see  https://docs.uiza.io/#errors-code.
 type Error struct {
 	ChargeID string    `json:"charge,omitempty"`
 	Code     ErrorCode `json:"code,omitempty"`
@@ -62,81 +62,81 @@ func (e *Error) Error() string {
 	return string(ret)
 }
 
-// APIConnectionError is a failure to connect to the Stripe API.
+// APIConnectionError is a failure to connect to the uiza API.
 type APIConnectionError struct {
-	stripeErr *Error
+	uizaErr *Error
 }
 
 // Error serializes the error object to JSON and returns it as a string.
 func (e *APIConnectionError) Error() string {
-	return e.stripeErr.Error()
+	return e.uizaErr.Error()
 }
 
 // APIError is a catch all for any errors not covered by other types (and
 // should be extremely uncommon).
 type APIError struct {
-	stripeErr *Error
+	uizaErr *Error
 }
 
 // Error serializes the error object to JSON and returns it as a string.
 func (e *APIError) Error() string {
-	return e.stripeErr.Error()
+	return e.uizaErr.Error()
 }
 
 // AuthenticationError is a failure to properly authenticate during a request.
 type AuthenticationError struct {
-	stripeErr *Error
+	uizaErr *Error
 }
 
 // Error serializes the error object to JSON and returns it as a string.
 func (e *AuthenticationError) Error() string {
-	return e.stripeErr.Error()
+	return e.uizaErr.Error()
 }
 
 // PermissionError results when you attempt to make an API request
 // for which your API key doesn't have the right permissions.
 type PermissionError struct {
-	stripeErr *Error
+	uizaErr *Error
 }
 
 // Error serializes the error object to JSON and returns it as a string.
 func (e *PermissionError) Error() string {
-	return e.stripeErr.Error()
+	return e.uizaErr.Error()
 }
 
 // CardError are the most common type of error you should expect to handle.
 // They result when the user enters a card that can't be charged for some
 // reason.
 type CardError struct {
-	stripeErr   *Error
+	uizaErr     *Error
 	DeclineCode string `json:"decline_code,omitempty"`
 }
 
 // Error serializes the error object to JSON and returns it as a string.
 func (e *CardError) Error() string {
-	return e.stripeErr.Error()
+	return e.uizaErr.Error()
 }
 
 // InvalidRequestError is an error that occurs when a request contains invalid
 // parameters.
 type InvalidRequestError struct {
-	stripeErr *Error
+	uizaErr *Error
 }
 
 // Error serializes the error object to JSON and returns it as a string.
 func (e *InvalidRequestError) Error() string {
-	return e.stripeErr.Error()
+	return e.uizaErr.Error()
 }
 
-// RateLimitError occurs when the Stripe API is hit to with too many requests
+// RateLimitError occurs when the uiza API is hit to with too many requests
 // too quickly and indicates that the current request has been rate limited.
 type RateLimitError struct {
-	stripeErr *Error
+	uizaErr *Error
 }
 
 // Error serializes the error object to JSON and returns it as a string.
 func (e *RateLimitError) Error() string {
-	return e.stripeErr.Error()
+	return e.uizaErr.Error()
 }
 
 // rawError deserializes the outer JSON object returned in an error response

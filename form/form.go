@@ -28,10 +28,10 @@ type Appender interface {
 
 // encoderFunc is used to encode any type from a request.
 //
-// A note about encodeZero: Since some types in the Stripe API are defaulted to
+// A note about encodeZero: Since some types in the uiza API are defaulted to
 // non-zero values, and Go defaults types to their zero values, any type that
-// has a Stripe API default of a non-zero value is defined as a Go pointer,
-// meaning nil defaults to the Stripe API non-zero value. To override this, a
+// has a uiza API default of a non-zero value is defined as a Go pointer,
+// meaning nil defaults to the uiza API non-zero value. To override this, a
 // check is made to see if the value is the zero-value for that type. If it is
 // and encodeZero is true, it's encoded. This is ignored as a parameter when
 // dealing with types like structs, where the decision cannot be made
@@ -116,7 +116,7 @@ func AppendToPrefixed(values *Values, i interface{}, keyParts []string) {
 }
 
 // FormatKey takes a series of key parts that may be parameter keyParts, map keys,
-// or array indices and unifies them into a single key suitable for Stripe's
+// or array indices and unifies them into a single key suitable for uiza's
 // style of form encoding.
 func FormatKey(parts []string) string {
 	if len(parts) < 1 {
@@ -342,7 +342,7 @@ func makeStructEncoder(t reflect.Type) *structEncoder {
 		if Strict && tag == "" {
 			panic(fmt.Sprintf(
 				"All fields in structs to be form-encoded must have `form` tag; on: %s/%s "+
-						"(hint: use an explicit `form:\"-\"` if the field should not be encoded",
+					"(hint: use an explicit `form:\"-\"` if the field should not be encoded",
 				t.Name(), reflectField.Name,
 			))
 		}
@@ -525,7 +525,7 @@ func (f *Values) Get(key string) []string {
 //
 //     arr[][foo]=foo0&arr[][foo]=foo1&arr[][bar]=bar0&arr[][bar]=bar1
 //
-// And thus result in an incorrect request to Stripe.
+// And thus result in an incorrect request to uiza.
 func (f *Values) ToValues() url.Values {
 	values := url.Values{}
 	for _, v := range f.values {

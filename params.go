@@ -9,7 +9,7 @@ import (
 	"net/url"
 	"time"
 
-	"uiza-api-wrapper/form"
+	"api-wrapper-go/form"
 )
 
 //
@@ -83,7 +83,7 @@ type ListParams struct {
 	// processes.
 	//
 	// Note that a cancelled or timed out context does not provide any
-	// guarantee whether the operation was or was not completed on Stripe's API
+	// guarantee whether the operation was or was not completed on uiza's API
 	// servers. For certainty, you must either retry with the same idempotency
 	// key or query the state of the API.
 	Context context.Context `form:"-"`
@@ -101,11 +101,11 @@ type ListParams struct {
 
 	StartingAfter *string `form:"starting_after"`
 
-	// StripeAccount may contain the ID of a connected account. By including
+	// UizaAccount may contain the ID of a connected account. By including
 	// this field, the request is made as if it originated from the connected
 	// account instead of under the account of the owner of the configured
-	// Stripe key.
-	StripeAccount *string `form:"-"` // Passed as header
+	// uiza key.
+	UizaAccount *string `form:"-"` // Passed as header
 }
 
 // AddExpand appends a new field to expand.
@@ -127,9 +127,9 @@ func (p *ListParams) GetParams() *Params {
 	return p.ToParams()
 }
 
-// SetStripeAccount sets a value for the Stripe-Account header.
-func (p *ListParams) SetStripeAccount(val string) {
-	p.StripeAccount = &val
+// SetUizaAccount sets a value for the Uiza-Account header.
+func (p *ListParams) SetUizaAccount(val string) {
+	p.UizaAccount = &val
 }
 
 // ToParams converts a ListParams to a Params by moving over any fields that
@@ -138,8 +138,8 @@ func (p *ListParams) SetStripeAccount(val string) {
 // ListParams is only used to build a set of parameters.
 func (p *ListParams) ToParams() *Params {
 	return &Params{
-		Context:       p.Context,
-		StripeAccount: p.StripeAccount,
+		Context:     p.Context,
+		UizaAccount: p.UizaAccount,
 	}
 }
 
@@ -158,7 +158,7 @@ type Params struct {
 	// processes.
 	//
 	// Note that a cancelled or timed out context does not provide any
-	// guarantee whether the operation was or was not completed on Stripe's API
+	// guarantee whether the operation was or was not completed on Uiza's API
 	// servers. For certainty, you must either retry with the same idempotency
 	// key or query the state of the API.
 	Context context.Context `form:"-"`
@@ -172,11 +172,11 @@ type Params struct {
 	IdempotencyKey *string           `form:"-"` // Passed as header
 	Metadata       map[string]string `form:"metadata"`
 
-	// StripeAccount may contain the ID of a connected account. By including
+	// UizaAccount may contain the ID of a connected account. By including
 	// this field, the request is made as if it originated from the connected
 	// account instead of under the account of the owner of the configured
-	// Stripe key.
-	StripeAccount *string `form:"-"` // Passed as header
+	// Uiza key.
+	UizaAccount *string `form:"-"` // Passed as header
 }
 
 // AddExpand appends a new field to expand.
@@ -214,9 +214,9 @@ func (p *Params) SetIdempotencyKey(val string) {
 	p.IdempotencyKey = &val
 }
 
-// SetStripeAccount sets a value for the Stripe-Account header.
-func (p *Params) SetStripeAccount(val string) {
-	p.StripeAccount = &val
+// SetUizaAccount sets a value for the Uiza-Account header.
+func (p *Params) SetUizaAccount(val string) {
+	p.UizaAccount = &val
 }
 
 // ParamsContainer is a general interface for which all parameter structs

@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	uiza "uiza-api-wrapper"
-	"uiza-api-wrapper/form"
+	uiza "api-wrapper-go"
+	"api-wrapper-go/form"
 
 	"golang.org/x/net/http2"
 )
@@ -21,7 +21,7 @@ func init() {
 		port = "12112"
 	}
 
-	// stripe-mock's certificate for localhost is self-signed so configure a
+	// uiza-mock's certificate for localhost is self-signed so configure a
 	// specialized client that skips the certificate authority check.
 	transport := &http.Transport{
 		TLSClientConfig: &tls.Config{
@@ -49,13 +49,13 @@ func init() {
 
 	// resp, err := httpClient.Get("https://localhost:" + port)
 	// if err != nil {
-	// 	fmt.Fprintf(os.Stderr, "Couldn't reach stripe-mock at `localhost:%s` (%v). Is "+
+	// 	fmt.Fprintf(os.Stderr, "Couldn't reach uiza-mock at `localhost:%s` (%v). Is "+
 	// 		"it running? Please see README for setup instructions.\n", port, err)
 	// 	os.Exit(1)
 	// }
-	// version := resp.Header.Get("Stripe-Mock-Version")
+	// version := resp.Header.Get("uiza-Mock-Version")
 	// if version != "master" && compareVersions(version, MockMinimumVersion) > 0 {
-	// 	fmt.Fprintf(os.Stderr, "Your version of stripe-mock (%s) is too old. The "+
+	// 	fmt.Fprintf(os.Stderr, "Your version of uiza-mock (%s) is too old. The "+
 	// 		"minimum version to run this test suite is %s. Please see its "+
 	// 		"repository for upgrade instructions.\n", version, MockMinimumVersion)
 	// 	os.Exit(1)
@@ -63,8 +63,8 @@ func init() {
 
 	uiza.Key = "uap-a2aaa7b2aea746ec89e67ad2f8f9ebbf-fdf5bdca"
 
-	// Configure a backend for stripe-mock and set it for both the API and
-	// Uploads (unlike the real Stripe API, stripe-mock supports both these
+	// Configure a backend for uiza-mock and set it for both the API and
+	// Uploads (unlike the real uiza API, uiza-mock supports both these
 	// backends).
 	uizaMockBackend := uiza.GetBackendWithConfig(
 		uiza.APIBackend,
