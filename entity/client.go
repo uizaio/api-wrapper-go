@@ -15,11 +15,9 @@ func Retrieve(params *uiza.EntitySpecParams) (*uiza.EntitySpec, error) {
 	return getC().Retrieve(params)
 }
 
-// Get returns a Entity Spec for a given Entity.
 func (c Client) Retrieve(params *uiza.EntitySpecParams) (*uiza.EntitySpec, error) {
-	// var id := "650131dc-c024-40e5-bde1-8bdb0cf898c6"
 	entitySpec := &uiza.EntitySpec{}
-	path := uiza.FormatURLPath("v3/media/entity")
+	path := uiza.FormatURLPath("api/public/v3/media/entity")
 	err := c.B.Call(http.MethodGet, path, c.Key, params, entitySpec)
 	return entitySpec, err
 }
