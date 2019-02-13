@@ -1,8 +1,8 @@
 package entity
 
 import (
-	"net/http"
 	uiza "api-wrapper-go"
+	"net/http"
 )
 
 // Client is used to invoke /Entity and entity-related APIs.
@@ -11,16 +11,33 @@ type Client struct {
 	Key string
 }
 
-func Retrieve(params *uiza.EntitySpecParams) (string, error) {
+const kBaseURL = "api/public/v3/media/entity"
+
+func Retrieve(params *uiza.EntityRetrieveParams) (string, error) {
 	return getC().Retrieve(params)
 }
 
-func (c Client) Retrieve(params *uiza.EntitySpecParams) (string, error) {
-	var entitySpec string
-	path := uiza.FormatURLPath("api/public/v3/media/entity")
-	err := c.B.Call(http.MethodGet, path, c.Key, params, &entitySpec)
+func (c Client) Retrieve(params *uiza.EntityRetrieveParams) (string, error) {
+	var entity string
+	path := uiza.FormatURLPath(kBaseURL)
+	err := c.B.Call(http.MethodGet, path, c.Key, params, &entity)
 
-	return entitySpec, err
+	return entity, err
+}
+
+func Create(params *uiza.EntityCreateParams) (string, error) {
+	return getC().Create(params)
+}
+
+func (c Client) Create(params *uiza.EntityCreateParams) (string, error) {
+	var entity string
+
+	if err := CheckCreateParamsIsValid(params); err != nil {
+		return "", err
+	}
+
+	err := c.B.Call(http.MethodPost, kBaseURL, c.Key, params, &entity)
+	return entity, err
 }
 
 func getC() Client {
