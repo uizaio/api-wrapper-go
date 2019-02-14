@@ -40,6 +40,19 @@ func (c Client) Create(params *uiza.EntityCreateParams) (string, error) {
 	return entity, err
 }
 
+// Del deletes a video
+func Del(params *uiza.EntityDelParams) (string, error) {
+	return getC().Del(params)
+}
+
+// Del deletes a video.
+func (c Client) Del(params *uiza.EntityDelParams) (string, error) {
+	var entity string
+
+	err := c.B.Call(http.MethodDelete, kBaseURL, c.Key, params, &entity)
+	return entity, err
+}
+
 func getC() Client {
 	return Client{uiza.GetBackend(uiza.APIBackend), uiza.Key}
 }

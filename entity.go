@@ -27,6 +27,12 @@ type EntityCreateParams struct {
 	ExtendMetadata   *map[string]string `form:"extendMetadata"`
 	EmbedMetadata    *map[string]string `form:"embedMetadata"`
 }
+
+type EntityDelParams struct {
+	Params `form:"*"`
+	ID     *string `form:"id"`
+}
+
 type Entity struct {
 	Data map[string]string `json:"data"`
 }
