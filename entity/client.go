@@ -11,24 +11,28 @@ type Client struct {
 	Key string
 }
 
-const kBaseURL = "api/public/v3/media/entity"
+const baseURL = "api/public/v3/media/entity"
 
+// Retrieve Entity API
 func Retrieve(params *uiza.EntityRetrieveParams) (string, error) {
 	return getC().Retrieve(params)
 }
 
+// Retrieve Entity API
 func (c Client) Retrieve(params *uiza.EntityRetrieveParams) (string, error) {
 	var entity string
-	path := uiza.FormatURLPath(kBaseURL)
+	path := uiza.FormatURLPath(baseURL)
 	err := c.B.Call(http.MethodGet, path, c.Key, params, &entity)
 
 	return entity, err
 }
 
+// Create Entity API
 func Create(params *uiza.EntityCreateParams) (string, error) {
 	return getC().Create(params)
 }
 
+// Create Entity API
 func (c Client) Create(params *uiza.EntityCreateParams) (string, error) {
 	var entity string
 
@@ -36,10 +40,11 @@ func (c Client) Create(params *uiza.EntityCreateParams) (string, error) {
 		return "", err
 	}
 
-	err := c.B.Call(http.MethodPost, kBaseURL, c.Key, params, &entity)
+	err := c.B.Call(http.MethodPost, baseURL, c.Key, params, &entity)
 	return entity, err
 }
 
+// Get Backend Client
 func getC() Client {
 	return Client{uiza.GetBackend(uiza.APIBackend), uiza.Key}
 }

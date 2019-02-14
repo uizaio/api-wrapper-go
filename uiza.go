@@ -60,6 +60,9 @@ var EnableTelemetry = false
 // Key is the Uiza API key used globally in the binding.
 var Key string
 
+// Workspace API domain.
+var WorkspaceAPIDomain string
+
 // LogLevel is the logging level for this library.
 // 0: no logging
 // 1: errors only
@@ -659,10 +662,14 @@ func GetBackendWithConfig(backendType SupportedBackend, config *BackendConfig) B
 		config.Logger = Logger
 	}
 
+	if &backendType == nil {
+		backendType = APIBackend
+	}
+
 	switch backendType {
 	case APIBackend:
 		if config.URL == "" {
-			config.URL = apiURL
+			config.URL = WorkspaceAPIDomain
 		}
 
 		config.URL = normalizeURL(config.URL)
@@ -671,7 +678,7 @@ func GetBackendWithConfig(backendType SupportedBackend, config *BackendConfig) B
 
 	case UploadsBackend:
 		if config.URL == "" {
-			config.URL = uploadsURL
+			config.URL = WorkspaceAPIDomain
 		}
 
 		config.URL = normalizeURL(config.URL)
