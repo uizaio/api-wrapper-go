@@ -44,6 +44,19 @@ func (c Client) Create(params *uiza.EntityCreateParams) (string, error) {
 	return entity, err
 }
 
+// Delete Entity API
+func Delete(params *uiza.EntityDeleteParams) (string, error) {
+	return getC().Delete(params)
+}
+
+// Delete Entity API
+func (c Client) Delete(params *uiza.EntityDeleteParams) (string, error) {
+	var entity string
+
+	err := c.B.Call(http.MethodDelete, baseURL, c.Key, params, &entity)
+	return entity, err
+}
+
 // Get Backend Client
 func getC() Client {
 	return Client{uiza.GetBackend(uiza.APIBackend), uiza.Key}
