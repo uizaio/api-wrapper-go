@@ -2,6 +2,7 @@ package entity
 
 import (
 	uiza "api-wrapper-go"
+	"api-wrapper-go/form"
 	"net/http"
 )
 
@@ -46,16 +47,39 @@ func (c Client) Create(params *uiza.EntityCreateParams) (string, error) {
 }
 
 // Delete Entity API
-func Delete(params *uiza.EntityDeleteParams) (string, error) {
+func Delete(params *uiza.EntityDeleteParams) (*uiza.EntityDelete, error) {
 	return getC().Delete(params)
 }
 
 // Delete Entity API
-func (c Client) Delete(params *uiza.EntityDeleteParams) (string, error) {
-	var entity string
-
-	err := c.B.Call(http.MethodDelete, baseURL, c.Key, params, &entity)
+func (c Client) Delete(params *uiza.EntityDeleteParams) (*uiza.EntityDelete, error) {
+	entity := &uiza.EntityDelete{}
+	err := c.B.Call(http.MethodDelete, baseURL, c.Key, params, entity)
 	return entity, err
+}
+
+// List returns a list of entity.
+func List(params *uiza.EntityListParams) *Iter {
+	return getC().List(params)
+}
+
+// List returns a list of entity.
+func (c Client) List(listParams *uiza.EntityListParams) *Iter {
+	return &Iter{uiza.GetIter(listParams, func(p *uiza.Params, b *form.Values) ([]interface{}, uiza.ListMeta, error) {
+		list := &uiza.EntityList{}
+		err := c.B.CallRaw(http.MethodGet, baseURL, c.Key, b, p, list)
+
+		ret := make([]interface{}, len(list.Data))
+		for i, v := range list.Data {
+			ret[i] = v
+		}
+
+		return ret, list.ListMeta, err
+	})}
+}
+
+type Iter struct {
+	*uiza.Iter
 }
 
 // Get Backend Client

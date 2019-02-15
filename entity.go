@@ -33,6 +33,33 @@ type EntityDeleteParams struct {
 	ID     *string `form:"id"`
 }
 
+type EntityDelete struct {
+	ID *string `form:"id"`
+}
+
+type EntityList struct {
+	ListMeta
+	Data []*Entity `json:"data"`
+}
+
+type EntityListParams struct {
+	ListParams       `form:"*"`
+	ID               *string            `form:"id"`
+	Name             *string            `form:"name"`
+	Description      *string            `form:"description"`
+	ShortDescription *string            `form:"shortDescription"`
+	View             *int64             `form:"view"`
+	Poster           *string            `form:"poster"`
+	Thumbnail        *string            `form:"thumbnail"`
+	Type             *InputType         `form:"type"`
+	Duration         *string            `form:"duration"`
+	PublishToCdn     *string            `form:"publishToCdn"`
+	EmbedMetadata    *map[string]string `form:"embedMetadata"`
+	ExtendMetadata   *map[string]string `form:"extendMetadata"`
+	CreatedAt        *int64             `form:"createdAt"`
+	UpdatedAt        *int64             `form:"updatedAt"`
+}
+
 type Entity struct {
 	Data map[string]string `json:"data"`
 }
