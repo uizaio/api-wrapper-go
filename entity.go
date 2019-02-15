@@ -64,18 +64,49 @@ type Entity struct {
 	Data map[string]string `json:"data"`
 }
 
-type EntityPublishToCDNParams struct {
+type EntityPublishParams struct {
 	Params `form:"*"`
 	ID     *string `form:"id"`
 }
 
-type EntityPublishToCDN struct {
+type EntityGetAWSUploadKey struct {
+	TempExpireAt     int64  `json:"temp_expire_at"`
+	TempAccessID     string `json:"temp_access_id"`
+	BucketName       string `json:"bucket_name"`
+	TempSessionToken string `json:"temp_session_token"`
+	RegionName       string `json:"region_name"`
+	TempAccessSecret string `json:"temp_access_secret"`
+}
+
+type EntityRetrieve struct {
+	ID               string            `json:"id"`
+	Name             string            `json:"name"`
+	Description      string            `json:"description"`
+	ShortDescription string            `json:"shortDescription"`
+	View             int64             `json:"view"`
+	Poster           string            `json:"poster"`
+	Thumbnail        string            `json:"thumbnail"`
+	Type             string            `json:"type"`
+	Status           int64             `json:"status"`
+	Duration         string            `json:"duration"`
+	PublishToCdn     string            `json:"publishToCdn"`
+	EmbedMetadata    map[string]string `json:"embedMetadata"`
+	ExtendMetadata   map[string]string `json:"extendMetadata"`
+	CreatedAt        string            `json:"createdAt"`
+	UpdatedAt        string            `json:"updatedAt"`
+}
+
+type EntityPublish struct {
 	ID       string `json:"id"`
 	Message  string `json:"message"`
 	EntityId string `json:"entityId"`
 }
 
-type PublishStatus struct {
+type EntityGetStatusPublish struct {
 	Progress int64  `json:"id"`
 	Status   string `json:"message"`
+}
+
+type EntityCreate struct {
+	ID string `json:"id"`
 }
