@@ -39,10 +39,6 @@ func Create(params *uiza.EntityCreateParams) (*uiza.EntityCreate, error) {
 func (c Client) Create(params *uiza.EntityCreateParams) (*uiza.EntityCreate, error) {
 	entityCreate := &uiza.EntityCreate{}
 
-	if err := CheckCreateParamsIsValid(params); err != nil {
-		return nil, err
-	}
-
 	err := c.B.Call(http.MethodPost, baseURL, c.Key, params, entityCreate)
 	return entityCreate, err
 }
