@@ -36,3 +36,8 @@ type EntityDeleteParams struct {
 type Entity struct {
 	Data map[string]string `json:"data"`
 }
+
+type EntityPublishToCDNParams struct {
+	Params `form:"*"`
+	ID     *string `form:"id"`
+}
