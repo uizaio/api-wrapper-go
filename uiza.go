@@ -109,9 +109,9 @@ func (a *AppInfo) formatUserAgent() string {
 // Backend is an interface for making calls against a Uiza service.
 // This interface exists to enable mocking for during testing if needed.
 type Backend interface {
-	Call(method, path, key string, params ParamsContainer, v *string) error
-	CallRaw(method, path, key string, body *form.Values, params *Params, v *string) error
-	CallMultipart(method, path, key, boundary string, body *bytes.Buffer, params *Params, v *string) error
+	Call(method, path, key string, params ParamsContainer, v interface{}) error
+	CallRaw(method, path, key string, body *form.Values, params *Params, v interface{}) error
+	CallMultipart(method, path, key, boundary string, body *bytes.Buffer, params *Params, v interface{}) error
 	SetMaxNetworkRetries(maxNetworkRetries int)
 }
 
@@ -182,7 +182,7 @@ type BackendImplementation struct {
 }
 
 // Call is the Backend.Call implementation for invoking Uiza APIs.
-func (s *BackendImplementation) Call(method, path, key string, params ParamsContainer, v *string) error {
+func (s *BackendImplementation) Call(method, path, key string, params ParamsContainer, v interface{}) error {
 	var body *form.Values
 	var commonParams *Params
 
@@ -208,7 +208,7 @@ func (s *BackendImplementation) Call(method, path, key string, params ParamsCont
 }
 
 // CallMultipart is the Backend.CallMultipart implementation for invoking Uiza APIs.
-func (s *BackendImplementation) CallMultipart(method, path, key, boundary string, body *bytes.Buffer, params *Params, v *string) error {
+func (s *BackendImplementation) CallMultipart(method, path, key, boundary string, body *bytes.Buffer, params *Params, v interface{}) error {
 	contentType := "multipart/form-data; boundary=" + boundary
 
 	req, err := s.NewRequest(method, path, key, contentType, params)
@@ -224,7 +224,7 @@ func (s *BackendImplementation) CallMultipart(method, path, key, boundary string
 }
 
 // CallRaw is the implementation for invoking Uiza APIs internally without a backend.
-func (s *BackendImplementation) CallRaw(method, path, key string, form *form.Values, params *Params, v *string) error {
+func (s *BackendImplementation) CallRaw(method, path, key string, form *form.Values, params *Params, v interface{}) error {
 	var body string
 	if form != nil && !form.Empty() {
 		body = form.Encode()
@@ -306,7 +306,7 @@ func (s *BackendImplementation) NewRequest(method, path, key, contentType string
 // Do is used by Call to execute an API request and parse the response. It uses
 // the backend's HTTP client to execute the request and unmarshals the response
 // into v. It also handles unmarshaling errors returned by the API.
-func (s *BackendImplementation) Do(req *http.Request, body *bytes.Buffer, v *string) error {
+func (s *BackendImplementation) Do(req *http.Request, body *bytes.Buffer, v interface{}) error {
 	if s.LogLevel > 1 {
 		s.Logger.Printf("Requesting %v %v%v\n", req.Method, req.URL.Host, req.URL.Path)
 	}
@@ -424,8 +424,7 @@ func (s *BackendImplementation) Do(req *http.Request, body *bytes.Buffer, v *str
 	}
 
 	if v != nil {
-		*v = string(resBody)
-		// return json.Unmarshal(resBody, v)
+		return json.Unmarshal(resBody, v)
 	}
 
 	return nil
