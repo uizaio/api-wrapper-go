@@ -41,3 +41,14 @@ type EntityPublishToCDNParams struct {
 	Params `form:"*"`
 	ID     *string `form:"id"`
 }
+
+type EntityPublishToCDN struct {
+	ID       string `json:"id"`
+	Message  string `json:"message"`
+	EntityId string `json:"entityId"`
+}
+
+type PublishStatus struct {
+	Progress int64  `json:"id"`
+	Status   string `json:"message"`
+}

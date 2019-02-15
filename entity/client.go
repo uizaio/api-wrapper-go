@@ -64,27 +64,27 @@ func getC() Client {
 }
 
 // Publish entity to CDN
-func PublishEntityToCDN(params *uiza.EntityPublishToCDNParams) (string, error) {
+func PublishEntityToCDN(params *uiza.EntityPublishToCDNParams) (*uiza.EntityPublishToCDN, error) {
 	return getC().PublishEntityToCDN(params)
 }
 
 // Publish entity to CDN
-func (c Client) PublishEntityToCDN(params *uiza.EntityPublishToCDNParams) (string, error) {
-	var entity string
-	err := c.B.Call(http.MethodPost, publishURL, c.Key, params, &entity)
+func (c Client) PublishEntityToCDN(params *uiza.EntityPublishToCDNParams) (*uiza.EntityPublishToCDN, error) {
+	entityPublishToCDN := &uiza.EntityPublishToCDN{}
+	err := c.B.Call(http.MethodPost, publishURL, c.Key, params, entityPublishToCDN)
 
-	return entity, err
+	return entityPublishToCDN, err
 }
 
 // Get status publish
-func GetStatusPublish(params *uiza.EntityPublishToCDNParams) (string, error) {
+func GetStatusPublish(params *uiza.EntityPublishToCDNParams) (*uiza.PublishStatus, error) {
 	return getC().GetStatusPublish(params)
 }
 
 // Get status publish
-func (c Client) GetStatusPublish(params *uiza.EntityPublishToCDNParams) (string, error) {
-	var entity string
-	err := c.B.Call(http.MethodGet, publishURL, c.Key, params, &entity)
+func (c Client) GetStatusPublish(params *uiza.EntityPublishToCDNParams) (*uiza.PublishStatus, error) {
+	publishStatus := &uiza.PublishStatus{}
+	err := c.B.Call(http.MethodGet, publishURL, c.Key, params, publishStatus)
 
-	return entity, err
+	return publishStatus, err
 }
