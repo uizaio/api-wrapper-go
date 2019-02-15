@@ -12,6 +12,7 @@ type Client struct {
 }
 
 const baseURL = "api/public/v3/media/entity"
+const publishURL = baseURL + "/publish"
 
 // Retrieve Entity API
 func Retrieve(params *uiza.EntityRetrieveParams) (string, error) {
@@ -60,4 +61,30 @@ func (c Client) Delete(params *uiza.EntityDeleteParams) (string, error) {
 // Get Backend Client
 func getC() Client {
 	return Client{uiza.GetBackend(uiza.APIBackend), uiza.Key}
+}
+
+// Publish entity to CDN
+func PublishEntityToCDN(params *uiza.EntityPublishToCDNParams) (string, error) {
+	return getC().PublishEntityToCDN(params)
+}
+
+// Publish entity to CDN
+func (c Client) PublishEntityToCDN(params *uiza.EntityPublishToCDNParams) (string, error) {
+	var entity string
+	err := c.B.Call(http.MethodPost, publishURL, c.Key, params, &entity)
+
+	return entity, err
+}
+
+// Get status publish
+func GetStatusPublish(params *uiza.EntityPublishToCDNParams) (string, error) {
+	return getC().GetStatusPublish(params)
+}
+
+// Get status publish
+func (c Client) GetStatusPublish(params *uiza.EntityPublishToCDNParams) (string, error) {
+	var entity string
+	err := c.B.Call(http.MethodGet, publishURL, c.Key, params, &entity)
+
+	return entity, err
 }
