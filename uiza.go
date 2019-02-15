@@ -414,10 +414,9 @@ func (s *BackendImplementation) Do(req *http.Request, body *bytes.Buffer, v inte
 		return err
 	}
 
-	//TODO: handle error
-	// if res.StatusCode >= 400 {
-	// 	return s.ResponseToError(res, resBody)
-	// }
+	if res.StatusCode >= 400 {
+		return s.ResponseToError(res, resBody)
+	}
 
 	if s.LogLevel > 2 {
 		s.Logger.Printf("Response: %s\n", string(resBody))
@@ -432,48 +431,33 @@ func (s *BackendImplementation) Do(req *http.Request, body *bytes.Buffer, v inte
 
 // ResponseToError converts a uiza response to an Error.
 func (s *BackendImplementation) ResponseToError(res *http.Response, resBody []byte) error {
-	var raw rawError
+	var raw Error
 	if err := json.Unmarshal(resBody, &raw); err != nil {
 		return err
 	}
+
 	// no error in resBody
-	if raw.E == nil {
+	if &raw == nil {
 		err := errors.New(string(resBody))
 		if s.LogLevel > 0 {
 			s.Logger.Printf("Unparsable error returned from Uiza: %v\n", err)
 		}
 		return err
 	}
-	raw.E.HTTPStatusCode = res.StatusCode
-	raw.E.RequestID = res.Header.Get("Request-Id")
+
+	// raw.HTTPStatusCode = res.StatusCode
+	// raw.RequestID = res.Header.Get("Request-Id")
 
 	var typedError error
-	switch raw.E.Type {
-	case ErrorTypeAPI:
-		typedError = &APIError{uizaErr: raw.E.Error}
-	case ErrorTypeAPIConnection:
-		typedError = &APIConnectionError{uizaErr: raw.E.Error}
+	switch raw.Type {
 	case ErrorTypeAuthentication:
-		typedError = &AuthenticationError{uizaErr: raw.E.Error}
-	case ErrorTypeCard:
-		cardErr := &CardError{uizaErr: raw.E.Error}
-		if raw.E.DeclineCode != nil {
-			cardErr.DeclineCode = *raw.E.DeclineCode
-		}
-		typedError = cardErr
-	case ErrorTypeInvalidRequest:
-		typedError = &InvalidRequestError{uizaErr: raw.E.Error}
-	case ErrorTypePermission:
-		typedError = &PermissionError{uizaErr: raw.E.Error}
-	case ErrorTypeRateLimit:
-		typedError = &RateLimitError{uizaErr: raw.E.Error}
+		typedError = &AuthenticationError{uizaErr: &raw}
 	}
-	raw.E.Err = typedError
-
+	raw.Err = typedError
 	if s.LogLevel > 0 {
-		s.Logger.Printf("Error encountered from Uiza: %v\n", raw.E.Error)
+		s.Logger.Printf("Error encountered from Uiza: %v\n", raw)
 	}
-	return raw.E.Error
+	return &raw
 }
 
 // SetMaxNetworkRetries sets max number of retries on failed requests
