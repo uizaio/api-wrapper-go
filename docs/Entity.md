@@ -51,8 +51,10 @@ log.Printf("%s\n", response)
 ```
 
 ## List all entities
+
 Get list of entities including all detail.
 See details [here](https://docs.uiza.io/#list-all-entities).
+
 ```golang
 import (
     Uiza "api-wrapper-go"
@@ -65,8 +67,10 @@ log.Printf("%s\n", response)
 ```
 
 ## Delete an entity
+
 Delete entity
 See details [here](https://docs.uiza.io/#delete-an-entity).
+
 ```golang
 import (
     Uiza "api-wrapper-go"
@@ -76,4 +80,22 @@ import (
 params := &Uiza.EntityDeleteParams{ID: uiza.String("Your entity ID")}
 response, _ := entity.Delete(params)
 log.Printf("%s\n", response)
+```
+
+## Search a list entity
+
+Delete entity
+See details [here](https://docs.uiza.io/#search-entity).
+
+```golang
+import (
+    Uiza "api-wrapper-go"
+    "api-wrapper-go/entity"
+)
+
+params := &uiza.EntitySearchParams{Keyword: uiza.String("Sample")}
+listEntity, _ := entity.Search(params)
+for _, v := range listEntity {
+  log.Printf("%v\n", v)
+}
 ```

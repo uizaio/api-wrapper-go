@@ -39,7 +39,7 @@ type EntityDelete struct {
 
 type EntityList struct {
 	ListMeta
-	Data []*Entity `json:"data"`
+	Data []*EntityData `json:"data"`
 }
 
 type EntityListParams struct {
@@ -60,10 +60,13 @@ type EntityListParams struct {
 	UpdatedAt        *int64             `form:"updatedAt"`
 }
 
-type Entity struct {
-	Data map[string]string `json:"data"`
+type EntityData struct {
+	Data *EntitySpec `json:"data"`
 }
 
+type EntityDataList struct {
+	Data []*EntitySpec `json:"data"`
+}
 type EntityPublishParams struct {
 	Params `form:"*"`
 	ID     *string `form:"id"`
@@ -78,22 +81,27 @@ type EntityGetAWSUploadKey struct {
 	TempAccessSecret string `json:"temp_access_secret"`
 }
 
-type EntityRetrieve struct {
-	ID               string            `json:"id"`
-	Name             string            `json:"name"`
-	Description      string            `json:"description"`
-	ShortDescription string            `json:"shortDescription"`
-	View             int64             `json:"view"`
-	Poster           string            `json:"poster"`
-	Thumbnail        string            `json:"thumbnail"`
-	Type             string            `json:"type"`
-	Status           int64             `json:"status"`
-	Duration         string            `json:"duration"`
-	PublishToCdn     string            `json:"publishToCdn"`
-	EmbedMetadata    map[string]string `json:"embedMetadata"`
-	ExtendMetadata   map[string]string `json:"extendMetadata"`
-	CreatedAt        string            `json:"createdAt"`
-	UpdatedAt        string            `json:"updatedAt"`
+type EntitySpec struct {
+	ID               string            `json:"id,omitempty"`
+	Name             string            `json:"name,omitempty"`
+	Description      string            `json:"description,omitempty"`
+	ShortDescription string            `json:"shortDescription,omitempty"`
+	View             int64             `json:"view,omitempty"`
+	Poster           string            `json:"poster,omitempty"`
+	Thumbnail        string            `json:"thumbnail,omitempty"`
+	Type             string            `json:"type,omitempty"`
+	Status           int64             `json:"status,omitempty"`
+	Duration         string            `json:"duration,omitempty"`
+	PublishToCdn     string            `json:"publishToCdn,omitempty"`
+	EmbedMetadata    map[string]string `json:"embedMetadata,omitempty"`
+	ExtendMetadata   map[string]string `json:"extendMetadata,omitempty"`
+	CreatedAt        string            `json:"createdAt,omitempty"`
+	UpdatedAt        string            `json:"updatedAt,omitempty"`
+}
+
+type EntitySearchParams struct {
+	Params  `form:"*"`
+	Keyword *string `form:"keyword"`
 }
 
 type EntityPublish struct {
