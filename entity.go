@@ -72,7 +72,7 @@ type EntityPublishParams struct {
 	ID     *string `form:"id"`
 }
 
-type EntityGetAWSUploadKey struct {
+type EntityGetAWSUploadKeyData struct {
 	TempExpireAt     int64  `json:"temp_expire_at"`
 	TempAccessID     string `json:"temp_access_id"`
 	BucketName       string `json:"bucket_name"`
@@ -104,17 +104,17 @@ type EntitySearchParams struct {
 	Keyword *string `form:"keyword"`
 }
 
-type EntityPublish struct {
+type EntityPublishData struct {
 	ID       string `json:"id"`
 	Message  string `json:"message"`
 	EntityId string `json:"entityId"`
 }
 
-type EntityGetStatusPublish struct {
+type EntityGetStatusPublishData struct {
 	Progress int64  `json:"id"`
 	Status   string `json:"message"`
 }
 
-type EntityCreate struct {
+type EntityCreateData struct {
 	ID string `json:"id"`
 }
