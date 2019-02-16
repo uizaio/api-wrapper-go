@@ -14,20 +14,37 @@ type Client struct {
 
 const baseURL = "api/public/v3/media/entity"
 const publishURL = baseURL + "/publish"
+const searchURL = baseURL + "/search"
 const awsUploadKeyURL = "api/public/v3/admin/app/config/aws"
 
+// Search Entity by Keyword
+func Search(params *uiza.EntitySearchParams) ([]*uiza.EntitySpec, error) {
+	return getC().Search(params)
+}
+
+// Search Entity by Keyword
+func (c Client) Search(params *uiza.EntitySearchParams) ([]*uiza.EntitySpec, error) {
+	entity := &uiza.EntityDataList{}
+	err := c.B.Call(http.MethodGet, searchURL, c.Key, params, entity)
+	ret := make([]*uiza.EntitySpec, len(entity.Data))
+	for i, v := range entity.Data {
+		ret[i] = v
+	}
+	return ret, err
+}
+
 // Retrieve Entity API
-func Retrieve(params *uiza.EntityRetrieveParams) (*uiza.EntityRetrieve, error) {
+func Retrieve(params *uiza.EntityRetrieveParams) (*uiza.EntitySpec, error) {
 	return getC().Retrieve(params)
 }
 
 // Retrieve Entity API
-func (c Client) Retrieve(params *uiza.EntityRetrieveParams) (*uiza.EntityRetrieve, error) {
-	entityRetrieve := &uiza.EntityRetrieve{}
+func (c Client) Retrieve(params *uiza.EntityRetrieveParams) (*uiza.EntitySpec, error) {
+	entityData := &uiza.EntityData{}
 	path := uiza.FormatURLPath(baseURL)
-	err := c.B.Call(http.MethodGet, path, c.Key, params, entityRetrieve)
+	err := c.B.Call(http.MethodGet, path, c.Key, params, entityData)
 
-	return entityRetrieve, err
+	return entityData.Data, err
 }
 
 // Create Entity API
