@@ -12,10 +12,11 @@ type Client struct {
 	Key string
 }
 
-const baseURL = "api/public/v3/media/entity"
-const publishURL = baseURL + "/publish"
-const searchURL = baseURL + "/search"
-const awsUploadKeyURL = "api/public/v3/admin/app/config/aws"
+const (
+	baseURL         = "api/public/v3/media/entity"
+	publishURL      = baseURL + "/publish"
+	awsUploadKeyURL = "api/public/v3/admin/app/config/aws"
+)
 
 // Search Entity by Keyword
 func Search(params *uiza.EntitySearchParams) ([]*uiza.EntitySpec, error) {
@@ -48,13 +49,13 @@ func (c Client) Retrieve(params *uiza.EntityRetrieveParams) (*uiza.EntitySpec, e
 }
 
 // Create Entity API
-func Create(params *uiza.EntityCreateParams) (*uiza.EntityCreate, error) {
+func Create(params *uiza.EntityCreateParams) (*uiza.EntityCreateData, error) {
 	return getC().Create(params)
 }
 
 // Create Entity API
-func (c Client) Create(params *uiza.EntityCreateParams) (*uiza.EntityCreate, error) {
-	entityCreate := &uiza.EntityCreate{}
+func (c Client) Create(params *uiza.EntityCreateParams) (*uiza.EntityCreateData, error) {
+	entityCreate := &uiza.EntityCreateData{}
 
 	err := c.B.Call(http.MethodPost, baseURL, c.Key, params, entityCreate)
 	return entityCreate, err
@@ -102,39 +103,39 @@ func getC() Client {
 }
 
 // Publish entity to CDN
-func Publish(params *uiza.EntityPublishParams) (*uiza.EntityPublish, error) {
+func Publish(params *uiza.EntityPublishParams) (*uiza.EntityPublishData, error) {
 	return getC().Publish(params)
 }
 
 // Publish entity to CDN
-func (c Client) Publish(params *uiza.EntityPublishParams) (*uiza.EntityPublish, error) {
-	entityPublishToCDN := &uiza.EntityPublish{}
+func (c Client) Publish(params *uiza.EntityPublishParams) (*uiza.EntityPublishData, error) {
+	entityPublishToCDN := &uiza.EntityPublishData{}
 	err := c.B.Call(http.MethodPost, publishURL, c.Key, params, entityPublishToCDN)
 
 	return entityPublishToCDN, err
 }
 
 // Get status publish
-func GetStatusPublish(params *uiza.EntityPublishParams) (*uiza.EntityGetStatusPublish, error) {
+func GetStatusPublish(params *uiza.EntityPublishParams) (*uiza.EntityGetStatusPublishData, error) {
 	return getC().GetStatusPublish(params)
 }
 
 // Get status publish
-func (c Client) GetStatusPublish(params *uiza.EntityPublishParams) (*uiza.EntityGetStatusPublish, error) {
-	publishStatus := &uiza.EntityGetStatusPublish{}
+func (c Client) GetStatusPublish(params *uiza.EntityPublishParams) (*uiza.EntityGetStatusPublishData, error) {
+	publishStatus := &uiza.EntityGetStatusPublishData{}
 	err := c.B.Call(http.MethodGet, publishURL, c.Key, params, publishStatus)
 
 	return publishStatus, err
 }
 
 // Get AWS upload key
-func GetAWSUploadKey() (*uiza.EntityGetAWSUploadKey, error) {
+func GetAWSUploadKey() (*uiza.EntityGetAWSUploadKeyData, error) {
 	return getC().GetAWSUploadKey()
 }
 
 // Get AWS upload key
-func (c Client) GetAWSUploadKey() (*uiza.EntityGetAWSUploadKey, error) {
-	entityAWSUploadKey := &uiza.EntityGetAWSUploadKey{}
+func (c Client) GetAWSUploadKey() (*uiza.EntityGetAWSUploadKeyData, error) {
+	entityAWSUploadKey := &uiza.EntityGetAWSUploadKeyData{}
 	err := c.B.Call(http.MethodGet, awsUploadKeyURL, c.Key, nil, entityAWSUploadKey)
 
 	return entityAWSUploadKey, err

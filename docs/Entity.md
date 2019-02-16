@@ -99,3 +99,48 @@ for _, v := range listEntity {
   log.Printf("%v\n", v)
 }
 ```
+
+
+## Publish entity to CDN
+Publish entity to CDN, use for streaming
+See details [here](https://docs.uiza.io/#publish-entity-to-cdn).
+
+```golang
+import (
+    Uiza "api-wrapper-go"
+    "api-wrapper-go/entity"
+)
+
+params := &Uiza.EntityPublishParams{ID: uiza.String("Your entity ID")}
+response, _ := entity.Publish(params)
+log.Printf("%s\n", response)
+```
+
+## Get status publish
+Publish entity to CDN, use for streaming
+See details [here](https://docs.uiza.io/#get-status-publish).
+
+```golang
+import (
+    Uiza "api-wrapper-go"
+    "api-wrapper-go/entity"
+)
+
+params := &Uiza.EntityPublishParams{ID: uiza.String("Your entity ID")}
+response, _ := entity.GetStatusPublish(params)
+log.Printf("%s\n", response)
+```
+
+## Get AWS upload key
+This API will be return the bucket temporary upload storage & key for upload, so that you can push your file to Uiza’s storage and get the link for URL upload & create entity
+See details [here](https://docs.uiza.io/#get-aws-upload-key).
+
+```golang
+import (
+    Uiza "api-wrapper-go"
+    "api-wrapper-go/entity"
+)
+
+response, _ := entity.GetAWSUploadKey()
+log.Printf("%s\n", response)
+```
