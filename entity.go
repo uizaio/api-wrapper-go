@@ -33,11 +33,11 @@ type EntityDeleteParams struct {
 	ID     *string `form:"id"`
 }
 
-type EntityDelete struct {
-	ID *string `form:"id"`
+type EntityDeleteData struct {
+	ID string `form:"id"`
 }
 
-type EntityList struct {
+type EntityListData struct {
 	ListMeta
 	Data []*EntityData `json:"data"`
 }

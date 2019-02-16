@@ -1,7 +1,7 @@
 package entity
 
 import (
-	uiza "api-wrapper-go"
+	"api-wrapper-go"
 	"api-wrapper-go/form"
 	"net/http"
 )
@@ -15,6 +15,7 @@ type Client struct {
 const (
 	baseURL         = "api/public/v3/media/entity"
 	publishURL      = baseURL + "/publish"
+	searchURL       = baseURL + "/search"
 	awsUploadKeyURL = "api/public/v3/admin/app/config/aws"
 )
 
@@ -62,13 +63,13 @@ func (c Client) Create(params *uiza.EntityCreateParams) (*uiza.EntityCreateData,
 }
 
 // Delete Entity API
-func Delete(params *uiza.EntityDeleteParams) (*uiza.EntityDelete, error) {
+func Delete(params *uiza.EntityDeleteParams) (*uiza.EntityDeleteData, error) {
 	return getC().Delete(params)
 }
 
 // Delete Entity API
-func (c Client) Delete(params *uiza.EntityDeleteParams) (*uiza.EntityDelete, error) {
-	entity := &uiza.EntityDelete{}
+func (c Client) Delete(params *uiza.EntityDeleteParams) (*uiza.EntityDeleteData, error) {
+	entity := &uiza.EntityDeleteData{}
 	err := c.B.Call(http.MethodDelete, baseURL, c.Key, params, entity)
 	return entity, err
 }
@@ -81,7 +82,7 @@ func List(params *uiza.EntityListParams) *Iter {
 // List returns a list of entity.
 func (c Client) List(listParams *uiza.EntityListParams) *Iter {
 	return &Iter{uiza.GetIter(listParams, func(p *uiza.Params, b *form.Values) ([]interface{}, uiza.ListMeta, error) {
-		list := &uiza.EntityList{}
+		list := &uiza.EntityListData{}
 		err := c.B.CallRaw(http.MethodGet, baseURL, c.Key, b, p, list)
 
 		ret := make([]interface{}, len(list.Data))
