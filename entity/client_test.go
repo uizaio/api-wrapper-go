@@ -16,7 +16,7 @@ type Test struct {
 }
 
 func TestCreate(t *testing.T) {
-	mockBackendImplementation := new(mockService.BackendImplementationMock)
+	mockBackendImplementation := new(mockService.BackendImplementationEntityMock)
 	mockClient := Client{mockBackendImplementation, ""}
 
 	type args struct {
@@ -52,7 +52,7 @@ func TestCreate(t *testing.T) {
 }
 
 func TestRetrieve(t *testing.T) {
-	mockBackendImplementation := new(mockService.BackendImplementationMock)
+	mockBackendImplementation := new(mockService.BackendImplementationEntityMock)
 	mockClient := Client{mockBackendImplementation, ""}
 
 	type args struct {
@@ -85,7 +85,7 @@ func TestRetrieve(t *testing.T) {
 }
 
 func TestDelete(t *testing.T) {
-	mockBackendImplementation := new(mockService.BackendImplementationMock)
+	mockBackendImplementation := new(mockService.BackendImplementationEntityMock)
 	mockClient := Client{mockBackendImplementation, ""}
 
 	type args struct {
@@ -116,7 +116,7 @@ func TestDelete(t *testing.T) {
 }
 
 func TestList(t *testing.T) {
-	mockBackendImplementation := new(mockService.BackendImplementationMock)
+	mockBackendImplementation := new(mockService.BackendImplementationEntityMock)
 	mockClient := Client{mockBackendImplementation, ""}
 
 	type args struct {
@@ -147,7 +147,7 @@ func TestList(t *testing.T) {
 }
 
 func TestPublish(t *testing.T) {
-	mockBackendImplementation := new(mockService.BackendImplementationMock)
+	mockBackendImplementation := new(mockService.BackendImplementationEntityMock)
 	mockClient := Client{mockBackendImplementation, ""}
 
 	type args struct {
@@ -178,7 +178,7 @@ func TestPublish(t *testing.T) {
 }
 
 func TestGetStatusPublish(t *testing.T) {
-	mockBackendImplementation := new(mockService.BackendImplementationMock)
+	mockBackendImplementation := new(mockService.BackendImplementationEntityMock)
 	mockClient := Client{mockBackendImplementation, ""}
 
 	type args struct {
@@ -209,7 +209,7 @@ func TestGetStatusPublish(t *testing.T) {
 }
 
 func TestGetAWSUploadKey(t *testing.T) {
-	mockBackendImplementation := new(mockService.BackendImplementationMock)
+	mockBackendImplementation := new(mockService.BackendImplementationEntityMock)
 	mockClient := Client{mockBackendImplementation, ""}
 
 	tests := []Test{
