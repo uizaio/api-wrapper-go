@@ -9,14 +9,6 @@ Create entity using full URL. Direct HTTP, FTP or AWS S3 link are acceptable.
 See details [here](https://docs.uiza.io/#create-entity).
 
 ```golang
-
-params = {
-  name: "Sample Video",
-  url: "https://example.com/video.mp4",
-  inputType: "http",
-  description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry"
-}
-
 import (
     Uiza "api-wrapper-go"
     "api-wrapper-go/entity"
@@ -24,11 +16,11 @@ import (
 
 var typeHTTP = Uiza.InputTypeHTTP
 params =  &uiza.EntityCreateParams{
-					Name:      uiza.String("Sample Video"),
-					URL:       uiza.String("https://example.com/video.mp4"),
-          InputType: &typeHTTP,
-          description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry"
-        }
+	Name:      uiza.String("Sample Video"),
+	URL:       uiza.String("https://example.com/video.mp4"),
+	InputType: &typeHTTP,
+	description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry"
+}
 
 response, _ := entity.Retrieve(params)
 log.Printf("%s\n", response)
