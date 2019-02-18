@@ -15,8 +15,7 @@ const (
 type Error struct {
 	// Err contains an internal error with an additional level of granularity
 	// that can be used in some cases to get more detailed information about
-	// what went wrong. For example, Err may hold a CardError that indicates
-	// exactly what went wrong during charging a card.
+	// what went wrong.
 	Err error `json:"-"`
 	// HTTPStatusCode  int       `json:"status,omitempty"`
 	Code int       `json:"code,omitempty"`
