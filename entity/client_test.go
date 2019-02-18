@@ -97,7 +97,7 @@ func TestDelete(t *testing.T) {
 			args: args{
 				params: &uiza.EntityDeleteParams{ID: uiza.String(mockService.EntityId)},
 			},
-			want:    &uiza.EntityDeleteData{ID: *uiza.String(mockService.EntityId)},
+			want:    &uiza.EntityIdData{ID: *uiza.String(mockService.EntityId)},
 			wantErr: false,
 		},
 	}

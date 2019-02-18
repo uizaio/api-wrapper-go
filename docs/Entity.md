@@ -136,3 +136,46 @@ import (
 response, _ := entity.GetAWSUploadKey()
 log.Printf("%s\n", response)
 ```
+
+## Update an entity
+Update entity's information.
+See details [here](https://docs.uiza.io/#update-an-entity).
+
+```golang
+import (
+    Uiza "api-wrapper-go"
+    "api-wrapper-go/entity"
+)
+params := &Uiza.EntityUpdateParams{ID: uiza.String("Your entity ID")}
+response, _ := entity.Update(params)
+log.Printf("%s\n", response)
+```
+Example Response
+
+```golang
+{
+        "id": "16ab25d3-fd0f-4568-8aa0-0339bbfd674f",
+        "name": "Sample Video",
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+        "shortDescription": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+        "view": 0,
+        "poster": "https://example.com/picture001",
+        "thumbnail": "https://example.com/picture002",
+        "type": "vod",
+        "status": 1,
+        "duration": "237.865215",
+        "publishToCdn":"success",
+        "embedMetadata": {
+            "artist": "John Doe",
+            "album": "Album sample",
+            "genre": "Pop"
+        },
+        "extendMetadata": {
+            "movie_category":"action",
+            "imdb_score":8.8,
+            "published_year":"2018"
+        },
+        "createdAt": "2018-06-16T18:54:15.000Z",
+        "updatedAt": "2018-06-16T18:54:29.000Z"
+    }
+```

@@ -23,7 +23,7 @@ func (m *BackendImplementationEntityMock) Call(method, path, key string, params 
 			method: "POST",
 			path:   EntityBaseUrl,
 			params: nil,
-			data:   &uiza.EntityCreateData{ID: *uiza.String(EntityId)},
+			data:   &uiza.EntityIdData{ID: *uiza.String(EntityId)},
 		},
 		{
 			method: "GET",
@@ -35,7 +35,7 @@ func (m *BackendImplementationEntityMock) Call(method, path, key string, params 
 			method: "DELETE",
 			path:   EntityBaseUrl,
 			params: &uiza.EntityDeleteParams{ID: uiza.String(EntityId)},
-			data:   &uiza.EntityDeleteData{ID: *uiza.String(EntityId)},
+			data:   &uiza.EntityIdData{ID: *uiza.String(EntityId)},
 		},
 		{
 			method: "POST",
@@ -114,16 +114,12 @@ func (m *BackendImplementationEntityMock) SetMaxNetworkRetries(maxNetworkRetries
 
 func SetEntityResponse(v interface{}, data interface{}) {
 	switch vp := v.(type) {
-	case *uiza.EntityCreateData:
-		if f, ok := data.(*uiza.EntityCreateData); ok {
+	case *uiza.EntityIdData:
+		if f, ok := data.(*uiza.EntityIdData); ok {
 			*vp = *f
 		}
 	case *uiza.EntityData:
 		if f, ok := data.(*uiza.EntityData); ok {
-			*vp = *f
-		}
-	case *uiza.EntityDeleteData:
-		if f, ok := data.(*uiza.EntityDeleteData); ok {
 			*vp = *f
 		}
 	case *uiza.EntityListData:
