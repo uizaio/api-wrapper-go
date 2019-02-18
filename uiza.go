@@ -445,13 +445,23 @@ func (s *BackendImplementation) ResponseToError(res *http.Response, resBody []by
 		return err
 	}
 
-	// raw.HTTPStatusCode = res.StatusCode
+	raw.HTTPStatusCode = res.StatusCode
 	// raw.RequestID = res.Header.Get("Request-Id")
 
 	var typedError error
-	switch raw.Type {
-	case ErrorTypeAuthentication:
+	switch raw.Code {
+	case ErrorCodeBadRequest:
+		typedError = &BadRequestError{uizaErr: &raw}
+	case ErrorCodeAuthentication:
 		typedError = &AuthenticationError{uizaErr: &raw}
+	case ErrorCodeInternalServer:
+		typedError = &InternalServerError{uizaErr: &raw}
+	case ErrorCodeNotFound:
+		typedError = &NotFoundError{uizaErr: &raw}
+	case ErrorCodeServiceUnavailable:
+		typedError = &ServiceUnavailableError{uizaErr: &raw}
+	case ErrorCodeUnProcessable:
+		typedError = &UnProcessableError{uizaErr: &raw}
 	}
 	raw.Err = typedError
 	if s.LogLevel > 0 {
