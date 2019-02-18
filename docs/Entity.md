@@ -22,7 +22,7 @@ params =  &uiza.EntityCreateParams{
 	description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry"
 }
 
-response, _ := entity.Retrieve(params)
+response, _ := entity.Create(params)
 log.Printf("%s\n", response)
 ```
 
