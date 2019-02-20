@@ -1,7 +1,7 @@
 package category
 
 import (
-	"api-wrapper-go"
+	uiza "api-wrapper-go"
 	"net/http"
 )
 
@@ -17,7 +17,9 @@ const (
 
 // Get Backend Client
 func getC() Client {
-	return Client{uiza.GetBackend(uiza.APIBackend), uiza.Key}
+	b := uiza.GetBackend(uiza.APIBackend)
+	b.SetClientType(uiza.CategoryClientType)
+	return Client{b, uiza.Key}
 }
 
 func Retrieve(params *uiza.CategoryIDParams) (*uiza.CategorySpec, error) {

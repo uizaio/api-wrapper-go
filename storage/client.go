@@ -1,7 +1,7 @@
 package storage
 
 import (
-	"api-wrapper-go"
+	uiza "api-wrapper-go"
 	"net/http"
 )
 
@@ -15,6 +15,13 @@ const (
 	baseURL = "api/public/v3/media/storage"
 )
 
+// Get Backend Client
+func getC() Client {
+	b := uiza.GetBackend(uiza.APIBackend)
+	b.SetClientType(uiza.StorageClientType)
+	return Client{b, uiza.Key}
+}
+
 // Add Storage API
 func Add(params *uiza.StorageAddParams) (*uiza.StorageIdData, error) {
 	return getC().Add(params)
@@ -26,9 +33,4 @@ func (c Client) Add(params *uiza.StorageAddParams) (*uiza.StorageIdData, error) 
 
 	err := c.B.Call(http.MethodPost, baseURL, c.Key, params, storageAdd)
 	return storageAdd, err
-}
-
-// Get Backend Client
-func getC() Client {
-	return Client{uiza.GetBackend(uiza.APIBackend), uiza.Key}
 }

@@ -1,7 +1,7 @@
 package entity
 
 import (
-	"api-wrapper-go"
+	uiza "api-wrapper-go"
 	"api-wrapper-go/form"
 	"net/http"
 )
@@ -19,6 +19,13 @@ const (
 	searchURL        = baseURL + "/search"
 	awsUploadKeyURL  = "api/public/v3/admin/app/config/aws"
 )
+
+// Get Backend Client
+func getC() Client {
+	b := uiza.GetBackend(uiza.APIBackend)
+	b.SetClientType(uiza.EntityClientType)
+	return Client{b, uiza.Key}
+}
 
 // Search Entity by Keyword
 func Search(params *uiza.EntitySearchParams) ([]*uiza.EntitySpec, error) {
@@ -97,11 +104,6 @@ func (c Client) List(listParams *uiza.EntityListParams) *Iter {
 
 type Iter struct {
 	*uiza.Iter
-}
-
-// Get Backend Client
-func getC() Client {
-	return Client{uiza.GetBackend(uiza.APIBackend), uiza.Key}
 }
 
 // Publish entity to CDN
