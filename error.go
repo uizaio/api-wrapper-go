@@ -38,7 +38,7 @@ type Error struct {
 	Err            error        `json:"-"`
 	HTTPStatusCode int          `json:"-"`
 	Code           ErrorCode    `json:"code,omitempty"`
-	Message        ErrorMessage `json:"-"`
+	Message        ErrorMessage `json:"message,omitempty"`
 	// Data            string    `json:"data,omitempty"`
 	// Retryable       bool      `json:"retryable,omitempty"`
 	// Message         string    `json:"message,omitempty"`
@@ -63,8 +63,9 @@ type AuthenticationError struct {
 
 // Error serializes the error object to JSON and returns it as a string.
 func (e *AuthenticationError) Error() string {
-	e.uizaErr.DescriptionLink = "https://docs.uiza.io/#authentication"
-	e.uizaErr.Message = ErrorMessageAuthentication
+	if e.uizaErr.DescriptionLink == "" {
+		e.uizaErr.DescriptionLink = "https://docs.uiza.io/#authentication"
+	}
 	return e.uizaErr.Error()
 }
 
@@ -74,8 +75,7 @@ type BadRequestError struct {
 
 // Error serializes the error object to JSON and returns it as a string.
 func (e *BadRequestError) Error() string {
-	e.uizaErr.DescriptionLink = "https://docs.uiza.io/#errors-code"
-	e.uizaErr.Message = ErrorMessageBadRequest
+	preprocessDescription(e.uizaErr)
 	return e.uizaErr.Error()
 }
 
@@ -85,8 +85,7 @@ type UnProcessableError struct {
 
 // Error serializes the error object to JSON and returns it as a string.
 func (e *UnProcessableError) Error() string {
-	e.uizaErr.DescriptionLink = "https://docs.uiza.io/#errors-code"
-	e.uizaErr.Message = ErrorMessageUnProcessable
+	preprocessDescription(e.uizaErr)
 	return e.uizaErr.Error()
 }
 
@@ -96,9 +95,13 @@ type NotFoundError struct {
 
 // Error serializes the error object to JSON and returns it as a string.
 func (e *NotFoundError) Error() string {
-	e.uizaErr.DescriptionLink = "https://docs.uiza.io/#errors-code"
-	e.uizaErr.Message = ErrorMessageNotFound
+	preprocessDescription(e.uizaErr)
 	return e.uizaErr.Error()
+}
+
+// Error serializes the error object to JSON and returns it as a string.
+func (e *NotFoundError) getDescriptionLink() string {
+	return e.uizaErr.DescriptionLink
 }
 
 type InternalServerError struct {
@@ -107,8 +110,7 @@ type InternalServerError struct {
 
 // Error serializes the error object to JSON and returns it as a string.
 func (e *InternalServerError) Error() string {
-	e.uizaErr.DescriptionLink = "https://docs.uiza.io/#errors-code"
-	e.uizaErr.Message = ErrorMessageInternalServer
+	preprocessDescription(e.uizaErr)
 	return e.uizaErr.Error()
 }
 
@@ -118,7 +120,13 @@ type ServiceUnavailableError struct {
 
 // Error serializes the error object to JSON and returns it as a string.
 func (e *ServiceUnavailableError) Error() string {
-	e.uizaErr.DescriptionLink = "https://docs.uiza.io/#errors-code"
-	e.uizaErr.Message = ErrorMessageServiceUnavailable
+	preprocessDescription(e.uizaErr)
 	return e.uizaErr.Error()
+}
+
+// Preprocess Description Link
+func preprocessDescription(err *Error) {
+	if err.DescriptionLink == "" {
+		err.DescriptionLink = "https://docs.uiza.io/#errors-code"
+	}
 }

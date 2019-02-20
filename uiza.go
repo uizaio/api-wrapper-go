@@ -113,6 +113,7 @@ type Backend interface {
 	CallRaw(method, path, key string, body *form.Values, params *Params, v interface{}) error
 	CallMultipart(method, path, key, boundary string, body *bytes.Buffer, params *Params, v interface{}) error
 	SetMaxNetworkRetries(maxNetworkRetries int)
+	SetClientType(clientType ClientType)
 }
 
 // BackendConfig is used to configure a new Uiza backend.
@@ -164,6 +165,7 @@ type BackendConfig struct {
 // future version.
 type BackendImplementation struct {
 	Type              SupportedBackend
+	ClientType        ClientType
 	URL               string
 	HTTPClient        *http.Client
 	MaxNetworkRetries int
@@ -448,6 +450,19 @@ func (s *BackendImplementation) ResponseToError(res *http.Response, resBody []by
 	raw.HTTPStatusCode = res.StatusCode
 	// raw.RequestID = res.Header.Get("Request-Id")
 
+	if raw.Code == ErrorCodeNotFound || raw.Code == ErrorCodeUnProcessable {
+		switch s.ClientType {
+		case EntityClientType:
+			raw.DescriptionLink = "https://docs.uiza.io/#video"
+
+		case StorageClientType:
+			raw.DescriptionLink = "https://docs.uiza.io/#storage"
+
+		case CategoryClientType:
+			raw.DescriptionLink = "https://docs.uiza.io/#category"
+		}
+	}
+
 	var typedError error
 	switch raw.Code {
 	case ErrorCodeBadRequest:
@@ -463,10 +478,12 @@ func (s *BackendImplementation) ResponseToError(res *http.Response, resBody []by
 	case ErrorCodeUnProcessable:
 		typedError = &UnProcessableError{uizaErr: &raw}
 	}
+
 	raw.Err = typedError
 	if s.LogLevel > 0 {
 		s.Logger.Printf("Error encountered from Uiza: %v\n", raw)
 	}
+
 	return &raw
 }
 
@@ -475,6 +492,11 @@ func (s *BackendImplementation) ResponseToError(res *http.Response, resBody []by
 // This function is deprecated. Please use GetBackendWithConfig instead.
 func (s *BackendImplementation) SetMaxNetworkRetries(maxNetworkRetries int) {
 	s.MaxNetworkRetries = maxNetworkRetries
+}
+
+// Set ClientType. Using it for check where Backend called
+func (s *BackendImplementation) SetClientType(clientType ClientType) {
+	s.ClientType = clientType
 }
 
 // SetNetworkRetriesSleep allows the normal sleep between network retries to be
