@@ -112,6 +112,9 @@ func (m *BackendImplementationEntityMock) CallRaw(method, path, key string, form
 func (m *BackendImplementationEntityMock) SetMaxNetworkRetries(maxNetworkRetries int) {
 }
 
+func (m *BackendImplementationEntityMock) SetClientType(clientType uiza.ClientType) {
+}
+
 func SetEntityResponse(v interface{}, data interface{}) {
 	switch vp := v.(type) {
 	case *uiza.EntityIdData:

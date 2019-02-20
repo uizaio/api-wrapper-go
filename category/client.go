@@ -51,10 +51,10 @@ func (c Client) Create(params *uiza.CategoryCreateParams) (*uiza.CategorySpec, e
 
 	categoryIDParam := &uiza.CategoryIDParams{ID: uiza.String(categoryIDData.Data.ID)}
 
-	return Retrieve(categoryIDParam)
+	return c.Retrieve(categoryIDParam)
 }
 
-func Upddate(params *uiza.CategoryUpdateParams) (*uiza.CategorySpec, error) {
+func Update(params *uiza.CategoryUpdateParams) (*uiza.CategorySpec, error) {
 
 	return getC().Update(params)
 }
@@ -69,7 +69,7 @@ func (c Client) Update(params *uiza.CategoryUpdateParams) (*uiza.CategorySpec, e
 
 	categoryIDParam := &uiza.CategoryIDParams{ID: uiza.String(categoryIDData.Data.ID)}
 
-	return Retrieve(categoryIDParam)
+	return c.Retrieve(categoryIDParam)
 
 }
 
