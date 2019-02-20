@@ -5,18 +5,44 @@ type StorageAddParams struct {
 	Name        *string `form:"name"`
 	Host        *string `form:"host"`
 	Port        *int64  `form:"port"`
-	Type        *string `form:"type"`
+	StorageType *string `form:"storageType"`
 	Username    *string `form:"username"`
 	Password    *string `form:"password"`
 	Description *string `form:"description"`
 }
 
-type StorageData struct {
-	Data *EntitySpec `json:"data"`
+type StorageRetrieveParams struct {
+	Params `form:"*"`
+	ID     *string `form:"id"`
+}
+
+type StorageUpdateParams struct {
+	Params      `form:"*"`
+	ID          *string `form:"id"`
+	Name        *string `form:"name"`
+	Host        *string `form:"host"`
+	Port        *int64  `form:"port"`
+	StorageType *string `form:"storageType"`
+	Username    *string `form:"username"`
+	Password    *string `form:"password"`
+	Description *string `form:"description"`
+}
+
+type StorageRemoveParams struct {
+	Params `form:"*"`
+	ID     *string `form:"id"`
+}
+
+type StorageSpecData struct {
+	Data *StorageSpec `json:"data"`
+}
+
+type StorageId struct {
+	ID string `json:"id"`
 }
 
 type StorageIdData struct {
-	ID string `json:"id"`
+	Data *StorageId `json:"data"`
 }
 
 type StorageSpec struct {

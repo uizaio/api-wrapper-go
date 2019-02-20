@@ -8,3 +8,8 @@ const (
 	EntityGetPublishStatusUrl = EntityPublishUrl + "/status"
 	GetAwsUploadKeyUrl        = "api/public/v3/admin/app/config/aws"
 )
+
+const (
+	StorageId      = "ae366b57-a8e4-4ad9-959e-045e083d53e9"
+	StorageBaseUrl = "api/public/v3/media/storage"
+)

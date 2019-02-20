@@ -36,14 +36,73 @@ Example Response
 {
     "data": {
         "id": "cd003123-7ec9-4f3a-9d7c-f2de93e83e49"
-    },
-    "version": 3,
-    "datetime": "2019-02-18T08:04:32.000Z",
-    "policy": "public",
-    "requestId": "02387807-a0e2-4b06-9791-c45bcc9e1362",
-    "serviceName": "api",
-    "message": "OK",
-    "code": 200,
-    "type": "SUCCESS"
+    }
+}
+```
+
+## Retrieve a storage
+
+Get information of your added storage (FTP or AWS S3)
+See details [here](https://docs.uiza.io/#retrieve-a-storage).
+
+Example Request
+
+```golang
+import (
+    uiza "api-wrapper-go"
+    "api-wrapper-go/storage"
+)
+
+params := &uiza.StorageRetrieveParams{ID: uiza.String("Your entity ID")}
+response, _ := storage.Retrieve(params)
+log.Printf("%s\n", response)
+```
+
+Example Response
+
+```golang
+{  
+   "id":"898d053c-5e9f-4955-8584-111e546e7db4",
+   "name":"FTP Uiza",
+   "description":"FTP of Uiza, use for transcode",
+   "storageType":"ftp",
+   "usageType":"input",
+   "bucket":null,
+   "prefix":null,
+   "host":"ftp-example.uiza.io",
+   "awsAccessKey":null,
+   "awsSecretKey":null,
+   "username":"uiza",
+   "password":"=5;'9x@LPsd+w7qW",
+   "region":null,
+   "port":21,
+   "createdAt":"2019-02-18T08:04:32.000Z",
+   "updatedAt":"2019-02-18T08:37:18.000Z"
+}
+```
+
+## Remove storage
+
+Remove storage that added to Uiza
+See details [here](https://docs.uiza.io/#remove-storage).
+
+Example Request
+
+```golang
+import (
+    uiza "api-wrapper-go"
+    "api-wrapper-go/storage"
+)
+
+params := &uiza.StorageRemoveParams{ID: uiza.String("Your entity ID")}
+response, _ := storage.Remove(params)
+log.Printf("%s\n", response)
+```
+
+Example Response
+
+```golang
+{
+  "id": "f477b8be-bc71-4ee1-813b-3b583c5eec97"
 }
 ```
