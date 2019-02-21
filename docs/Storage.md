@@ -12,8 +12,8 @@ Example Request
 
 ```golang
 import (
-    uiza "api-wrapper-go"
-    "api-wrapper-go/storage"
+    uiza "github.com/uizaio/api-wrapper-go"
+    "github.com/uizaio/api-wrapper-go/storage"
 )
 
 params :=  &uiza.StorageAddParams{
@@ -49,8 +49,8 @@ Example Request
 
 ```golang
 import (
-    uiza "api-wrapper-go"
-    "api-wrapper-go/storage"
+    uiza "github.com/uizaio/api-wrapper-go"
+    "github.com/uizaio/api-wrapper-go/storage"
 )
 
 params := &uiza.StorageRetrieveParams{ID: uiza.String("Your entity ID")}
@@ -61,7 +61,7 @@ log.Printf("%s\n", response)
 Example Response
 
 ```golang
-{  
+{
    "id":"898d053c-5e9f-4955-8584-111e546e7db4",
    "name":"FTP Uiza",
    "description":"FTP of Uiza, use for transcode",
@@ -90,8 +90,8 @@ Example Request
 
 ```golang
 import (
-    uiza "api-wrapper-go"
-    "api-wrapper-go/storage"
+    uiza "github.com/uizaio/api-wrapper-go"
+    "github.com/uizaio/api-wrapper-go/storage"
 )
 
 params :=  &uiza.StorageUpdateParams{
@@ -112,7 +112,7 @@ log.Printf("%s\n", response)
 Example Response
 
 ```golang
-{  
+{
    "id":"f3a94046-b1de-40db-95b6-84cf85b9352f",
    "name":"FTP Uiza Edit",
    "description":"FTP of Uiza, use for transcode",
@@ -133,8 +133,8 @@ Example Request
 
 ```golang
 import (
-    uiza "api-wrapper-go"
-    "api-wrapper-go/storage"
+    uiza "github.com/uizaio/api-wrapper-go"
+    "github.com/uizaio/api-wrapper-go/storage"
 )
 
 params := &uiza.StorageRemoveParams{ID: uiza.String("Your entity ID")}

@@ -1,9 +1,9 @@
 package storage
 
 import (
-	"api-wrapper-go"
-	mockService "api-wrapper-go/mock"
-	_ "api-wrapper-go/testing"
+	"github.com/uizaio/api-wrapper-go"
+	mockService "github.com/uizaio/api-wrapper-go/mock"
+	_ "github.com/uizaio/api-wrapper-go/testing"
 	"reflect"
 	"testing"
 )

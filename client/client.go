@@ -1,8 +1,8 @@
 package client
 
 import (
-	uiza "api-wrapper-go"
-	entity "api-wrapper-go/entity"
+	uiza "github.com/uizaio/api-wrapper-go"
+	entity "github.com/uizaio/api-wrapper-go/entity"
 )
 
 // API is the Uiza client. It contains all the different resources available.

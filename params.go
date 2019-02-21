@@ -9,7 +9,7 @@ import (
 	"net/url"
 	"time"
 
-	"api-wrapper-go/form"
+	"github.com/uizaio/api-wrapper-go/form"
 )
 
 //

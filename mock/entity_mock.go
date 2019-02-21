@@ -1,8 +1,8 @@
 package mock
 
 import (
-	"api-wrapper-go"
-	"api-wrapper-go/form"
+	"github.com/uizaio/api-wrapper-go"
+	"github.com/uizaio/api-wrapper-go/form"
 	"bytes"
 	"github.com/stretchr/testify/mock"
 	"reflect"
