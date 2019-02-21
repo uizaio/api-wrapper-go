@@ -82,6 +82,27 @@ func TestRetrieve(t *testing.T) {
 }
 
 func TestList(t *testing.T) {
+	mockBackendImplementation := new(mockService.BackendImplementationCategoryMock)
+	mockClient := Client{mockBackendImplementation, ""}
+
+	tests := []Test{
+		{
+			name:    " Success",
+			args:    nil,
+			want:    &uiza.CategoryDataList{Data: []*uiza.CategorySpec{}},
+			wantErr: false,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			_, err := mockClient.List()
+			if (err != nil) != tt.wantErr {
+				t.Errorf("\nList() error = %v", err)
+				return
+			}
+		})
+	}
 }
 
 func TestUpdate(t *testing.T) {
