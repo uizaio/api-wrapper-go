@@ -35,7 +35,7 @@ Example Response
 ```golang
 {
     "data": {
-        "id": "cd003123-7ec9-4f3a-9d7c-f2de93e83e49"
+        "id": "f3a94046-b1de-40db-95b6-84cf85b9352f"
     }
 }
 ```
@@ -79,6 +79,49 @@ Example Response
    "createdAt":"2019-02-18T08:04:32.000Z",
    "updatedAt":"2019-02-18T08:37:18.000Z"
 }
+```
+
+## Update storage
+
+Update storage's information
+See details [here](https://docs.uiza.io/#update-storage).
+
+Example Request
+
+```golang
+import (
+    uiza "api-wrapper-go"
+    "api-wrapper-go/storage"
+)
+
+params :=  &uiza.StorageUpdateParams{
+	ID:          uiza.String("f3a94046-b1de-40db-95b6-84cf85b9352f"),
+	Name:        uiza.String("FTP Uiza Edit"),
+	Host:        uiza.String("ftp-example.uiza.io"),
+	Port:        uiza.Int64(21),
+	StorageType: uiza.String("ftp"),
+	Username:    uiza.String("uiza"),
+	Password:    uiza.String("=59x@LPsd+w7qW"),
+	Description: uiza.String("FTP of Uiza, use for transcode"),
+}
+
+response, _ := storage.Update(params)
+log.Printf("%s\n", response)
+```
+
+Example Response
+
+```golang
+{  
+   "id":"f3a94046-b1de-40db-95b6-84cf85b9352f",
+   "name":"FTP Uiza Edit",
+   "description":"FTP of Uiza, use for transcode",
+   "storageType":"ftp",
+   "host":"ftp-example.uiza.io",
+   "username":"uiza",
+   "password":"=59x@LPsd+w7qW",
+   "port":21,
+  }
 ```
 
 ## Remove storage
