@@ -30,7 +30,7 @@ func (m *BackendImplementationCategoryMock) Call(method, path, key string, param
 				Type:        &typeCategory,
 				Description: uiza.String("Category description"),
 				Icon:        uiza.String("Category icon")},
-			data: &uiza.CategoryIDData{Data: &uiza.CategoryID{ID: *uiza.String(CategoryId)}},
+			data: &uiza.CategoryIDResponse{Data: &uiza.CategoryIDData{ID: *uiza.String(CategoryId)}},
 		},
 		{
 			method: "PUT",
@@ -41,36 +41,36 @@ func (m *BackendImplementationCategoryMock) Call(method, path, key string, param
 				Type:        &typeCategory,
 				Description: uiza.String("Category description"),
 				Icon:        uiza.String("Category icon")},
-			data: &uiza.CategoryIDData{Data: &uiza.CategoryID{ID: *uiza.String(CategoryId)}},
+			data: &uiza.CategoryIDResponse{Data: &uiza.CategoryIDData{ID: *uiza.String(CategoryId)}},
 		},
 		{
 			method: "GET",
 			path:   CategoryBaseURL,
 			params: &uiza.CategoryIDParams{ID: uiza.String(CategoryId)},
-			data:   &uiza.CategorySpecData{Data: &uiza.CategorySpec{ID: *uiza.String(CategoryId)}},
+			data:   &uiza.CategoryResponse{Data: &uiza.CategoryData{ID: *uiza.String(CategoryId)}},
 		},
 		{
 			method: "DELETE",
 			path:   CategoryBaseURL,
 			params: &uiza.CategoryIDParams{ID: uiza.String(CategoryId)},
-			data:   &uiza.CategoryIDData{Data: &uiza.CategoryID{ID: *uiza.String(CategoryId)}},
+			data:   &uiza.CategoryIDResponse{Data: &uiza.CategoryIDData{ID: *uiza.String(CategoryId)}},
 		},
 		{
 			method: "POST",
 			path:   CategoryRelationURL,
 			params: &uiza.CategoryRelationParams{},
-			data:   &uiza.CategoryRelationData{Data: []*uiza.CategoryRelation{}},
+			data:   &uiza.CategoryRelationResponse{Data: []*uiza.CategoryRelationData{}},
 		},
 		{
 			method: "DELETE",
 			path:   CategoryRelationURL,
 			params: &uiza.CategoryRelationParams{},
-			data:   &uiza.CategoryRelationData{Data: []*uiza.CategoryRelation{}},
+			data:   &uiza.CategoryRelationResponse{Data: []*uiza.CategoryRelationData{}},
 		}, {
 			method: "GET",
 			path:   CategoryBaseURL,
 			params: nil,
-			data:   &uiza.CategoryDataList{Data: []*uiza.CategorySpec{}},
+			data:   &uiza.CategoryListResponse{Data: []*uiza.CategoryData{}},
 		},
 	}
 
@@ -101,20 +101,20 @@ func (m *BackendImplementationCategoryMock) SetClientType(clientType uiza.Client
 
 func SetCategoryResponse(v interface{}, data interface{}) {
 	switch vp := v.(type) {
-	case *uiza.CategorySpecData:
-		if f, ok := data.(*uiza.CategorySpecData); ok {
+	case *uiza.CategoryResponse:
+		if f, ok := data.(*uiza.CategoryResponse); ok {
 			*vp = *f
 		}
-	case *uiza.CategoryIDData:
-		if f, ok := data.(*uiza.CategoryIDData); ok {
+	case *uiza.CategoryIDResponse:
+		if f, ok := data.(*uiza.CategoryIDResponse); ok {
 			*vp = *f
 		}
-	case *uiza.CategoryRelationData:
-		if f, ok := data.(*uiza.CategoryRelationData); ok {
+	case *uiza.CategoryRelationResponse:
+		if f, ok := data.(*uiza.CategoryRelationResponse); ok {
 			*vp = *f
 		}
-	case *uiza.CategoryDataList:
-		if f, ok := data.(*uiza.CategoryDataList); ok {
+	case *uiza.CategoryListResponse:
+		if f, ok := data.(*uiza.CategoryListResponse); ok {
 			*vp = *f
 		}
 	default:
