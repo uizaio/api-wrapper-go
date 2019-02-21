@@ -1,20 +1,20 @@
 package uiza
 
-type Type string
+type CategoryType string
 
 const (
-	FolderType   Type = "folder"
-	PlaylistType Type = "playlist"
-	TagType      Type = "tag"
+	CategoryFolderType   CategoryType = "folder"
+	CategoryPlaylistType CategoryType = "playlist"
+	CategoryTagType      CategoryType = "tag"
 )
 
 type CategoryCreateParams struct {
 	Params      `form:"*"`
-	Name        *string `form:"name"`
-	Type        *Type   `form:"type"`
-	Description *string `form:"description"`
-	OrderNumber *int64  `form:"orderNumber"`
-	Icon        *string `form:"icon"`
+	Name        *string       `form:"name"`
+	Type        *CategoryType `form:"type"`
+	Description *string       `form:"description"`
+	OrderNumber *int64        `form:"orderNumber"`
+	Icon        *string       `form:"icon"`
 }
 
 type CategoryID struct {
@@ -26,16 +26,16 @@ type CategorySpecData struct {
 }
 
 type CategorySpec struct {
-	ID          string `json:"id"`
-	Name        string `json:"name"`
-	Type        Type   `json:"type"`
-	Description string `json:"description"`
-	Slug        string `json:"slug"`
-	OrderNumber int64  `json:"orderNumber"`
-	Icon        string `json:"icon"`
-	Status      int64  `json:"status"`
-	CreatedAt   string `json:"createdAt"`
-	UpdatedAt   string `json:"updatedAt"`
+	ID          string       `json:"id"`
+	Name        string       `json:"name"`
+	Type        CategoryType `json:"type"`
+	Description string       `json:"description"`
+	Slug        string       `json:"slug"`
+	OrderNumber int64        `json:"orderNumber"`
+	Icon        string       `json:"icon"`
+	Status      int64        `json:"status"`
+	CreatedAt   string       `json:"createdAt"`
+	UpdatedAt   string       `json:"updatedAt"`
 }
 
 type CategoryIDParams struct {
@@ -49,12 +49,12 @@ type CategoryIDData struct {
 
 type CategoryUpdateParams struct {
 	Params      `form:"*"`
-	ID          *string `form:"id"`
-	Name        *string `form:"name"`
-	Type        *Type   `form:"type"`
-	Description *string `form:"description"`
-	OrderNumber *int64  `form:"orderNumber"`
-	Icon        *string `form:"icon"`
+	ID          *string       `form:"id"`
+	Name        *string       `form:"name"`
+	Type        *CategoryType `form:"type"`
+	Description *string       `form:"description"`
+	OrderNumber *int64        `form:"orderNumber"`
+	Icon        *string       `form:"icon"`
 }
 
 type CategoryRelationParams struct {
