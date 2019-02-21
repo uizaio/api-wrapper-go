@@ -28,7 +28,7 @@ type CategorySpecData struct {
 type CategorySpec struct {
 	ID          string `json:"id"`
 	Name        string `json:"name"`
-	Type        string `json:"type"`
+	Type        Type   `json:"type"`
 	Description string `json:"description"`
 	Slug        string `json:"slug"`
 	OrderNumber int64  `json:"orderNumber"`

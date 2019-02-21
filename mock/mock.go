@@ -7,4 +7,8 @@ const (
 	EntityPublishUrl          = EntityBaseUrl + "/publish"
 	EntityGetPublishStatusUrl = EntityPublishUrl + "/status"
 	GetAwsUploadKeyUrl        = "api/public/v3/admin/app/config/aws"
+	CategoryBaseURL           = "api/public/v3/media/metadata"
+	CategoryRelationURL       = "api/public/v3/media/entity/related/metadata"
+	CategoryId                = "b8f2a6ec-d45f-4cc0-a32d-35ad0ad9f1b6"
+	CategoryId2               = "fd0575c8-a599-498c-b544-04e307ac43c4"
 )
