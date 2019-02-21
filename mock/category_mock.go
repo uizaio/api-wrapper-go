@@ -66,6 +66,11 @@ func (m *BackendImplementationCategoryMock) Call(method, path, key string, param
 			path:   CategoryRelationURL,
 			params: &uiza.CategoryRelationParams{},
 			data:   &uiza.CategoryRelationData{Data: []*uiza.CategoryRelation{}},
+		}, {
+			method: "GET",
+			path:   CategoryBaseURL,
+			params: nil,
+			data:   &uiza.CategoryDataList{Data: []*uiza.CategorySpec{}},
 		},
 	}
 
@@ -85,28 +90,6 @@ func (m *BackendImplementationCategoryMock) CallMultipart(method, path, key, bou
 }
 
 func (m *BackendImplementationCategoryMock) CallRaw(method, path, key string, form *form.Values, params *uiza.Params, v interface{}) error {
-	mockCallRawTest := []struct {
-		method string
-		path   string
-		params uiza.ParamsContainer
-		data   interface{}
-	}{
-		{
-			method: "GET",
-			path:   CategoryBaseURL,
-			params: nil,
-			data:   &uiza.CategoryDataList{Data: []*uiza.CategorySpec{}},
-		},
-	}
-
-	for _, mockData := range mockCallRawTest {
-		if method == mockData.method && path == mockData.path {
-			if reflect.DeepEqual(params, mockData.params) {
-				SetCategoryResponse(v, mockData.data)
-			}
-		}
-	}
-
 	return nil
 }
 
@@ -128,6 +111,10 @@ func SetCategoryResponse(v interface{}, data interface{}) {
 		}
 	case *uiza.CategoryRelationData:
 		if f, ok := data.(*uiza.CategoryRelationData); ok {
+			*vp = *f
+		}
+	case *uiza.CategoryDataList:
+		if f, ok := data.(*uiza.CategoryDataList); ok {
 			*vp = *f
 		}
 	default:
