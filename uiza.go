@@ -235,11 +235,18 @@ func (s *BackendImplementation) CallRaw(method, path, key string, form *form.Val
 		if method == http.MethodGet {
 			path += "?" + body
 			body = ""
+		} else {
+			jsonObject, err := form.MarshalJSON()
+			if err != nil {
+				return err
+			}
+			body = string(jsonObject)
 		}
 	}
+
 	bodyBuffer := bytes.NewBufferString(body)
 
-	req, err := s.NewRequest(method, path, key, "application/x-www-form-urlencoded", params)
+	req, err := s.NewRequest(method, path, key, "application/json", params)
 	if err != nil {
 		return err
 	}
