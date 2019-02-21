@@ -21,7 +21,7 @@ Set `Uiza.WorkspaceAPIDomain` and `Uiza.Key` with your values:
 ```golang
 
 import (
-    Uiza "api-wrapper-go"
+    Uiza "github.com/uizaio/api-wrapper-go"
 )
 
 func init() {
@@ -37,7 +37,7 @@ You can custom your Backend Config by:
 
 ```golang
 import (
-    Uiza "api-wrapper-go"
+    Uiza "github.com/uizaio/api-wrapper-go"
 )
 
 func init() {
@@ -87,8 +87,8 @@ params = {
 }
 
 import (
-    Uiza "api-wrapper-go"
-    "api-wrapper-go/entity"
+    Uiza "github.com/uizaio/api-wrapper-go"
+    "github.com/uizaio/api-wrapper-go/entity"
 )
 
 var typeHTTP = Uiza.InputTypeHTTP
@@ -110,8 +110,8 @@ See details [here](https://docs.uiza.io/#retrieve-an-entity).
 
 ```golang
 import (
-    Uiza "api-wrapper-go"
-    "api-wrapper-go/entity"
+    Uiza "github.com/uizaio/api-wrapper-go"
+    "github.com/uizaio/api-wrapper-go/entity"
 )
 
 params := &Uiza.EntityRetrieveParams{ID: uiza.String("Your entity ID")}

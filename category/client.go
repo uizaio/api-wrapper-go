@@ -1,7 +1,7 @@
 package category
 
 import (
-	uiza "api-wrapper-go"
+	uiza "github.com/uizaio/api-wrapper-go"
 	"net/http"
 )
 
