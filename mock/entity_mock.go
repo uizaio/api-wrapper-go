@@ -39,7 +39,7 @@ func (m *BackendImplementationEntityMock) Call(method, path, key string, params 
 			method: "GET",
 			path:   EntityBaseUrl,
 			params: &uiza.EntityRetrieveParams{ID: uiza.String(EntityId)},
-			data:   &uiza.EntityData{Data: &uiza.EntityData{ID: *uiza.String(EntityId)}},
+			data:   &uiza.EntityResponse{Data: &uiza.EntityData{ID: *uiza.String(EntityId)}},
 		},
 		{
 			method: "DELETE",
@@ -109,7 +109,7 @@ func (m *BackendImplementationEntityMock) CallRaw(method, path, key string, form
 			method: "GET",
 			path:   EntityBaseUrl,
 			params: &uiza.EntityListParams{},
-			data: &uiza.EntityListData{Data: []*uiza.EntityData{
+			data: &uiza.EntityListData{Data: []*uiza.EntityResponse{
 				{Data: &uiza.EntityData{ID: *uiza.String(EntityId)}},
 				{Data: &uiza.EntityData{ID: *uiza.String(EntityId2)}},
 			}},
