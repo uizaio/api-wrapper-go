@@ -14,7 +14,7 @@ type BackendImplementationCategoryMock struct {
 
 func (m *BackendImplementationCategoryMock) Call(method, path, key string, params uiza.ParamsContainer, v interface{}) error {
 
-	var typeCategory = uiza.FolderType
+	var typeCategory = uiza.CategoryFolderType
 
 	mockCallTest := []struct {
 		method string

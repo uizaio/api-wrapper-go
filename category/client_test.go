@@ -21,7 +21,7 @@ func TestCreate(t *testing.T) {
 		params *uiza.CategoryCreateParams
 	}
 
-	var typeCategory = uiza.FolderType
+	var typeCategory = uiza.CategoryFolderType
 
 	tests := []Test{
 		{
@@ -113,7 +113,7 @@ func TestUpdate(t *testing.T) {
 		params *uiza.CategoryUpdateParams
 	}
 
-	var typeCategory = uiza.FolderType
+	var typeCategory = uiza.CategoryFolderType
 
 	tests := []Test{
 		{
