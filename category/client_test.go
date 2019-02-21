@@ -65,7 +65,7 @@ func TestRetrieve(t *testing.T) {
 			args: args{
 				params: &uiza.CategoryIDParams{ID: uiza.String(mockService.CategoryId)},
 			},
-			want:    &uiza.CategorySpec{ID: *uiza.String(mockService.CategoryId)},
+			want:    &uiza.CategoryData{ID: *uiza.String(mockService.CategoryId)},
 			wantErr: false,
 		},
 	}
@@ -89,7 +89,7 @@ func TestList(t *testing.T) {
 		{
 			name:    " Success",
 			args:    nil,
-			want:    &uiza.CategoryDataList{Data: []*uiza.CategorySpec{}},
+			want:    &uiza.CategoryListResponse{Data: []*uiza.CategoryData{}},
 			wantErr: false,
 		},
 	}
@@ -157,7 +157,7 @@ func TestDelete(t *testing.T) {
 			args: args{
 				params: &uiza.CategoryIDParams{ID: uiza.String(mockService.CategoryId)},
 			},
-			want:    &uiza.CategoryID{ID: *uiza.String(mockService.CategoryId)},
+			want:    &uiza.CategoryIDData{ID: *uiza.String(mockService.CategoryId)},
 			wantErr: false,
 		},
 	}

@@ -28,15 +28,15 @@ func getC() Client {
 }
 
 // Search Entity by Keyword
-func Search(params *uiza.EntitySearchParams) ([]*uiza.EntitySpec, error) {
+func Search(params *uiza.EntitySearchParams) ([]*uiza.EntityData, error) {
 	return getC().Search(params)
 }
 
 // Search Entity by Keyword
-func (c Client) Search(params *uiza.EntitySearchParams) ([]*uiza.EntitySpec, error) {
+func (c Client) Search(params *uiza.EntitySearchParams) ([]*uiza.EntityData, error) {
 	entity := &uiza.EntityDataList{}
 	err := c.B.Call(http.MethodGet, searchURL, c.Key, params, entity)
-	ret := make([]*uiza.EntitySpec, len(entity.Data))
+	ret := make([]*uiza.EntityData, len(entity.Data))
 	for i, v := range entity.Data {
 		ret[i] = v
 	}
@@ -44,13 +44,13 @@ func (c Client) Search(params *uiza.EntitySearchParams) ([]*uiza.EntitySpec, err
 }
 
 // Retrieve Entity API
-func Retrieve(params *uiza.EntityRetrieveParams) (*uiza.EntitySpec, error) {
+func Retrieve(params *uiza.EntityRetrieveParams) (*uiza.EntityData, error) {
 	return getC().Retrieve(params)
 }
 
 // Retrieve Entity API
-func (c Client) Retrieve(params *uiza.EntityRetrieveParams) (*uiza.EntitySpec, error) {
-	entityData := &uiza.EntityData{}
+func (c Client) Retrieve(params *uiza.EntityRetrieveParams) (*uiza.EntityData, error) {
+	entityData := &uiza.EntityResponse{}
 	path := uiza.FormatURLPath(baseURL)
 	err := c.B.Call(http.MethodGet, path, c.Key, params, entityData)
 
@@ -58,16 +58,22 @@ func (c Client) Retrieve(params *uiza.EntityRetrieveParams) (*uiza.EntitySpec, e
 }
 
 // Create Entity API
-func Create(params *uiza.EntityCreateParams) (*uiza.EntityIdData, error) {
+func Create(params *uiza.EntityCreateParams) (*uiza.EntityData, error) {
 	return getC().Create(params)
 }
 
 // Create Entity API
-func (c Client) Create(params *uiza.EntityCreateParams) (*uiza.EntityIdData, error) {
-	entityCreate := &uiza.EntityIdData{}
+func (c Client) Create(params *uiza.EntityCreateParams) (*uiza.EntityData, error) {
+	entityCreate := &uiza.EntityIdResponse{}
 
 	err := c.B.Call(http.MethodPost, baseURL, c.Key, params, entityCreate)
-	return entityCreate, err
+
+	if err != nil {
+		return nil, err
+	}
+
+	entityRetrieveParam := &uiza.EntityRetrieveParams{ID: uiza.String(entityCreate.Data.ID)}
+	return c.Retrieve(entityRetrieveParam)
 }
 
 // Delete Entity API
@@ -77,9 +83,9 @@ func Delete(params *uiza.EntityDeleteParams) (*uiza.EntityIdData, error) {
 
 // Delete Entity API
 func (c Client) Delete(params *uiza.EntityDeleteParams) (*uiza.EntityIdData, error) {
-	entity := &uiza.EntityIdData{}
+	entity := &uiza.EntityIdResponse{}
 	err := c.B.Call(http.MethodDelete, baseURL, c.Key, params, entity)
-	return entity, err
+	return entity.Data, err
 }
 
 // List returns a list of entity.
@@ -113,10 +119,10 @@ func Publish(params *uiza.EntityPublishParams) (*uiza.EntityPublishData, error) 
 
 // Publish entity to CDN
 func (c Client) Publish(params *uiza.EntityPublishParams) (*uiza.EntityPublishData, error) {
-	entityPublishToCDN := &uiza.EntityPublishData{}
+	entityPublishToCDN := &uiza.EntityPublishResponse{}
 	err := c.B.Call(http.MethodPost, publishURL, c.Key, params, entityPublishToCDN)
 
-	return entityPublishToCDN, err
+	return entityPublishToCDN.Data, err
 }
 
 // Get status publish
@@ -126,10 +132,10 @@ func GetStatusPublish(params *uiza.EntityPublishParams) (*uiza.EntityGetStatusPu
 
 // Get status publish
 func (c Client) GetStatusPublish(params *uiza.EntityPublishParams) (*uiza.EntityGetStatusPublishData, error) {
-	publishStatus := &uiza.EntityGetStatusPublishData{}
+	publishStatus := &uiza.EntityGetStatusPublishResponse{}
 	err := c.B.Call(http.MethodGet, publishStatusURL, c.Key, params, publishStatus)
 
-	return publishStatus, err
+	return publishStatus.Data, err
 }
 
 // Get AWS upload key
@@ -139,32 +145,30 @@ func GetAWSUploadKey() (*uiza.EntityGetAWSUploadKeyData, error) {
 
 // Get AWS upload key
 func (c Client) GetAWSUploadKey() (*uiza.EntityGetAWSUploadKeyData, error) {
-	entityAWSUploadKey := &uiza.EntityGetAWSUploadKeyData{}
+	entityAWSUploadKey := &uiza.EntityGetAWSUploadKeyResponse{}
 	err := c.B.Call(http.MethodGet, awsUploadKeyURL, c.Key, nil, entityAWSUploadKey)
 
-	return entityAWSUploadKey, err
+	return entityAWSUploadKey.Data, err
 }
 
 // Update an entity
-func Update(params *uiza.EntityUpdateParams) (*uiza.EntitySpec, error) {
+func Update(params *uiza.EntityUpdateParams) (*uiza.EntityData, error) {
 
-	entityUpdateData, err := getC().Update(params)
+	return getC().Update(params)
+}
+
+// Update an entity
+func (c Client) Update(params *uiza.EntityUpdateParams) (*uiza.EntityData, error) {
+
+	entityUpdateData := &uiza.EntityIdResponse{}
+	err := c.B.Call(http.MethodPut, baseURL, c.Key, params, entityUpdateData)
 
 	if err != nil {
 		return nil, err
 	}
 
-	entityRetrieveParams := &uiza.EntityRetrieveParams{ID: uiza.String(entityUpdateData.ID)}
+	entityRetrieveParams := &uiza.EntityRetrieveParams{ID: uiza.String(entityUpdateData.Data.ID)}
 
-	return Retrieve(entityRetrieveParams)
-}
-
-// Update an entity
-func (c Client) Update(params *uiza.EntityUpdateParams) (*uiza.EntityIdData, error) {
-
-	entityUpdateData := &uiza.EntityIdData{}
-	err := c.B.Call(http.MethodPut, baseURL, c.Key, params, entityUpdateData)
-
-	return entityUpdateData, err
+	return c.Retrieve(entityRetrieveParams)
 
 }

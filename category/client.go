@@ -22,27 +22,27 @@ func getC() Client {
 	return Client{b, uiza.Key}
 }
 
-func Retrieve(params *uiza.CategoryIDParams) (*uiza.CategorySpec, error) {
+func Retrieve(params *uiza.CategoryIDParams) (*uiza.CategoryData, error) {
 
 	return getC().Retrieve(params)
 }
 
-func (c Client) Retrieve(params *uiza.CategoryIDParams) (*uiza.CategorySpec, error) {
-	categorySpecData := &uiza.CategorySpecData{}
+func (c Client) Retrieve(params *uiza.CategoryIDParams) (*uiza.CategoryData, error) {
+	categorySpecData := &uiza.CategoryResponse{}
 
 	err := c.B.Call(http.MethodGet, baseURL, c.Key, params, categorySpecData)
 
 	return categorySpecData.Data, err
 }
 
-func Create(params *uiza.CategoryCreateParams) (*uiza.CategorySpec, error) {
+func Create(params *uiza.CategoryCreateParams) (*uiza.CategoryData, error) {
 
 	return getC().Create(params)
 }
 
-func (c Client) Create(params *uiza.CategoryCreateParams) (*uiza.CategorySpec, error) {
+func (c Client) Create(params *uiza.CategoryCreateParams) (*uiza.CategoryData, error) {
 
-	categoryIDData := &uiza.CategoryIDData{}
+	categoryIDData := &uiza.CategoryIDResponse{}
 	err := c.B.Call(http.MethodPost, baseURL, c.Key, params, categoryIDData)
 
 	if err != nil {
@@ -54,13 +54,13 @@ func (c Client) Create(params *uiza.CategoryCreateParams) (*uiza.CategorySpec, e
 	return c.Retrieve(categoryIDParam)
 }
 
-func Update(params *uiza.CategoryUpdateParams) (*uiza.CategorySpec, error) {
+func Update(params *uiza.CategoryUpdateParams) (*uiza.CategoryData, error) {
 
 	return getC().Update(params)
 }
 
-func (c Client) Update(params *uiza.CategoryUpdateParams) (*uiza.CategorySpec, error) {
-	categoryIDData := &uiza.CategoryIDData{}
+func (c Client) Update(params *uiza.CategoryUpdateParams) (*uiza.CategoryData, error) {
+	categoryIDData := &uiza.CategoryIDResponse{}
 	err := c.B.Call(http.MethodPut, baseURL, c.Key, params, categoryIDData)
 
 	if err != nil {
@@ -73,51 +73,51 @@ func (c Client) Update(params *uiza.CategoryUpdateParams) (*uiza.CategorySpec, e
 
 }
 
-func Delete(params *uiza.CategoryIDParams) (*uiza.CategoryID, error) {
+func Delete(params *uiza.CategoryIDParams) (*uiza.CategoryIDData, error) {
 	return getC().Delete(params)
 }
 
-func (c Client) Delete(params *uiza.CategoryIDParams) (*uiza.CategoryID, error) {
-	categoryIDData := &uiza.CategoryIDData{}
+func (c Client) Delete(params *uiza.CategoryIDParams) (*uiza.CategoryIDData, error) {
+	categoryIDData := &uiza.CategoryIDResponse{}
 	err := c.B.Call(http.MethodDelete, baseURL, c.Key, params, categoryIDData)
 	return categoryIDData.Data, err
 }
 
-func CreateRelation(params *uiza.CategoryRelationParams) ([]*uiza.CategoryRelation, error) {
+func CreateRelation(params *uiza.CategoryRelationParams) ([]*uiza.CategoryRelationData, error) {
 
 	return getC().CreateRelation(params)
 }
 
-func (c Client) CreateRelation(params *uiza.CategoryRelationParams) ([]*uiza.CategoryRelation, error) {
+func (c Client) CreateRelation(params *uiza.CategoryRelationParams) ([]*uiza.CategoryRelationData, error) {
 
-	categoryRelationData := &uiza.CategoryRelationData{}
+	categoryRelationData := &uiza.CategoryRelationResponse{}
 	err := c.B.Call(http.MethodPost, relationURL, c.Key, params, categoryRelationData)
 
 	return categoryRelationData.Data, err
 }
 
-func DeleteRelation(params *uiza.CategoryRelationParams) ([]*uiza.CategoryRelation, error) {
+func DeleteRelation(params *uiza.CategoryRelationParams) ([]*uiza.CategoryRelationData, error) {
 	return getC().DeleteRelation(params)
 }
 
-func (c Client) DeleteRelation(params *uiza.CategoryRelationParams) ([]*uiza.CategoryRelation, error) {
+func (c Client) DeleteRelation(params *uiza.CategoryRelationParams) ([]*uiza.CategoryRelationData, error) {
 
-	categoryRelationData := &uiza.CategoryRelationData{}
+	categoryRelationData := &uiza.CategoryRelationResponse{}
 	err := c.B.Call(http.MethodDelete, relationURL, c.Key, params, categoryRelationData)
 
 	return categoryRelationData.Data, err
 }
 
-func List() ([]*uiza.CategorySpec, error) {
+func List() ([]*uiza.CategoryData, error) {
 
 	return getC().List()
 }
 
-func (c Client) List() ([]*uiza.CategorySpec, error) {
-	category := &uiza.CategoryDataList{}
+func (c Client) List() ([]*uiza.CategoryData, error) {
+	category := &uiza.CategoryListResponse{}
 	err := c.B.Call(http.MethodGet, baseURL, c.Key, nil, category)
 
-	ret := make([]*uiza.CategorySpec, len(category.Data))
+	ret := make([]*uiza.CategoryData, len(category.Data))
 	for i, v := range category.Data {
 		ret[i] = v
 	}

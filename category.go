@@ -17,15 +17,15 @@ type CategoryCreateParams struct {
 	Icon        *string       `form:"icon"`
 }
 
-type CategoryID struct {
+type CategoryIDData struct {
 	ID string `json:"id"`
 }
 
-type CategorySpecData struct {
-	Data *CategorySpec `json:"data"`
+type CategoryResponse struct {
+	Data *CategoryData `json:"data"`
 }
 
-type CategorySpec struct {
+type CategoryData struct {
 	ID          string       `json:"id"`
 	Name        string       `json:"name"`
 	Type        CategoryType `json:"type"`
@@ -43,8 +43,8 @@ type CategoryIDParams struct {
 	ID     *string `form:"id"`
 }
 
-type CategoryIDData struct {
-	Data *CategoryID `json:"data"`
+type CategoryIDResponse struct {
+	Data *CategoryIDData `json:"data"`
 }
 
 type CategoryUpdateParams struct {
@@ -63,16 +63,16 @@ type CategoryRelationParams struct {
 	MetadataIds []*string `form:"metadataIds"`
 }
 
-type CategoryRelationData struct {
-	Data []*CategoryRelation `json:"data"`
+type CategoryRelationResponse struct {
+	Data []*CategoryRelationData `json:"data"`
 }
 
-type CategoryRelation struct {
+type CategoryRelationData struct {
 	ID         string `json:"id"`
 	EntityId   string `json:"entityId"`
 	MetadataId string `json:"metadataId"`
 }
 
-type CategoryDataList struct {
-	Data []*CategorySpec `json:"data"`
+type CategoryListResponse struct {
+	Data []*CategoryData `json:"data"`
 }
