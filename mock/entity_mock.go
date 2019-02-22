@@ -1,10 +1,10 @@
 package mock
 
 import (
-	"github.com/uizaio/api-wrapper-go"
-	"github.com/uizaio/api-wrapper-go/form"
 	"bytes"
 	"github.com/stretchr/testify/mock"
+	"github.com/uizaio/api-wrapper-go"
+	"github.com/uizaio/api-wrapper-go/form"
 	"reflect"
 )
 
@@ -81,6 +81,15 @@ func (m *BackendImplementationEntityMock) Call(method, path, key string, params 
 			params: &uiza.EntityUpdateParams{ID: uiza.String(EntityId), Name: uiza.String("Video Test")},
 			data:   &uiza.EntityIdResponse{Data: &uiza.EntityIdData{ID: *uiza.String(EntityId)}},
 		},
+		{
+			method: "GET",
+			path:   EntitySearchUrl,
+			params: &uiza.EntitySearchParams{Keyword: uiza.String("Keyword")},
+			data: &uiza.EntityDataList{Data: []*uiza.EntityData{
+				{ID: *uiza.String(EntityId)},
+				{ID: *uiza.String(EntityId2)},
+			}},
+		},
 	}
 
 	for _, mockData := range mockCallTest {
@@ -135,6 +144,10 @@ func (m *BackendImplementationEntityMock) SetClientType(clientType uiza.ClientTy
 
 func SetEntityResponse(v interface{}, data interface{}) {
 	switch vp := v.(type) {
+	case *uiza.EntityResponse:
+		if f, ok := data.(*uiza.EntityResponse); ok {
+			*vp = *f
+		}
 	case *uiza.EntityIdResponse:
 		if f, ok := data.(*uiza.EntityIdResponse); ok {
 			*vp = *f
@@ -157,6 +170,10 @@ func SetEntityResponse(v interface{}, data interface{}) {
 		}
 	case *uiza.EntityGetAWSUploadKeyResponse:
 		if f, ok := data.(*uiza.EntityGetAWSUploadKeyResponse); ok {
+			*vp = *f
+		}
+	case *uiza.EntityDataList:
+		if f, ok := data.(*uiza.EntityDataList); ok {
 			*vp = *f
 		}
 	default:

@@ -1,11 +1,12 @@
 package entity
 
 import (
+	"reflect"
+	"testing"
+
 	"github.com/uizaio/api-wrapper-go"
 	mockService "github.com/uizaio/api-wrapper-go/mock"
 	_ "github.com/uizaio/api-wrapper-go/testing"
-	"reflect"
-	"testing"
 )
 
 type Test struct {
@@ -267,6 +268,41 @@ func TestUpdate(t *testing.T) {
 			if (err != nil) != tt.wantErr {
 				t.Errorf("\nUpdate() error = %v", err)
 				return
+			}
+		})
+	}
+}
+
+func TestSearch(t *testing.T) {
+	mockBackendImplementation := new(mockService.BackendImplementationEntityMock)
+	mockClient := Client{mockBackendImplementation, ""}
+
+	type args struct {
+		params *uiza.EntitySearchParams
+	}
+	tests := []Test{
+		{
+			name: "Search Success",
+			args: args{params: &uiza.EntitySearchParams{
+				Keyword: uiza.String("Keyword"),
+			},
+			},
+			want: []*uiza.EntityData{
+				{ID: *uiza.String(mockService.EntityId)},
+				{ID: *uiza.String(mockService.EntityId2)},
+			},
+			wantErr: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := mockClient.Search(tt.args.(args).params)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("Search() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Search() = %v, want %v", got, tt.want)
 			}
 		})
 	}

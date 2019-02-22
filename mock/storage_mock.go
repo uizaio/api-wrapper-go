@@ -1,10 +1,10 @@
 package mock
 
 import (
-	"github.com/uizaio/api-wrapper-go"
-	"github.com/uizaio/api-wrapper-go/form"
 	"bytes"
 	"github.com/stretchr/testify/mock"
+	"github.com/uizaio/api-wrapper-go"
+	"github.com/uizaio/api-wrapper-go/form"
 	"reflect"
 )
 
@@ -22,8 +22,16 @@ func (m *BackendImplementationStorageMock) Call(method, path, key string, params
 		{
 			method: "POST",
 			path:   StorageBaseUrl,
-			params: &uiza.StorageAddParams{},
-			data:   &uiza.StorageId{ID: *uiza.String(StorageId)},
+			params: &uiza.StorageAddParams{
+				Name:        uiza.String("FTP Uiza"),
+				Host:        uiza.String("ftp-example.uiza.io"),
+				Port:        uiza.Int64(21),
+				StorageType: uiza.String("ftp"),
+				Username:    uiza.String("uiza"),
+				Password:    uiza.String("=59x@LPsd+w7qW"),
+				Description: uiza.String("FTP of Uiza, use for transcode"),
+			},
+			data: &uiza.StorageIdData{Data: &uiza.StorageId{ID: *uiza.String(StorageId)}},
 		},
 		{
 			method: "GET",
@@ -32,10 +40,18 @@ func (m *BackendImplementationStorageMock) Call(method, path, key string, params
 			data:   &uiza.StorageSpecData{Data: &uiza.StorageSpec{ID: *uiza.String(StorageId)}},
 		},
 		{
-			method: "PUSH",
+			method: "PUT",
 			path:   StorageBaseUrl,
-			params: &uiza.StorageUpdateParams{ID: uiza.String(StorageId)},
-			data:   &uiza.StorageSpec{ID: *uiza.String(StorageId)},
+			params: &uiza.StorageUpdateParams{
+				Name:        uiza.String("FTP Uiza Edit"),
+				Host:        uiza.String("ftp-example.uiza.io"),
+				Port:        uiza.Int64(21),
+				StorageType: uiza.String("ftp"),
+				Username:    uiza.String("uiza"),
+				Password:    uiza.String("=59x@LPsd+w7qW"),
+				Description: uiza.String("FTP of Uiza, use for transcode"),
+			},
+			data: &uiza.StorageIdData{Data: &uiza.StorageId{ID: *uiza.String(StorageId)}},
 		},
 		{
 			method: "DELETE",
