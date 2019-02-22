@@ -38,7 +38,7 @@ func (c Client) Add(params *uiza.StorageAddParams) (*uiza.StorageSpec, error) {
 
 	storageRetrieveParams := &uiza.StorageRetrieveParams{ID: uiza.String(storageIdData.Data.ID)}
 
-	return Retrieve(storageRetrieveParams)
+	return c.Retrieve(storageRetrieveParams)
 }
 
 // Retrieve Storage API
@@ -70,7 +70,7 @@ func (c Client) Update(params *uiza.StorageUpdateParams) (*uiza.StorageSpec, err
 
 	storageRetrieveParams := &uiza.StorageRetrieveParams{ID: uiza.String(storageUpdateData.Data.ID)}
 
-	return Retrieve(storageRetrieveParams)
+	return c.Retrieve(storageRetrieveParams)
 
 }
 
