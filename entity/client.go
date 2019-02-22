@@ -1,9 +1,10 @@
 package entity
 
 import (
-	uiza "api-wrapper-go"
-	"api-wrapper-go/form"
 	"net/http"
+
+	uiza "github.com/uizaio/api-wrapper-go"
+	"github.com/uizaio/api-wrapper-go/form"
 )
 
 // Client is used to invoke /Entity and entity-related APIs.
