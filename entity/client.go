@@ -96,7 +96,7 @@ func List(params *uiza.EntityListParams) ([]*uiza.EntityData, error) {
 // List returns a list of entity.
 func (c Client) List(params *uiza.EntityListParams) ([]*uiza.EntityData, error) {
 	entity := &uiza.EntityDataList{}
-	err := c.B.Call(http.MethodGet, searchURL, c.Key, params, entity)
+	err := c.B.Call(http.MethodGet, baseURL, c.Key, params, entity)
 	ret := make([]*uiza.EntityData, len(entity.Data))
 	for i, v := range entity.Data {
 		ret[i] = v

@@ -15,11 +15,11 @@ import (
 )
 
 var typeHTTP = uiza.InputTypeHTTP
-params =  &uiza.EntityCreateParams{
-	Name:      uiza.String("Sample Video"),
-	URL:       uiza.String("https://example.com/video.mp4"),
-	InputType: &typeHTTP,
-	description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry"
+params :=  &uiza.EntityCreateParams{
+    Name:      uiza.String("Sample Video"),
+    URL:       uiza.String("https://example.com/video.mp4"),
+    InputType: &typeHTTP,
+    Description: uiza.String("Lorem Ipsum is simply dummy text of the printing and typesetting industry"),
 }
 
 response, _ := entity.Create(params)
@@ -153,7 +153,10 @@ import (
     uiza "github.com/uizaio/api-wrapper-go"
     "github.com/uizaio/api-wrapper-go/entity"
 )
-params := &uiza.EntityUpdateParams{ID: uiza.String("Your entity ID")}
+params := &uiza.EntityUpdateParams{
+    ID: uiza.String("Your entity ID"),
+    Name: uiza.String("Update entity name"),
+}
 response, _ := entity.Update(params)
 log.Printf("%s\n", response)
 ```
@@ -162,7 +165,7 @@ Example Response
 ```golang
 {
         "id": "16ab25d3-fd0f-4568-8aa0-0339bbfd674f",
-        "name": "Sample Video",
+        "name": "Update entity name",
         "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
         "shortDescription": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
         "view": 0,
