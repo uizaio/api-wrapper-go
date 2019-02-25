@@ -5,6 +5,11 @@
 ...
 
 ## Installation
+Install api-wrapper-go with:
+```golang
+go get -u github.com/uizaio/api-wrapper-go
+
+```
 
 ### Requirements
 
@@ -70,17 +75,17 @@ func init() {
 ## Entity
 
 These below APIs used to take action with your media files (we called Entity)
-See details [here](https://github.com/uizaio/api-wrapper-go/blob/master/docs/Entity.md).
+See details [here](https://github.com/uizaio/api-wrapper-go/blob/master/docs/ENTITY.md).
 
 ## Category
 
 Category has been splits into 3 types: folder, playlist and tag. These will make the management of entity more easier.
-See details [here](https://github.com/uizaio/api-wrapper-go/blob/develop/docs/category.md).
+See details [here](https://github.com/uizaio/api-wrapper-go/blob/master/docs/CATEGORY.md).
 
 ## Storage
 
 You can add your storage (FTP, AWS S3) with UIZA. After synced, you can select your content easier from your storage to create entity.
-See details [here](https://github.com/uizaio/api-wrapper-go/blob/develop/docs/Storage.md).
+See details [here](https://github.com/uizaio/api-wrapper-go/blob/master/docs/STORAGE.md).
 
 ## Development
 
