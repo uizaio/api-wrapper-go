@@ -3,8 +3,7 @@ package entity
 import (
 	"net/http"
 
-	uiza "github.com/uizaio/api-wrapper-go"
-	"github.com/uizaio/api-wrapper-go/form"
+	"github.com/uizaio/api-wrapper-go"
 )
 
 // Client is used to invoke /Entity and entity-related APIs.
@@ -90,23 +89,19 @@ func (c Client) Delete(params *uiza.EntityDeleteParams) (*uiza.EntityIdData, err
 }
 
 // List returns a list of entity.
-func List(params *uiza.EntityListParams) *Iter {
+func List(params *uiza.EntityListParams) ([]*uiza.EntityData, error) {
 	return getC().List(params)
 }
 
 // List returns a list of entity.
-func (c Client) List(listParams *uiza.EntityListParams) *Iter {
-	return &Iter{uiza.GetIter(listParams, func(p *uiza.Params, b *form.Values) ([]interface{}, uiza.ListMeta, error) {
-		list := &uiza.EntityListData{}
-		err := c.B.CallRaw(http.MethodGet, baseURL, c.Key, b, p, list)
-
-		ret := make([]interface{}, len(list.Data))
-		for i, v := range list.Data {
-			ret[i] = v
-		}
-
-		return ret, list.ListMeta, err
-	})}
+func (c Client) List(params *uiza.EntityListParams) ([]*uiza.EntityData, error) {
+	entity := &uiza.EntityDataList{}
+	err := c.B.Call(http.MethodGet, searchURL, c.Key, params, entity)
+	ret := make([]*uiza.EntityData, len(entity.Data))
+	for i, v := range entity.Data {
+		ret[i] = v
+	}
+	return ret, err
 }
 
 type Iter struct {
