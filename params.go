@@ -276,5 +276,6 @@ const (
 	EntityClientType   ClientType = "Entity"
 	StorageClientType  ClientType = "Storage"
 	CategoryClientType ClientType = "Category"
+	CallbackClientType ClientType = "Callback"
 	LiveClientType     ClientType = "Live"
 )

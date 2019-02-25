@@ -2,11 +2,11 @@
 package uiza
 
 import (
-	"github.com/uizaio/api-wrapper-go/form"
 	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/uizaio/api-wrapper-go/form"
 	"io"
 	"io/ioutil"
 	"log"
@@ -967,3 +967,16 @@ func normalizeURL(url string) string {
 
 	return url
 }
+
+type HttpMethod string
+
+const (
+	HttpMethodPost    HttpMethod = http.MethodPost
+	HttpMethodGet     HttpMethod = http.MethodGet
+	HttpMethodPut     HttpMethod = http.MethodPut
+	HttpMethodPatch   HttpMethod = http.MethodPatch
+	HttpMethodDelete  HttpMethod = http.MethodDelete
+	HttpMethodConnect HttpMethod = http.MethodConnect
+	HttpMethodOptions HttpMethod = http.MethodOptions
+	HttpMethodtrace   HttpMethod = http.MethodTrace
+)

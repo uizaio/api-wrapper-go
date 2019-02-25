@@ -87,7 +87,7 @@ func TestList(t *testing.T) {
 
 	tests := []Test{
 		{
-			name:    " Success",
+			name:    "Get list Success",
 			args:    nil,
 			want:    &uiza.CategoryListResponse{Data: []*uiza.CategoryData{}},
 			wantErr: false,
@@ -117,7 +117,7 @@ func TestUpdate(t *testing.T) {
 
 	tests := []Test{
 		{
-			name: " Success",
+			name: "Update Success",
 			args: args{
 				params: &uiza.CategoryUpdateParams{
 					ID:          uiza.String(mockService.CategoryId2),
@@ -136,7 +136,7 @@ func TestUpdate(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			_, err := mockClient.Update(tt.args.(args).params)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("\nCreate() error = %v", err)
+				t.Errorf("\nUpdate() error = %v", err)
 				return
 			}
 		})
