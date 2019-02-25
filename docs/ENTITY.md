@@ -10,14 +10,14 @@ See details [here](https://docs.uiza.io/#create-entity).
 
 ```golang
 import (
-    Uiza "api-wrapper-go"
-    "api-wrapper-go/entity"
+    Uiza "github.com/uizaio/api-wrapper-go"
+    "github.com/uizaio/api-wrapper-go/entity"
 )
 
 var typeHTTP = Uiza.InputTypeHTTP
-params =  &uiza.EntityCreateParams{
-	Name:      uiza.String("Sample Video"),
-	URL:       uiza.String("https://example.com/video.mp4"),
+params =  &Uiza.EntityCreateParams{
+	Name:      Uiza.String("Sample Video"),
+	URL:       Uiza.String("https://example.com/video.mp4"),
 	InputType: &typeHTTP,
 	description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry"
 }
@@ -33,11 +33,11 @@ See details [here](https://docs.uiza.io/#retrieve-an-entity).
 
 ```golang
 import (
-    Uiza "api-wrapper-go"
-    "api-wrapper-go/entity"
+    Uiza "github.com/uizaio/api-wrapper-go"
+    "github.com/uizaio/api-wrapper-go/entity"
 )
 
-params := &Uiza.EntityRetrieveParams{ID: uiza.String("Your entity ID")}
+params := &Uiza.EntityRetrieveParams{ID: Uiza.String("Your entity ID")}
 response, _ := entity.Retrieve(params)
 log.Printf("%s\n", response)
 ```
@@ -49,11 +49,11 @@ See details [here](https://docs.uiza.io/#list-all-entities).
 
 ```golang
 import (
-    Uiza "api-wrapper-go"
-    "api-wrapper-go/entity"
+    Uiza "github.com/uizaio/api-wrapper-go"
+    "github.com/uizaio/api-wrapper-go/entity"
 )
 
-params := &uiza.EntityListParams{}
+params := &Uiza.EntityListParams{}
 response := entity.List(params)
 log.Printf("%s\n", response)
 ```
@@ -65,11 +65,11 @@ See details [here](https://docs.uiza.io/#delete-an-entity).
 
 ```golang
 import (
-    Uiza "api-wrapper-go"
-    "api-wrapper-go/entity"
+    Uiza "github.com/uizaio/api-wrapper-go"
+    "github.com/uizaio/api-wrapper-go/entity"
 )
 
-params := &Uiza.EntityDeleteParams{ID: uiza.String("Your entity ID")}
+params := &Uiza.EntityDeleteParams{ID: Uiza.String("Your entity ID")}
 response, _ := entity.Delete(params)
 log.Printf("%s\n", response)
 ```
@@ -81,11 +81,11 @@ See details [here](https://docs.uiza.io/#search-entity).
 
 ```golang
 import (
-    Uiza "api-wrapper-go"
-    "api-wrapper-go/entity"
+    Uiza "github.com/uizaio/api-wrapper-go"
+    "github.com/uizaio/api-wrapper-go/entity"
 )
 
-params := &uiza.EntitySearchParams{Keyword: uiza.String("Sample")}
+params := &Uiza.EntitySearchParams{Keyword: Uiza.String("Sample")}
 listEntity, _ := entity.Search(params)
 for _, v := range listEntity {
   log.Printf("%v\n", v)
@@ -99,11 +99,11 @@ See details [here](https://docs.uiza.io/#publish-entity-to-cdn).
 
 ```golang
 import (
-    Uiza "api-wrapper-go"
-    "api-wrapper-go/entity"
+    Uiza "github.com/uizaio/api-wrapper-go"
+    "github.com/uizaio/api-wrapper-go/entity"
 )
 
-params := &Uiza.EntityPublishParams{ID: uiza.String("Your entity ID")}
+params := &Uiza.EntityPublishParams{ID: Uiza.String("Your entity ID")}
 response, _ := entity.Publish(params)
 log.Printf("%s\n", response)
 ```
@@ -114,11 +114,11 @@ See details [here](https://docs.uiza.io/#get-status-publish).
 
 ```golang
 import (
-    Uiza "api-wrapper-go"
-    "api-wrapper-go/entity"
+    Uiza "github.com/uizaio/api-wrapper-go"
+    "github.com/uizaio/api-wrapper-go/entity"
 )
 
-params := &Uiza.EntityPublishParams{ID: uiza.String("Your entity ID")}
+params := &Uiza.EntityPublishParams{ID: Uiza.String("Your entity ID")}
 response, _ := entity.GetStatusPublish(params)
 log.Printf("%s\n", response)
 ```
@@ -129,8 +129,8 @@ See details [here](https://docs.uiza.io/#get-aws-upload-key).
 
 ```golang
 import (
-    Uiza "api-wrapper-go"
-    "api-wrapper-go/entity"
+    Uiza "github.com/uizaio/api-wrapper-go"
+    "github.com/uizaio/api-wrapper-go/entity"
 )
 
 response, _ := entity.GetAWSUploadKey()
@@ -143,10 +143,10 @@ See details [here](https://docs.uiza.io/#update-an-entity).
 
 ```golang
 import (
-    Uiza "api-wrapper-go"
-    "api-wrapper-go/entity"
+    Uiza "github.com/uizaio/api-wrapper-go"
+    "github.com/uizaio/api-wrapper-go/entity"
 )
-params := &Uiza.EntityUpdateParams{ID: uiza.String("Your entity ID")}
+params := &Uiza.EntityUpdateParams{ID: Uiza.String("Your entity ID")}
 response, _ := entity.Update(params)
 log.Printf("%s\n", response)
 ```
