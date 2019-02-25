@@ -62,9 +62,9 @@ func init() {
 
 	uizaBackendConfig := Uiza.GetBackendWithConfig(
 		Uiza.APIBackend,
-		&uiza.BackendConfig{
+		&Uiza.BackendConfig{
 			HTTPClient: httpClient,   // Your HttpClient.
-			Logger:   uiza.Logger,    // Log by your logger
+			Logger:   Uiza.Logger,    // Log by your logger
 			LogLevel: 3,              // Level debug log
 		},
 	)
