@@ -5,6 +5,11 @@
 ...
 
 ## Installation
+Install api-wrapper-go with:
+```golang
+go get -u github.com/uizaio/api-wrapper-go
+
+```
 
 ### Requirements
 
@@ -21,7 +26,7 @@ Set `Uiza.WorkspaceAPIDomain` and `Uiza.Key` with your values:
 ```golang
 
 import (
-    Uiza "api-wrapper-go"
+    Uiza "github.com/uizaio/api-wrapper-go"
 )
 
 func init() {
@@ -37,7 +42,7 @@ You can custom your Backend Config by:
 
 ```golang
 import (
-    Uiza "api-wrapper-go"
+    Uiza "github.com/uizaio/api-wrapper-go"
 )
 
 func init() {
@@ -57,9 +62,9 @@ func init() {
 
 	uizaBackendConfig := Uiza.GetBackendWithConfig(
 		Uiza.APIBackend,
-		&uiza.BackendConfig{
+		&Uiza.BackendConfig{
 			HTTPClient: httpClient,   // Your HttpClient.
-			Logger:   uiza.Logger,    // Log by your logger
+			Logger:   Uiza.Logger,    // Log by your logger
 			LogLevel: 3,              // Level debug log
 		},
 	)
@@ -70,54 +75,17 @@ func init() {
 ## Entity
 
 These below APIs used to take action with your media files (we called Entity)
-See details [here](https://docs.uiza.io/#video).
+See details [here](https://github.com/uizaio/api-wrapper-go/blob/master/docs/ENTITY.md).
 
-## Create entity
+## Category
 
-Create entity using full URL. Direct HTTP, FTP or AWS S3 link are acceptable.
-See details [here](https://docs.uiza.io/#create-entity).
+Category has been splits into 3 types: folder, playlist and tag. These will make the management of entity more easier.
+See details [here](https://github.com/uizaio/api-wrapper-go/blob/master/docs/CATEGORY.md).
 
-```golang
+## Storage
 
-params = {
-  name: "Sample Video",
-  url: "https://example.com/video.mp4",
-  inputType: "http",
-  description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry"
-}
-
-import (
-    Uiza "api-wrapper-go"
-    "api-wrapper-go/entity"
-)
-
-var typeHTTP = Uiza.InputTypeHTTP
-params =  &uiza.EntityCreateParams{
-					Name:      uiza.String("Sample Video"),
-					URL:       uiza.String("https://example.com/video.mp4"),
-          InputType: &typeHTTP,
-          description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry"
-        }
-
-response, _ := entity.Retrieve(params)
-log.Printf("%s\n", response)
-```
-
-## Retrieve entity
-
-Get detail of entity including all information of entity.
-See details [here](https://docs.uiza.io/#retrieve-an-entity).
-
-```golang
-import (
-    Uiza "api-wrapper-go"
-    "api-wrapper-go/entity"
-)
-
-params := &Uiza.EntityRetrieveParams{ID: uiza.String("Your entity ID")}
-response, _ := entity.Retrieve(params)
-log.Printf("%s\n", response)
-```
+You can add your storage (FTP, AWS S3) with UIZA. After synced, you can select your content easier from your storage to create entity.
+See details [here](https://github.com/uizaio/api-wrapper-go/blob/master/docs/STORAGE.md).
 
 ## Development
 

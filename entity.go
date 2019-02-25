@@ -33,13 +33,9 @@ type EntityDeleteParams struct {
 	ID     *string `form:"id"`
 }
 
-type EntityDeleteData struct {
-	ID string `form:"id"`
-}
-
 type EntityListData struct {
 	ListMeta
-	Data []*EntityData `json:"data"`
+	Data []*EntityResponse `json:"data"`
 }
 
 type EntityListParams struct {
@@ -60,16 +56,20 @@ type EntityListParams struct {
 	UpdatedAt        *int64             `form:"updatedAt"`
 }
 
-type EntityData struct {
-	Data *EntitySpec `json:"data"`
+type EntityResponse struct {
+	Data *EntityData `json:"data"`
 }
 
 type EntityDataList struct {
-	Data []*EntitySpec `json:"data"`
+	Data []*EntityData `json:"data"`
 }
 type EntityPublishParams struct {
 	Params `form:"*"`
 	ID     *string `form:"id"`
+}
+
+type EntityGetAWSUploadKeyResponse struct {
+	Data *EntityGetAWSUploadKeyData `json:"data"`
 }
 
 type EntityGetAWSUploadKeyData struct {
@@ -81,7 +81,7 @@ type EntityGetAWSUploadKeyData struct {
 	TempAccessSecret string `json:"temp_access_secret"`
 }
 
-type EntitySpec struct {
+type EntityData struct {
 	ID               string            `json:"id,omitempty"`
 	Name             string            `json:"name,omitempty"`
 	Description      string            `json:"description,omitempty"`
@@ -104,10 +104,18 @@ type EntitySearchParams struct {
 	Keyword *string `form:"keyword"`
 }
 
+type EntityPublishResponse struct {
+	Data *EntityPublishData `json:"data"`
+}
+
 type EntityPublishData struct {
 	ID       string `json:"id"`
 	Message  string `json:"message"`
 	EntityId string `json:"entityId"`
+}
+
+type EntityGetStatusPublishResponse struct {
+	Data *EntityGetStatusPublishData `json:"data"`
 }
 
 type EntityGetStatusPublishData struct {
@@ -115,6 +123,21 @@ type EntityGetStatusPublishData struct {
 	Status   string `json:"message"`
 }
 
-type EntityCreateData struct {
+type EntityUpdateParams struct {
+	Params           `form:"*"`
+	ID               *string            `form:"id"`
+	Name             *string            `form:"name"`
+	Description      *string            `form:"description"`
+	ShortDescription *string            `form:"shortDescription"`
+	Poster           *string            `form:"poster"`
+	Thumbnail        *string            `form:"thumbnail"`
+	ExtendMetadata   *map[string]string `form:"extendMetadata"`
+}
+
+type EntityIdResponse struct {
+	Data *EntityIdData `json:"data"`
+}
+
+type EntityIdData struct {
 	ID string `json:"id"`
 }

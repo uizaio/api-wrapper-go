@@ -9,7 +9,7 @@ import (
 	"net/url"
 	"time"
 
-	"api-wrapper-go/form"
+	"github.com/uizaio/api-wrapper-go/form"
 )
 
 //
@@ -267,3 +267,13 @@ func NewIdempotencyKey() string {
 type filter struct {
 	Key, Op, Val string
 }
+
+// Type of Client.
+type ClientType string
+
+// Define Client Type
+const (
+	EntityClientType   ClientType = "Entity"
+	StorageClientType  ClientType = "Storage"
+	CategoryClientType ClientType = "Category"
+)

@@ -1,11 +1,12 @@
 package entity
 
 import (
-	"api-wrapper-go"
-	mockService "api-wrapper-go/mock"
-	_ "api-wrapper-go/testing"
 	"reflect"
 	"testing"
+
+	"github.com/uizaio/api-wrapper-go"
+	mockService "github.com/uizaio/api-wrapper-go/mock"
+	_ "github.com/uizaio/api-wrapper-go/testing"
 )
 
 type Test struct {
@@ -65,7 +66,7 @@ func TestRetrieve(t *testing.T) {
 			args: args{
 				params: &uiza.EntityRetrieveParams{ID: uiza.String(mockService.EntityId)},
 			},
-			want:    &uiza.EntitySpec{ID: *uiza.String(mockService.EntityId)},
+			want:    &uiza.EntityData{ID: *uiza.String(mockService.EntityId)},
 			wantErr: false,
 		},
 	}
@@ -97,7 +98,7 @@ func TestDelete(t *testing.T) {
 			args: args{
 				params: &uiza.EntityDeleteParams{ID: uiza.String(mockService.EntityId)},
 			},
-			want:    &uiza.EntityDeleteData{ID: *uiza.String(mockService.EntityId)},
+			want:    &uiza.EntityIdData{ID: *uiza.String(mockService.EntityId)},
 			wantErr: false,
 		},
 	}
@@ -129,9 +130,9 @@ func TestList(t *testing.T) {
 			args: args{
 				params: &uiza.EntityListParams{},
 			},
-			want: &uiza.EntityListData{Data: []*uiza.EntityData{
-				{Data: &uiza.EntitySpec{ID: *uiza.String(mockService.EntityId)}},
-				{Data: &uiza.EntitySpec{ID: *uiza.String(mockService.EntityId2)}},
+			want: &uiza.EntityListData{Data: []*uiza.EntityResponse{
+				{Data: &uiza.EntityData{ID: *uiza.String(mockService.EntityId)}},
+				{Data: &uiza.EntityData{ID: *uiza.String(mockService.EntityId2)}},
 			}},
 			wantErr: false,
 		},
@@ -190,7 +191,8 @@ func TestGetStatusPublish(t *testing.T) {
 			args: args{
 				params: &uiza.EntityPublishParams{ID: uiza.String(mockService.EntityId)},
 			},
-			want:    &uiza.EntityGetStatusPublishData{Progress: 0, Status: *uiza.String("processing")},
+			want: &uiza.EntityGetStatusPublishData{
+				Progress: 0, Status: *uiza.String("processing")},
 			wantErr: false,
 		},
 	}
@@ -234,6 +236,73 @@ func TestGetAWSUploadKey(t *testing.T) {
 			}
 			if !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("GetAWSUploadKey() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestUpdate(t *testing.T) {
+	mockBackendImplementation := new(mockService.BackendImplementationEntityMock)
+	mockClient := Client{mockBackendImplementation, ""}
+
+	type args struct {
+		params *uiza.EntityUpdateParams
+	}
+
+	tests := []Test{
+		{
+			name: "Update Success",
+			args: args{params: &uiza.EntityUpdateParams{
+				ID:   uiza.String(mockService.EntityId),
+				Name: uiza.String("Video Test"),
+			},
+			},
+			want:    &uiza.EntityIdResponse{Data: &uiza.EntityIdData{ID: *uiza.String(mockService.EntityId)}},
+			wantErr: false,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			_, err := mockClient.Update(tt.args.(args).params)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("\nUpdate() error = %v", err)
+				return
+			}
+		})
+	}
+}
+
+func TestSearch(t *testing.T) {
+	mockBackendImplementation := new(mockService.BackendImplementationEntityMock)
+	mockClient := Client{mockBackendImplementation, ""}
+
+	type args struct {
+		params *uiza.EntitySearchParams
+	}
+	tests := []Test{
+		{
+			name: "Search Success",
+			args: args{params: &uiza.EntitySearchParams{
+				Keyword: uiza.String("Keyword"),
+			},
+			},
+			want: []*uiza.EntityData{
+				{ID: *uiza.String(mockService.EntityId)},
+				{ID: *uiza.String(mockService.EntityId2)},
+			},
+			wantErr: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := mockClient.Search(tt.args.(args).params)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("Search() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Search() = %v, want %v", got, tt.want)
 			}
 		})
 	}

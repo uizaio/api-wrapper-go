@@ -2,6 +2,7 @@ package form
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"net/url"
 	"reflect"
@@ -267,7 +268,7 @@ func intEncoder(values *Values, v reflect.Value, keyParts []string, encodeZero b
 	if val == 0 && !encodeZero {
 		return
 	}
-	values.Add(FormatKey(keyParts), strconv.FormatInt(val, 10))
+	values.Add(FormatKey(keyParts), val)
 }
 
 func interfaceEncoder(values *Values, v reflect.Value, keyParts []string, encodeZero bool, _ *formOptions) {
@@ -455,9 +456,22 @@ type Values struct {
 	values []formValue
 }
 
+// RawValues store raw value of objects.
+type RawValues interface{}
+
 // Add adds a key/value tuple to the form.
-func (f *Values) Add(key, val string) {
+func (f *Values) Add(key string, val RawValues) {
 	f.values = append(f.values, formValue{key, val})
+}
+
+func (f *Values) MarshalJSON() ([]byte, error) {
+	values := make(map[string]interface{})
+	for _, v := range f.values {
+		values[v.Key] = v.Value
+	}
+
+	b, err := json.Marshal(values)
+	return b, err
 }
 
 // Encode encodes the values into “URL encoded” form ("bar=baz&foo=quux").
@@ -469,7 +483,12 @@ func (f *Values) Encode() string {
 		}
 		buf.WriteString(url.QueryEscape(v.Key))
 		buf.WriteString("=")
-		buf.WriteString(url.QueryEscape(v.Value))
+		switch v.Value.(type) {
+		case string:
+			buf.WriteString(url.QueryEscape(v.Value.(string)))
+		case int64:
+			buf.WriteString(url.QueryEscape(strconv.FormatInt(v.Value.(int64), 10)))
+		}
 	}
 	return buf.String()
 }
@@ -498,8 +517,8 @@ func (f *Values) Set(key, val string) {
 // for the key, nil will be returned.
 //
 // Note that Get is O(n) and may be quite slow for a very large parameter list.
-func (f *Values) Get(key string) []string {
-	var results []string
+func (f *Values) Get(key string) []RawValues {
+	var results []RawValues
 	for i, v := range f.values {
 		if v.Key == key {
 			results = append(results, f.values[i].Value)
@@ -529,7 +548,12 @@ func (f *Values) Get(key string) []string {
 func (f *Values) ToValues() url.Values {
 	values := url.Values{}
 	for _, v := range f.values {
-		values.Add(v.Key, v.Value)
+		switch v.Value.(type) {
+		case string:
+			values.Add(v.Key, v.Value.(string))
+		case int64:
+			values.Add(v.Key, strconv.FormatInt(v.Value.(int64), 10))
+		}
 	}
 	return values
 }
@@ -537,5 +561,5 @@ func (f *Values) ToValues() url.Values {
 // A key/value tuple for use in the Values type.
 type formValue struct {
 	Key   string
-	Value string
+	Value RawValues
 }
