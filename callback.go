@@ -3,7 +3,7 @@ package uiza
 type CallbackCreateParams struct {
 	Params      `form:"*"`
 	Url         *string     `form:"url"`
-	Method      *HttpMethod `form:"method"`
+	Method      *HTTPMethod `form:"method"`
 	JsonData    *string     `form:"jsonData"`
 	HeadersData *string     `form:"headersData"`
 }
@@ -28,7 +28,7 @@ type CallbackResponse struct {
 type CallbackData struct {
 	ID          string      `json:"id"`
 	Url         string      `json:"url"`
-	Method      HttpMethod  `json:"method"`
+	Method      HTTPMethod  `json:"method"`
 	JsonData    JsonData    `json:"jsonData"`
 	HeadersData HeadersData `json:"headersData"`
 	Status      int64       `json:"status"`
@@ -40,7 +40,7 @@ type CallbackUpdateParams struct {
 	Params      `form:"*"`
 	ID          *string      `form:"id"`
 	Url         *string      `form:"url"`
-	Method      *HttpMethod  `form:"method"`
+	Method      *HTTPMethod  `form:"method"`
 	JsonData    *JsonData    `form:"jsonData"`
 	HeadersData *HeadersData `form:"headersData"`
 }

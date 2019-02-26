@@ -1,9 +1,10 @@
 package callback
 
 import (
-	"github.com/uizaio/api-wrapper-go"
-	mockService "github.com/uizaio/api-wrapper-go/mock"
 	"testing"
+
+	uiza "github.com/uizaio/api-wrapper-go"
+	mockService "github.com/uizaio/api-wrapper-go/mock"
 )
 
 type Test struct {
@@ -21,7 +22,7 @@ func TestCreate(t *testing.T) {
 		params *uiza.CallbackCreateParams
 	}
 
-	callBackMethodPOST := uiza.HttpMethodPost
+	callBackMethodPOST := uiza.HTTPMethoddPost
 
 	tests := []Test{
 		{
@@ -89,7 +90,7 @@ func TestUpdate(t *testing.T) {
 		params *uiza.CallbackUpdateParams
 	}
 
-	callBackMethodPOST := uiza.HttpMethodPost
+	callBackMethodPOST := uiza.HTTPMethodPost
 
 	tests := []Test{
 		{
