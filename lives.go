@@ -14,12 +14,17 @@ const (
 	DvrTypeOne  DvrType = 1
 )
 
-type LiveStreamingRetrieveParams struct {
+type LiveRetrieveParams struct {
 	Params `form:"*"`
 	ID     *string `form:"id"`
 }
 
-type LiveStreamingCreateParams struct {
+type LiveIDParams struct {
+	Params `form:"*"`
+	ID     *string `form:"id"`
+}
+
+type LiveCreateParams struct {
 	Params            `form:"*"`
 	Name              *string           `form:"name"`
 	Mode              *string           `form:"mode"`
@@ -32,24 +37,19 @@ type LiveStreamingCreateParams struct {
 	ResourceMode      *ResourceModeType `form:"resourceMode"`
 }
 
-type LiveStreamingIDData struct {
+type LiveIDData struct {
 	ID string `json:"id"`
 }
 
-type LiveStreamingIDParams struct {
-	Params `form:"*"`
-	ID     *string `form:"id"`
+type LiveIDResponse struct {
+	Data *LiveIDData `json:"data"`
 }
 
-type LiveStreamingIDResponse struct {
-	Data *LiveStreamingIDData `json:"data"`
+type LiveResponse struct {
+	Data *LiveData `json:"data"`
 }
 
-type LiveStreamingResponse struct {
-	Data *LiveStreamingData `json:"data"`
-}
-
-type LiveStreamingData struct {
+type LiveData struct {
 	ID                string           `form:"id,omitempty"`
 	Name              string           `json:"name,omitempty"`
 	Mode              int64            `json:"mode,omitempty"`
@@ -59,7 +59,7 @@ type LiveStreamingData struct {
 	ResourceMode      ResourceModeType `json:"resourceMode,omitempty"`
 }
 
-type LiveStreamingSpec struct {
+type LiveSpec struct {
 	ID                string           `json:"id"`
 	Name              string           `json:"name"`
 	Description       string           `json:"description"`
@@ -81,7 +81,7 @@ type LiveStreamingSpec struct {
 	UpdatedAt         string           `json:"updatedAt"`
 }
 
-type LiveStreamingUpdateParams struct {
+type LiveUpdateParams struct {
 	Params       `form:"*"`
 	ID           *string           `form:"id"`
 	Name         *string           `form:"name"`
@@ -89,4 +89,25 @@ type LiveStreamingUpdateParams struct {
 	Encode       *int64            `form:"encode"`
 	Dvr          *DvrType          `form:"dvr"`
 	ResourceMode *ResourceModeType `form:"resourceMode"`
+}
+
+type LiveListRecordedResponse struct {
+	Data []*LiveRecordedData `json:"data"`
+}
+
+type LiveRecordedData struct {
+	ID             string `json:"id"`
+	EntityId       string `json:"entityId"`
+	ChannelName    string `json:"channelName"`
+	FeedId         string `json:"feedId"`
+	EventType      string `json:"eventType"`
+	StartTime      string `json:"startTime"`
+	EndTime        string `json:"endTime"`
+	Length         string `json:"length"`
+	FileSize       string `json:"fileSize"`
+	ExtraInfo      string `json:"extraInfo"`
+	EndpointConfig string `json:"endpointConfig"`
+	CreatedAt      string `json:"createdAt"`
+	UpdatedAt      string `json:"updatedAt"`
+	EntityName     string `json:"entityName"`
 }
