@@ -13,13 +13,13 @@ Example Request
 ```golang
 import (
     uiza "github.com/uizaio/api-wrapper-go"
-    "github.com/uizaio/api-wrapper-go/livestreaming"
+    "github.com/uizaio/api-wrapper-go/live"
 )
 
 dvrType := uiza.DvrTypeOne
 resourceMode := uiza.ResourceModeSingle
 
-params := &uiza.LiveStreamingCreateParams{
+params := &uiza.LiveCreateParams{
 	Name:          uiza.String("test event Go"),
 	Mode:          uiza.String("push"),
 	Encode:        uiza.Int64(1),
@@ -29,7 +29,7 @@ params := &uiza.LiveStreamingCreateParams{
 	LinkStream:    &[]string{*uiza.String("https://playlist.m3u8")},
 	ResourceMode:  &resourceMode,
 }
-response, _ := livestreaming.Create(params)
+response, _ := live.Create(params)
 log.Printf("%s\n", response)
 ```
 
@@ -71,11 +71,11 @@ Example Request
 ```golang
 import (
     uiza "github.com/uizaio/api-wrapper-go"
-    "github.com/uizaio/api-wrapper-go/livestreaming"
+    "github.com/uizaio/api-wrapper-go/live"
 )
 
-params := &uiza.LiveStreamingRetrieveParams{ID: uiza.String("247014d5-3dae-453f-97b2-93a441bc1c80")}
-response, _ := livestreaming.Retrieve(params)
+params := &uiza.LiveRetrieveParams{ID: uiza.String("247014d5-3dae-453f-97b2-93a441bc1c80")}
+response, _ := live.Retrieve(params)
 log.Printf("%s\n", response)
 ```
 
@@ -114,17 +114,17 @@ See details [here](https://docs.uiza.io/#update-a-live-event).
 ```golang
 import (
     uiza "github.com/uizaio/api-wrapper-go"
-    "github.com/uizaio/api-wrapper-go/livestreaming"
+    "github.com/uizaio/api-wrapper-go/live"
 )
 dvrType := uiza.DvrTypeOne
 resourceMode := uiza.ResourceModeSingle
-params := &uiza.LiveStreamingUpdateParams{
+params := &uiza.LiveUpdateParams{
     ID: uiza.String("5c607bc8-1063-4025-ad36-6c6516a7dd5b"),
     Name: uiza.String("Live streaming Update name"),
     Dvr: &dvrType,
     ResourceMode: &resourceMode,
 }
-response, _ := livestreaming.Update(params)
+response, _ := live.Update(params)
 log.Printf("%s\n", response)
 ```
 Example Response
@@ -152,5 +152,109 @@ Example Response
     "dvr": "1",
     "createdAt": "2019-02-26T03:49:51.000Z",
     "updatedAt": "2019-02-26T03:54:34.000Z"
+}
+```
+## List all recorded files
+Retrieves list of recorded file after streamed (only available when your live event has turned on Record feature)
+
+See details [here](https://docs.uiza.io/#list-all-recorded-files).
+
+```golang
+import (
+	"github.com/uizaio/api-wrapper-go"
+	"github.com/uizaio/api-wrapper-go/live"
+)
+
+response, _ := live.ListRecorded()
+for _, v := range response {
+	log.Printf("%v\n", v)
+}
+```
+
+Example Response
+
+```golang
+[
+    {
+        "id": "040df935-61c4-46f7-a41f-0a899ebaa2cc",
+        "entityId": "ee122e85-553f-4621-bc77-1396191d5846",
+        "channelName": "dcb8686f-d0f8-4a0f-8b92-22db339eb315",
+        "feedId": "3e3b75df-e6fa-471c-b386-8f44b8a34b6c",
+        "eventType": "pull",
+        "startTime": "2018-12-13T16:28:29.000Z",
+        "endTime": "2018-12-13T18:28:29.000Z",
+        "length": "7200",
+        "fileSize": "9276182",
+        "extraInfo": null,
+        "endpointConfig": "s3-uiza-dvr",
+        "createdAt": "2018-12-13T19:28:43.000Z",
+        "updatedAt": "2018-12-13T19:28:43.000Z",
+        "entityName": "Christmas 2018 Holidays Special | Best Christmas Songs & Cartoons for Kids & Babies on Baby First TV"
+    },
+    {
+        "id": "3fec45e9-932b-4efe-b97f-dc3053acaa05",
+        "entityId": "47e804bc-d4e5-4442-8f1f-20341a156a70",
+        "channelName": "e9034eac-4905-4f9a-8e79-c0bd67e49dd5",
+        "feedId": "12830696-87e3-4209-a877-954f8f008964",
+        "eventType": "pull",
+        "startTime": "2018-12-13T14:14:14.000Z",
+        "endTime": "2018-12-13T16:14:14.000Z",
+        "length": "7200",
+        "fileSize": "439858038",
+        "extraInfo": null,
+        "endpointConfig": "s3-uiza-dvr",
+        "createdAt": "2018-12-13T17:30:42.000Z",
+        "updatedAt": "2018-12-13T17:30:42.000Z",
+        "entityName": "WATCH: SpaceX to Launch Falcon 9 Rocket #Spaceflight CRS16 @1:16pm EST"
+    }
+]
+```
+## Delete a record file
+Delete a recorded file
+
+See details [here](https://docs.uiza.io/#delete-a-record-file).
+
+```golang
+import (
+	"github.com/uizaio/api-wrapper-go"
+	"github.com/uizaio/api-wrapper-go/live"
+)
+
+param := &uiza.LiveIDParams{ID: uiza.String("Your Recorded ID ")}
+response, _ := live.DeleteRecord(param)
+log.Printf("%s\n", response)
+	
+```
+Example Response
+
+```golang
+
+{
+    "id": "009596b1-f751-4102-86f7-7290a9f3f0cf"
+}
+```
+
+## Convert into VOD
+
+Convert recorded file into VOD entity. After converted, your file can be stream via Uiza's CDN.
+
+See details [here](https://docs.uiza.io/#convert-into-vod).
+
+```golang
+import (
+	"github.com/uizaio/api-wrapper-go"
+	"github.com/uizaio/api-wrapper-go/live"
+)
+
+param := &uiza.LiveIDParams{ID: uiza.String("Your Recorded ID ")}
+response, _ := live.ConvertToVOD(param)
+log.Printf("%s\n", response)
+	
+```
+Example Response
+
+```golang
+{
+   "id": "03739912-d781-4d5a-aaf8-7262691a5d0c"
 }
 ```

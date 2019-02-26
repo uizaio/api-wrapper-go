@@ -273,8 +273,8 @@ type ClientType string
 
 // Define Client Type
 const (
-	EntityClientType        ClientType = "Entity"
-	StorageClientType       ClientType = "Storage"
-	CategoryClientType      ClientType = "Category"
-	LiveStreamingClientType ClientType = "LiveStreaming"
+	EntityClientType   ClientType = "Entity"
+	StorageClientType  ClientType = "Storage"
+	CategoryClientType ClientType = "Category"
+	LiveClientType     ClientType = "Live"
 )
