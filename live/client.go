@@ -12,6 +12,9 @@ type Client struct {
 
 const (
 	baseURL         = "api/public/v3/live/entity"
+	startFeedURL    = "api/public/v3/live/entity/feed"
+	getViewURL      = "api/public/v3/live/entity/tracking/current-view"
+	stopFeedURL     = "api/public/v3/live/entity/feed"
 	convertToVODURL = "api/public/v3/live/entity/dvr/convert-to-vod"
 	recordedURL     = "api/public/v3/live/entity/dvr"
 )
@@ -69,6 +72,44 @@ func (c Client) Update(params *uiza.LiveUpdateParams) (*uiza.LiveData, error) {
 	retrieveParams := &uiza.LiveRetrieveParams{ID: uiza.String(updateData.Data.ID)}
 
 	return c.Retrieve(retrieveParams)
+}
+
+// Start a live feed
+func StartFeed(params *uiza.LiveIDParams) (*uiza.LiveIDData, error) {
+	return getC().StartFeed(params)
+}
+
+func (c Client) StartFeed(params *uiza.LiveIDParams) (*uiza.LiveIDData, error) {
+	liveIDResponse := &uiza.LiveIDResponse{}
+	err := c.B.Call(http.MethodPost, startFeedURL, c.Key, params, liveIDResponse)
+
+	return liveIDResponse.Data, err
+}
+
+// Get view of live feed
+func GetView(params *uiza.LiveIDParams) (*uiza.LiveGetViewParams, error) {
+	return getC().GetView(params)
+}
+
+func (c Client) GetView(params *uiza.LiveIDParams) (*uiza.LiveGetViewParams, error) {
+
+	liveGetViewResponse := &uiza.LiveGetViewResponse{}
+	err := c.B.Call(http.MethodGet, getViewURL, c.Key, params, liveGetViewResponse)
+
+	return liveGetViewResponse.Data, err
+
+}
+
+// Stop a live feed
+func StopFeed(params *uiza.LiveIDParams) (*uiza.LiveIDData, error) {
+	return getC().StopFeed(params)
+}
+
+func (c Client) StopFeed(params *uiza.LiveIDParams) (*uiza.LiveIDData, error) {
+	liveIDResponse := &uiza.LiveIDResponse{}
+	err := c.B.Call(http.MethodPut, stopFeedURL, c.Key, params, liveIDResponse)
+
+	return liveIDResponse.Data, err
 }
 
 // List all recorded files
