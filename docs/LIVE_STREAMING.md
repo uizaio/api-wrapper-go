@@ -154,6 +154,75 @@ Example Response
     "updatedAt": "2019-02-26T03:54:34.000Z"
 }
 ```
+
+## Start a live feed
+These API use to start a live event that has been create success. The Live channel minute start count whenever the event start success.
+See details [here](https://docs.uiza.io/?shell#start-a-live-feed).
+
+Example Request
+```golang
+import (
+    uiza "github.com/uizaio/api-wrapper-go"
+    "github.com/uizaio/api-wrapper-go/live"
+)
+
+params := &uiza.LiveIDParams{ID: uiza.String("c6b23cc3-e47d-4e87-8f40-5da64221ad4e")}
+response, _ := live.StartFeed(params)
+log.Printf("%s\n", response)
+```
+Example Response
+
+```golang
+{  
+   "message":"Start feed success",
+   "entityId":"c6b23cc3-e47d-4e87-8f40-5da64221ad4e"
+}
+```
+
+## Get view of live feed
+This API use to get a live view status . This view only show when event has been started and being processing.
+See details [here](https://docs.uiza.io/?shell#get-view-of-live-feed).
+
+Example Request
+```golang
+import (
+    uiza "github.com/uizaio/api-wrapper-go"
+    "github.com/uizaio/api-wrapper-go/live"
+)
+
+params := &uiza.LiveIDParams{ID: uiza.String("Your live ID")}
+response, _ := live.GetView(params)
+log.Printf("%s\n", response)
+```
+Example Response
+
+```golang
+{  
+   "stream_name":"peppa-pig-english-episodes",
+   "watchnow":1,
+   "day":1533271205999
+}
+```
+
+## Stop a live feed
+Stop live event.
+See details [here](https://docs.uiza.io/?shell#stop-a-live-feed).
+
+Example Request
+```golang
+params := &uiza.LiveIDParams{ID: uiza.String("c6b23cc3-e47d-4e87-8f40-5da64221ad4e")}
+response, _ := live.StopFeed(params)
+log.Printf("%s\n", response)
+```
+Example Response
+
+```golang
+{  
+   "message":"Stop feed success",
+   "entityId":"c6b23cc3-e47d-4e87-8f40-5da64221ad4e"
+}
+```
+
 ## List all recorded files
 Retrieves list of recorded file after streamed (only available when your live event has turned on Record feature)
 

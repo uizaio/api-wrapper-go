@@ -37,6 +37,17 @@ type LiveCreateParams struct {
 	ResourceMode      *ResourceModeType `form:"resourceMode"`
 }
 
+type LiveGetViewParams struct {
+	Params     `form:"*"`
+	StreamName *string `form:"stream_name"`
+	Day        *int64  `form:"day"`
+	WatchNow   *int64  `form:"watchnow"`
+}
+
+type LiveGetViewResponse struct {
+	Data *LiveGetViewParams `json:"data"`
+}
+
 type LiveIDData struct {
 	ID string `json:"id"`
 }
