@@ -279,3 +279,7 @@ const (
 	CallbackClientType ClientType = "Callback"
 	LiveClientType     ClientType = "Live"
 )
+
+type MockHTTPCLient interface {
+	Do(req *http.Request) (*http.Response, error)
+}
