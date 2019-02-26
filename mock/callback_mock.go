@@ -2,10 +2,11 @@ package mock
 
 import (
 	"bytes"
-	"github.com/stretchr/testify/mock"
-	"github.com/uizaio/api-wrapper-go"
-	"github.com/uizaio/api-wrapper-go/form"
 	"reflect"
+
+	"github.com/stretchr/testify/mock"
+	uiza "github.com/uizaio/api-wrapper-go"
+	"github.com/uizaio/api-wrapper-go/form"
 )
 
 type BackendImplementationCallBackMock struct {
@@ -14,7 +15,7 @@ type BackendImplementationCallBackMock struct {
 
 func (m *BackendImplementationCallBackMock) Call(method, path, key string, params uiza.ParamsContainer, v interface{}) error {
 
-	callbackMethodPOST := uiza.HttpMethodPost
+	callbackMethodPOST := uiza.HTTPMethodPost
 	mockCallTest := []struct {
 		method string
 		path   string
