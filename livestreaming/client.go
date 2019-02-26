@@ -50,3 +50,24 @@ func (c Client) Create(params *uiza.LiveStreamingCreateParams) (*uiza.LiveStream
 
 	return c.Retrieve(liveStreamingIDParam)
 }
+
+func Update(params *uiza.LiveStreamingUpdateParams) (*uiza.LiveStreamingData, error) {
+
+	return getC().Update(params)
+}
+
+// Update an live streaming
+func (c Client) Update(params *uiza.LiveStreamingUpdateParams) (*uiza.LiveStreamingData, error) {
+
+	updateData := &uiza.LiveStreamingIDResponse{}
+	err := c.B.Call(http.MethodPut, baseURL, c.Key, params, updateData)
+
+	if err != nil {
+		return nil, err
+	}
+
+	retrieveParams := &uiza.LiveStreamingRetrieveParams{ID: uiza.String(updateData.Data.ID)}
+
+	return c.Retrieve(retrieveParams)
+
+}

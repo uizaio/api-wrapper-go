@@ -80,3 +80,13 @@ type LiveStreamingSpec struct {
 	CreatedAt         string           `json:"createdAt"`
 	UpdatedAt         string           `json:"updatedAt"`
 }
+
+type LiveStreamingUpdateParams struct {
+	Params       `form:"*"`
+	ID           *string           `form:"id"`
+	Name         *string           `form:"name"`
+	Mode         *string           `form:"mode"`
+	Encode       *int64            `form:"encode"`
+	Dvr          *DvrType          `form:"dvr"`
+	ResourceMode *ResourceModeType `form:"resourceMode"`
+}
