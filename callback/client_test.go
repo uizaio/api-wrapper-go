@@ -1,10 +1,10 @@
 package callback
 
 import (
-	"testing"
-
-	uiza "github.com/uizaio/api-wrapper-go"
+	"github.com/uizaio/api-wrapper-go"
 	mockService "github.com/uizaio/api-wrapper-go/mock"
+	"reflect"
+	"testing"
 )
 
 type Test struct {
@@ -14,36 +14,50 @@ type Test struct {
 	wantErr bool
 }
 
-func TestCreate(t *testing.T) {
-	backendImplementationCallBackMock := new(mockService.BackendImplementationCallBackMock)
-	mockClient := Client{backendImplementationCallBackMock, ""}
+type Response struct {
+	Body string
+}
 
+func init() {
+	uizaMockBackend := uiza.GetBackendWithConfig(
+		uiza.APIBackend,
+		&uiza.BackendConfig{
+			MockHTTPClient: &mockService.CallbackClientMock{},
+		},
+	)
+	uiza.SetBackend(uiza.APIBackend, uizaMockBackend)
+}
+
+func TestCreate(t *testing.T) {
 	type args struct {
 		params *uiza.CallbackCreateParams
 	}
 
-	callBackMethodPOST := uiza.HTTPMethoddPost
+	callBackMethodPOST := uiza.HTTPMethodPost
 
 	tests := []Test{
 		{
 			name: "Create Success",
 			args: args{
 				params: &uiza.CallbackCreateParams{
-					Url:    uiza.String("https://callback-url.uiza.co"),
+					Url:    uiza.String("https://callback-url.uiza.com"),
 					Method: &callBackMethodPOST,
 				},
 			},
-			want:    "",
+			want:    mockService.CallbackDataMock,
 			wantErr: false,
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_, err := mockClient.Create(tt.args.(args).params)
+			got, err := Create(tt.args.(args).params)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("\nCreate() error = %v", err)
+				t.Errorf("Create() error = %v, wantErr %v", err, tt.wantErr)
 				return
+			}
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Create() = %v, want %v", got, tt.want)
 			}
 		})
 	}
@@ -51,8 +65,6 @@ func TestCreate(t *testing.T) {
 }
 
 func TestRetrieve(t *testing.T) {
-	backendImplementationCallBackMock := new(mockService.BackendImplementationCallBackMock)
-	mockClient := Client{backendImplementationCallBackMock, ""}
 
 	type args struct {
 		params *uiza.CallbackIDParams
@@ -64,27 +76,26 @@ func TestRetrieve(t *testing.T) {
 			args: args{
 				params: &uiza.CallbackIDParams{ID: uiza.String(mockService.CallBackId)},
 			},
-			want: &uiza.CallbackResponse{Data: &uiza.CallbackData{
-				ID: *uiza.String(mockService.CallBackId),
-			}},
+			want:    mockService.CallbackDataMock,
 			wantErr: false,
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_, err := mockClient.Retrieve(tt.args.(args).params)
+			got, err := Retrieve(tt.args.(args).params)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("\nRetrieve() error = %v", err)
+				t.Errorf("Retrieve() error = %v, wantErr %v", err, tt.wantErr)
 				return
+			}
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Retrieve() = %v, want %v", got, tt.want)
 			}
 		})
 	}
 }
 
 func TestUpdate(t *testing.T) {
-	backendImplementationCallBackMock := new(mockService.BackendImplementationCallBackMock)
-	mockClient := Client{backendImplementationCallBackMock, ""}
 
 	type args struct {
 		params *uiza.CallbackUpdateParams
@@ -102,25 +113,26 @@ func TestUpdate(t *testing.T) {
 					Method: &callBackMethodPOST,
 				},
 			},
-			want:    &uiza.CallbackIDResponse{Data: &uiza.CallbackIDData{ID: *uiza.String(mockService.CallBackId)}},
+			want:    mockService.CallbackDataMock,
 			wantErr: false,
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_, err := mockClient.Update(tt.args.(args).params)
+			got, err := Update(tt.args.(args).params)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("\nUpdate() error = %v", err)
+				t.Errorf("Update() error = %v, wantErr %v", err, tt.wantErr)
 				return
+			}
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Update() = %v, want %v", got, tt.want)
 			}
 		})
 	}
 }
 
 func TestDelete(t *testing.T) {
-	backendImplementationCallBackMock := new(mockService.BackendImplementationCallBackMock)
-	mockClient := Client{backendImplementationCallBackMock, ""}
 
 	type args struct {
 		params *uiza.CallbackIDParams
@@ -134,17 +146,20 @@ func TestDelete(t *testing.T) {
 					ID: uiza.String(mockService.CallBackId),
 				},
 			},
-			want:    &uiza.CallbackIDResponse{Data: &uiza.CallbackIDData{ID: *uiza.String(mockService.CallBackId)}},
+			want:    mockService.CallbackIDDataMock,
 			wantErr: false,
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_, err := mockClient.Delete(tt.args.(args).params)
+			got, err := Delete(tt.args.(args).params)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("\nDelete() error = %v", err)
+				t.Errorf("Delete() error = %v, wantErr %v", err, tt.wantErr)
 				return
+			}
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Delete() = %v, want %v", got, tt.want)
 			}
 		})
 	}
