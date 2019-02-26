@@ -106,3 +106,51 @@ Example Response
       "updatedAt":"2019-02-25T06:35:30.000Z"
    }
 ```
+
+## Update an live streaming
+Update live streaming's information.
+See details [here](https://docs.uiza.io/#update-a-live-event).
+
+```golang
+import (
+    uiza "github.com/uizaio/api-wrapper-go"
+    "github.com/uizaio/api-wrapper-go/livestreaming"
+)
+dvrType := uiza.DvrTypeOne
+resourceMode := uiza.ResourceModeSingle
+params := &uiza.LiveStreamingUpdateParams{
+    ID: uiza.String("5c607bc8-1063-4025-ad36-6c6516a7dd5b"),
+    Name: uiza.String("Live streaming Update name"),
+    Dvr: &dvrType,
+    ResourceMode: &resourceMode,
+}
+response, _ := livestreaming.Update(params)
+log.Printf("%s\n", response)
+```
+Example Response
+
+```golang
+{
+    "id": "5c607bc8-1063-4025-ad36-6c6516a7dd5b",
+    "name": "Live streaming Update name",
+    "description": "This is for test event",
+    "mode": "push",
+    "resourceMode": "single",
+    "encode": 1,
+    "channelName": "f5b7a6b7-d2bd-40d0-bec6-1d764735639f",
+    "lastPresetId": null,
+    "lastFeedId": null,
+    "poster": null,
+    "thumbnail": "//image1.jpeg",
+    "linkPublishSocial": null,
+    "linkStream": null,
+    "lastPullInfo": null,
+    "lastPushInfo": null,
+    "lastProcess": null,
+    "eventType": null,
+    "drm": "0",
+    "dvr": "1",
+    "createdAt": "2019-02-26T03:49:51.000Z",
+    "updatedAt": "2019-02-26T03:54:34.000Z"
+}
+```
