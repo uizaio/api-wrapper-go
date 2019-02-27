@@ -1,24 +1,47 @@
 package mock
 
 import (
-	"bytes"
-	"github.com/stretchr/testify/mock"
 	"github.com/uizaio/api-wrapper-go"
-	"github.com/uizaio/api-wrapper-go/form"
-	"reflect"
+	"net/http"
 )
 
-type BackendImplementationStorageMock struct {
-	mock.Mock
+type StorageClientMock struct {
+	http.Client
 }
 
-func (m *BackendImplementationStorageMock) Call(method, path, key string, params uiza.ParamsContainer, v interface{}) error {
-	mockCallTest := []struct {
-		method string
-		path   string
-		params uiza.ParamsContainer
-		data   interface{}
-	}{
+const (
+	StorageId      = "adb33082-0064-43f0-852f-3d6b70c068a3"
+	StorageBaseUrl = "/api/public/v3/media/storage"
+
+	DeleteStorageSuccessResponse   = "{  \r\n   \"data\":{  \r\n      \"id\":\"adb33082-0064-43f0-852f-3d6b70c068a3\"\r\n   },\r\n   \"version\":3,\r\n   \"datetime\":\"2019-02-27T10:08:23.764Z\",\r\n   \"policy\":\"public\",\r\n   \"requestId\":\"f5ed8841-3c35-4298-8bad-9b2ebfd06ed7\",\r\n   \"serviceName\":\"api\",\r\n   \"message\":\"OK\",\r\n   \"code\":200,\r\n   \"type\":\"SUCCESS\"\r\n}"
+	RetrieveStorageSuccessResponse = "{  \r\n   \"data\":{  \r\n      \"id\":\"adb33082-0064-43f0-852f-3d6b70c068a3\",\r\n      \"name\":\"FTP Uiza\",\r\n      \"description\":\"FTP of Uiza, use for transcode\",\r\n      \"storageType\":\"ftp\",\r\n      \"usageType\":\"input\",\r\n      \"bucket\":null,\r\n      \"prefix\":null,\r\n      \"host\":\"ftp-example.uiza.io\",\r\n      \"awsAccessKey\":null,\r\n      \"awsSecretKey\":null,\r\n      \"username\":\"uiza\",\r\n      \"password\":\"=59x@LPsd+w7qW\",\r\n      \"region\":null,\r\n      \"port\":21,\r\n      \"createdAt\":\"2019-02-27T10:04:53.000Z\",\r\n      \"updatedAt\":\"2019-02-27T10:04:53.000Z\"\r\n   },\r\n   \"version\":3,\r\n   \"datetime\":\"2019-02-27T10:04:54.554Z\",\r\n   \"policy\":\"public\",\r\n   \"requestId\":\"b8430995-ca34-4ce8-b859-879e54673f4f\",\r\n   \"serviceName\":\"api\",\r\n   \"message\":\"OK\",\r\n   \"code\":200,\r\n   \"type\":\"SUCCESS\"\r\n}"
+)
+
+var StorageDataMock = &uiza.StorageSpec{
+	ID:           *uiza.String("adb33082-0064-43f0-852f-3d6b70c068a3"),
+	Name:         *uiza.String("FTP Uiza"),
+	Host:         *uiza.String("ftp-example.uiza.io"),
+	Port:         *uiza.Int64(21),
+	StorageType:  *uiza.String("ftp"),
+	Username:     *uiza.String("uiza"),
+	Password:     *uiza.String("=59x@LPsd+w7qW"),
+	Description:  *uiza.String("FTP of Uiza, use for transcode"),
+	UsageType:    *uiza.String("input"),
+	Bucket:       "",
+	Prefix:       "",
+	AwsAccessKey: "",
+	AwsSecretKey: "",
+	Region:       "",
+	CreatedAt:    *uiza.String("2019-02-27T10:04:53.000Z"),
+	UpdatedAt:    *uiza.String("2019-02-27T10:04:53.000Z"),
+}
+
+var StorageIDDataMock = &uiza.StorageId{
+	ID: *uiza.String("adb33082-0064-43f0-852f-3d6b70c068a3"),
+}
+
+func (m *StorageClientMock) Do(req *http.Request) (*http.Response, error) {
+	mockCallTest := []MockData{
 		{
 			method: "POST",
 			path:   StorageBaseUrl,
@@ -31,13 +54,13 @@ func (m *BackendImplementationStorageMock) Call(method, path, key string, params
 				Password:    uiza.String("=59x@LPsd+w7qW"),
 				Description: uiza.String("FTP of Uiza, use for transcode"),
 			},
-			data: &uiza.StorageIdData{Data: &uiza.StorageId{ID: *uiza.String(StorageId)}},
+			responseString: RetrieveStorageSuccessResponse,
 		},
 		{
-			method: "GET",
-			path:   StorageBaseUrl,
-			params: &uiza.StorageRetrieveParams{ID: uiza.String(StorageId)},
-			data:   &uiza.StorageSpecData{Data: &uiza.StorageSpec{ID: *uiza.String(StorageId)}},
+			method:         "GET",
+			path:           StorageBaseUrl,
+			params:         &uiza.StorageRetrieveParams{ID: uiza.String(StorageId)},
+			responseString: RetrieveStorageSuccessResponse,
 		},
 		{
 			method: "PUT",
@@ -51,56 +74,15 @@ func (m *BackendImplementationStorageMock) Call(method, path, key string, params
 				Password:    uiza.String("=59x@LPsd+w7qW"),
 				Description: uiza.String("FTP of Uiza, use for transcode"),
 			},
-			data: &uiza.StorageIdData{Data: &uiza.StorageId{ID: *uiza.String(StorageId)}},
+			responseString: RetrieveStorageSuccessResponse,
 		},
 		{
-			method: "DELETE",
-			path:   StorageBaseUrl,
-			params: &uiza.StorageRemoveParams{ID: uiza.String(StorageId)},
-			data:   &uiza.StorageIdData{Data: &uiza.StorageId{ID: *uiza.String(StorageId)}},
+			method:         "DELETE",
+			path:           StorageBaseUrl,
+			params:         &uiza.StorageRemoveParams{ID: uiza.String(StorageId)},
+			responseString: DeleteStorageSuccessResponse,
 		},
 	}
 
-	for _, mockData := range mockCallTest {
-		if method == mockData.method && path == mockData.path {
-			if reflect.DeepEqual(params, mockData.params) {
-				SetStorageResponse(v, mockData.data)
-			}
-		}
-	}
-
-	return nil
-}
-
-func (m *BackendImplementationStorageMock) CallMultipart(method, path, key, boundary string, body *bytes.Buffer, params *uiza.Params, v interface{}) error {
-	return nil
-}
-
-func (m *BackendImplementationStorageMock) CallRaw(method, path, key string, form *form.Values, params *uiza.Params, v interface{}) error {
-	return nil
-}
-
-func (m *BackendImplementationStorageMock) SetMaxNetworkRetries(maxNetworkRetries int) {
-}
-
-func (m *BackendImplementationStorageMock) SetClientType(clientType uiza.ClientType) {
-}
-
-func SetStorageResponse(v interface{}, data interface{}) {
-	switch vp := v.(type) {
-	case *uiza.StorageId:
-		if f, ok := data.(*uiza.StorageId); ok {
-			*vp = *f
-		}
-	case *uiza.StorageIdData:
-		if f, ok := data.(*uiza.StorageIdData); ok {
-			*vp = *f
-		}
-	case *uiza.StorageSpecData:
-		if f, ok := data.(*uiza.StorageSpecData); ok {
-			*vp = *f
-		}
-	default:
-		panic("Unexpected Response")
-	}
+	return getMockResponse(req, mockCallTest)
 }
