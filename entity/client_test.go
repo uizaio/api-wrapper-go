@@ -1,10 +1,11 @@
 package entity
 
 import (
+	"reflect"
 	"testing"
 
 	uiza "github.com/uizaio/api-wrapper-go"
-	"github.com/uizaio/api-wrapper-go/mock"
+	mockService "github.com/uizaio/api-wrapper-go/mock"
 	_ "github.com/uizaio/api-wrapper-go/testing"
 )
 
@@ -22,7 +23,7 @@ func initUT() {
 	uizaMockBackend := uiza.GetBackendWithConfig(
 		uiza.APIBackend,
 		&uiza.BackendConfig{
-			MockHTTPClient: &mock.EntityClientMock{},
+			MockHTTPClient: &mockService.EntityClientMock{},
 		},
 	)
 	uiza.SetBackend(uiza.APIBackend, uizaMockBackend)
@@ -47,54 +48,56 @@ func TestCreate(t *testing.T) {
 				},
 			},
 
-			want:    "",
+			want:    mockService.EntityDataMock,
 			wantErr: false,
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_, err := Create(tt.args.(args).params)
+			got, err := Create(tt.args.(args).params)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("\nCreate() error = %v", err)
+				t.Errorf("Create() error = %v, wantErr %v", err, tt.wantErr)
 				return
+			}
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Create() = %v, want %v", got, tt.want)
 			}
 		})
 	}
 }
 
-// func TestRetrieve(t *testing.T) {
-// 	mockBackendImplementation := new(mockService.BackendImplementationEntityMock)
-// 	mockClient := Client{mockBackendImplementation, ""}
+func TestRetrieve(t *testing.T) {
+	initUT()
 
-// 	type args struct {
-// 		params *uiza.EntityRetrieveParams
-// 	}
+	type args struct {
+		params *uiza.EntityRetrieveParams
+	}
 
-// 	tests := []Test{
-// 		{
-// 			name: "Retrieve Success",
-// 			args: args{
-// 				params: &uiza.EntityRetrieveParams{ID: uiza.String(mockService.EntityId)},
-// 			},
-// 			want:    &uiza.EntityData{ID: *uiza.String(mockService.EntityId)},
-// 			wantErr: false,
-// 		},
-// 	}
+	tests := []Test{
+		{
+			name: "Retrieve Success",
+			args: args{
+				params: &uiza.EntityRetrieveParams{ID: uiza.String(mockService.EntityId)},
+			},
+			want:    mockService.EntityDataMock,
+			wantErr: false,
+		},
+	}
 
-// 	for _, tt := range tests {
-// 		t.Run(tt.name, func(t *testing.T) {
-// 			got, err := mockClient.Retrieve(tt.args.(args).params)
-// 			if (err != nil) != tt.wantErr {
-// 				t.Errorf("Retrieve() error = %v, wantErr %v", err, tt.wantErr)
-// 				return
-// 			}
-// 			if !reflect.DeepEqual(got, tt.want) {
-// 				t.Errorf("Retrieve() = %v, want %v", got, tt.want)
-// 			}
-// 		})
-// 	}
-// }
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := Retrieve(tt.args.(args).params)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("Retrieve() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Retrieve() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
 
 // func TestDelete(t *testing.T) {
 // 	mockBackendImplementation := new(mockService.BackendImplementationEntityMock)
