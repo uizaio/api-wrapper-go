@@ -11,8 +11,8 @@ type Client struct {
 }
 
 const (
-	baseURL     = "api/public/v3/media/metadata"
-	relationURL = "api/public/v3/media/entity/related/metadata"
+	baseURL     = "/api/public/v3/media/metadata"
+	relationURL = "/api/public/v3/media/entity/related/metadata"
 )
 
 // Get Backend Client
@@ -28,11 +28,11 @@ func Retrieve(params *uiza.CategoryIDParams) (*uiza.CategoryData, error) {
 }
 
 func (c Client) Retrieve(params *uiza.CategoryIDParams) (*uiza.CategoryData, error) {
-	categorySpecData := &uiza.CategoryResponse{}
+	categoryResponse := &uiza.CategoryResponse{}
 
-	err := c.B.Call(http.MethodGet, baseURL, c.Key, params, categorySpecData)
+	err := c.B.Call(http.MethodGet, baseURL, c.Key, params, categoryResponse)
 
-	return categorySpecData.Data, err
+	return categoryResponse.Data, err
 }
 
 func Create(params *uiza.CategoryCreateParams) (*uiza.CategoryData, error) {
@@ -108,14 +108,14 @@ func (c Client) DeleteRelation(params *uiza.CategoryRelationParams) ([]*uiza.Cat
 	return categoryRelationData.Data, err
 }
 
-func List() ([]*uiza.CategoryData, error) {
+func List(params *uiza.CategoryListParams) ([]*uiza.CategoryData, error) {
 
-	return getC().List()
+	return getC().List(params)
 }
 
-func (c Client) List() ([]*uiza.CategoryData, error) {
+func (c Client) List(params *uiza.CategoryListParams) ([]*uiza.CategoryData, error) {
 	category := &uiza.CategoryListResponse{}
-	err := c.B.Call(http.MethodGet, baseURL, c.Key, nil, category)
+	err := c.B.Call(http.MethodGet, baseURL, c.Key, params, category)
 
 	ret := make([]*uiza.CategoryData, len(category.Data))
 	for i, v := range category.Data {

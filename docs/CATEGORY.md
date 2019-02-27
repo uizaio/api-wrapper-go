@@ -61,9 +61,13 @@ Example Response
 Get all category
 See details [here](https://docs.uiza.io/#retrieve-category-list).
 ```golang
-response, _ := category.List()
-for _, v := range response {
-    log.Printf("%v\n", v)
+params := &uiza.CategoryListParams{
+    Page:uiza.Int64(2),
+    Limit:uiza.Int64(10),
+}
+listData, _ := category.List(params)
+for _, v := range listData {
+    log.Printf("%s\n", v)
 }
 ```
 
