@@ -14,10 +14,6 @@ type Test struct {
 	wantErr bool
 }
 
-type Response struct {
-	Body string
-}
-
 func init() {
 	uizaMockBackend := uiza.GetBackendWithConfig(
 		uiza.APIBackend,

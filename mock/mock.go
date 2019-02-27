@@ -22,10 +22,6 @@ const (
 const (
 	NotFound404Response = "{\r\n    \"code\": 404,\r\n    \"retryable\": false,\r\n    \"message\": \"Not found\",\r\n    \"type\": \"ERROR\",\r\n    \"data\": null,\r\n    \"version\": 3,\r\n    \"datetime\": \"2019-02-27T03:44:45.504Z\",\r\n    \"policy\": \"public\",\r\n    \"requestId\": \"f5a416d3-5c73-44c1-80f0-f6daf07181b5\",\r\n    \"serviceName\": \"api\"\r\n}"
 )
-const (
-	StorageId      = "ae366b57-a8e4-4ad9-959e-045e083d53e9"
-	StorageBaseUrl = "api/public/v3/media/storage"
-)
 
 type MockData struct {
 	method         string
