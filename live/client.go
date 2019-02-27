@@ -128,12 +128,12 @@ func (c Client) ListRecorded() ([]*uiza.LiveRecordedData, error) {
 	return ret, err
 }
 
-// DeleteRecord a record file
-func DeleteRecord(params *uiza.LiveIDParams) (*uiza.LiveIDData, error) {
-	return getC().DeleteRecord(params)
+// Delete a record file
+func Delete(params *uiza.LiveIDParams) (*uiza.LiveIDData, error) {
+	return getC().Delete(params)
 }
 
-func (c Client) DeleteRecord(params *uiza.LiveIDParams) (*uiza.LiveIDData, error) {
+func (c Client) Delete(params *uiza.LiveIDParams) (*uiza.LiveIDData, error) {
 	liveIDResponse := &uiza.LiveIDResponse{}
 	err := c.B.Call(http.MethodDelete, recordedURL, c.Key, params, liveIDResponse)
 

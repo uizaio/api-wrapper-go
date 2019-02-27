@@ -290,7 +290,7 @@ import (
 )
 
 param := &uiza.LiveIDParams{ID: uiza.String("Your Recorded ID ")}
-response, _ := live.DeleteRecord(param)
+response, _ := live.Delete(param)
 log.Printf("%s\n", response)
 	
 ```

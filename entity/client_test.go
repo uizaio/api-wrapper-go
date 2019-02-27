@@ -141,7 +141,7 @@ func TestCreate(t *testing.T) {
 // 			args: args{
 // 				params: &uiza.EntityListParams{},
 // 			},
-// 			want: &uiza.EntityListData{Data: []*uiza.EntityResponse{
+// 			want: &uiza.EntityListResponse{Data: []*uiza.EntityResponse{
 // 				{Data: &uiza.EntityData{ID: *uiza.String(mockService.EntityId)}},
 // 				{Data: &uiza.EntityData{ID: *uiza.String(mockService.EntityId2)}},
 // 			}},

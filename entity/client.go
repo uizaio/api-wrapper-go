@@ -104,10 +104,6 @@ func (c Client) List(params *uiza.EntityListParams) ([]*uiza.EntityData, error) 
 	return ret, err
 }
 
-type Iter struct {
-	*uiza.Iter
-}
-
 // Publish entity to CDN
 func Publish(params *uiza.EntityPublishParams) (*uiza.EntityPublishData, error) {
 	return getC().Publish(params)
