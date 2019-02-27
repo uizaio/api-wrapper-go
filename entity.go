@@ -24,7 +24,7 @@ type EntityCreateParams struct {
 	Poster           *string            `form:"poster"`
 	Thumbnail        *string            `form:"thumbnail"`
 	MetadataIds      *[]string          `form:"metadataIds"`
-	ExtendMetadata   *map[string]string `form:"extendMetadata"`
+	ExtendMetadata   *ExtendMetadata    `form:"extendMetadata"`
 	EmbedMetadata    *map[string]string `form:"embedMetadata"`
 }
 
@@ -68,7 +68,11 @@ type EntityGetAWSUploadKeyData struct {
 	RegionName       string `json:"region_name"`
 	TempAccessSecret string `json:"temp_access_secret"`
 }
-
+type ExtendMetadata struct {
+	MovieCategory string  `json:"movie_category,omitempty"`
+	IMDBScore     float64 `json:"imdb_score,omitempty"`
+	PublishedYear string  `json:"published_year,omitempty"`
+}
 type EntityData struct {
 	ID               string            `json:"id,omitempty"`
 	Name             string            `json:"name,omitempty"`
@@ -82,7 +86,7 @@ type EntityData struct {
 	Duration         string            `json:"duration,omitempty"`
 	PublishToCdn     string            `json:"publishToCdn,omitempty"`
 	EmbedMetadata    map[string]string `json:"embedMetadata,omitempty"`
-	ExtendMetadata   map[string]string `json:"extendMetadata,omitempty"`
+	ExtendMetadata   ExtendMetadata    `json:"extendMetadata,omitempty"`
 	CreatedAt        string            `json:"createdAt,omitempty"`
 	UpdatedAt        string            `json:"updatedAt,omitempty"`
 }
@@ -113,13 +117,13 @@ type EntityGetStatusPublishData struct {
 
 type EntityUpdateParams struct {
 	Params           `form:"*"`
-	ID               *string            `form:"id"`
-	Name             *string            `form:"name"`
-	Description      *string            `form:"description"`
-	ShortDescription *string            `form:"shortDescription"`
-	Poster           *string            `form:"poster"`
-	Thumbnail        *string            `form:"thumbnail"`
-	ExtendMetadata   *map[string]string `form:"extendMetadata"`
+	ID               *string         `form:"id"`
+	Name             *string         `form:"name"`
+	Description      *string         `form:"description"`
+	ShortDescription *string         `form:"shortDescription"`
+	Poster           *string         `form:"poster"`
+	Thumbnail        *string         `form:"thumbnail"`
+	ExtendMetadata   *ExtendMetadata `form:"extendMetadata"`
 }
 
 type EntityIdResponse struct {
