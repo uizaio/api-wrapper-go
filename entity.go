@@ -111,8 +111,8 @@ type EntityGetStatusPublishResponse struct {
 }
 
 type EntityGetStatusPublishData struct {
-	Progress int64  `json:"id"`
-	Status   string `json:"message"`
+	Progress int64  `json:"progress"`
+	Status   string `json:"status"`
 }
 
 type EntityUpdateParams struct {
