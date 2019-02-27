@@ -23,6 +23,14 @@ const (
 	CategoryId2               = "fd0575c8-a599-498c-b544-04e307ac43c4"
 	CallBackBaseURL           = "api/public/v3/media/entity/callback"
 	CallBackId                = "72d59f91-88c6-458b-9d45-489d2194a09f"
+	// Live Streaming
+	LiveId              = "7650024c-df27-4b4a-966c-7da069bdec1b"
+	LiveBaseURL         = "/api/public/v3/live/entity"
+	LiveStartFeedURL    = "/api/public/v3/live/entity/feed"
+	LiveGetViewURL      = "/api/public/v3/live/entity/tracking/current-view"
+	LiveStopFeedURL     = "/api/public/v3/live/entity/feed"
+	LiveConvertToVODURL = "/api/public/v3/live/entity/dvr/convert-to-vod"
+	LiveRecordedURL     = "/api/public/v3/live/entity/dvr"
 )
 
 var EntityDataMock = &uiza.EntityData{
