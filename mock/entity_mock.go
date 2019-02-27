@@ -144,7 +144,7 @@ func (m *EntityClientMock) Do(req *http.Request) (*http.Response, error) {
 // 			method: "GET",
 // 			path:   EntityBaseUrl,
 // 			params: &uiza.EntityListParams{},
-// 			data: &uiza.EntityListData{Data: []*uiza.EntityResponse{
+// 			data: &uiza.EntityListResponse{Data: []*uiza.EntityResponse{
 // 				{Data: &uiza.EntityData{ID: *uiza.String(EntityId)}},
 // 				{Data: &uiza.EntityData{ID: *uiza.String(EntityId2)}},
 // 			}},
@@ -182,8 +182,8 @@ func (m *EntityClientMock) Do(req *http.Request) (*http.Response, error) {
 // 		if f, ok := data.(*uiza.EntityData); ok {
 // 			*vp = *f
 // 		}
-// 	case *uiza.EntityListData:
-// 		if f, ok := data.(*uiza.EntityListData); ok {
+// 	case *uiza.EntityListResponse:
+// 		if f, ok := data.(*uiza.EntityListResponse); ok {
 // 			*vp = *f
 // 		}
 // 	case *uiza.EntityPublishResponse:

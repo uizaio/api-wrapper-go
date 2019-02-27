@@ -2,12 +2,11 @@ package mock
 
 import (
 	"bytes"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 
-	uiza "github.com/uizaio/api-wrapper-go"
-	form "github.com/uizaio/api-wrapper-go/form"
+	"github.com/uizaio/api-wrapper-go"
+	"github.com/uizaio/api-wrapper-go/form"
 )
 
 const (
@@ -48,9 +47,8 @@ func getParamsString(params uiza.ParamsContainer) string {
 
 	bodyFormValue = &form.Values{}
 	form.AppendTo(bodyFormValue, params)
-	jsonOject, _ := bodyFormValue.MarshalJSON()
-	fmt.Printf(string(jsonOject))
-	return string(jsonOject)
+	jsonObject, _ := bodyFormValue.MarshalJSON()
+	return string(jsonObject)
 }
 
 func getParamsRawPath(params uiza.ParamsContainer) string {
