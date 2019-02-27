@@ -43,6 +43,14 @@ func TestCreate(t *testing.T) {
 			want:    mockService.CallbackDataMock,
 			wantErr: false,
 		},
+		{
+			name: "Create Failed",
+			args: args{
+				params: &uiza.CallbackCreateParams{},
+			},
+			want:    nil,
+			wantErr: true,
+		},
 	}
 
 	for _, tt := range tests {
@@ -52,7 +60,7 @@ func TestCreate(t *testing.T) {
 				t.Errorf("Create() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
-			if !reflect.DeepEqual(got, tt.want) {
+			if tt.want != nil && !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("Create() = %v, want %v", got, tt.want)
 			}
 		})
@@ -112,6 +120,14 @@ func TestUpdate(t *testing.T) {
 			want:    mockService.CallbackDataMock,
 			wantErr: false,
 		},
+		{
+			name: "Update Failed",
+			args: args{
+				params: &uiza.CallbackUpdateParams{},
+			},
+			want:    nil,
+			wantErr: true,
+		},
 	}
 
 	for _, tt := range tests {
@@ -121,7 +137,7 @@ func TestUpdate(t *testing.T) {
 				t.Errorf("Update() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
-			if !reflect.DeepEqual(got, tt.want) {
+			if tt.want != nil && !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("Update() = %v, want %v", got, tt.want)
 			}
 		})

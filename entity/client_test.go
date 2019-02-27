@@ -57,6 +57,15 @@ func TestCreate(t *testing.T) {
 			want:    mockService.EntityDataMock,
 			wantErr: false,
 		},
+		{
+			name: "Create Failed",
+			args: args{
+				params: &uiza.EntityCreateParams{},
+			},
+
+			want:    nil,
+			wantErr: true,
+		},
 	}
 
 	for _, tt := range tests {
@@ -66,7 +75,7 @@ func TestCreate(t *testing.T) {
 				t.Errorf("Create() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
-			if !reflect.DeepEqual(got, tt.want) {
+			if tt.want != nil && !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("Create() = %v, want %v", got, tt.want)
 			}
 		})
@@ -271,6 +280,12 @@ func TestUpdate(t *testing.T) {
 			},
 			want:    mockService.EntityDataMock,
 			wantErr: false,
+		},
+		{
+			name:    "Update Failed",
+			args:    args{params: &uiza.EntityUpdateParams{}},
+			want:    nil,
+			wantErr: true,
 		},
 	}
 

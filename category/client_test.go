@@ -15,10 +15,6 @@ type Test struct {
 	wantErr bool
 }
 
-type Response struct {
-	Body string
-}
-
 func init() {
 	uizaMockBackend := uiza.GetBackendWithConfig(
 		uiza.APIBackend,
@@ -51,6 +47,15 @@ func TestCreate(t *testing.T) {
 			want:    mockService.CategoryDataMock,
 			wantErr: false,
 		},
+		{
+			name: "Create Failed",
+			args: args{
+				params: &uiza.CategoryCreateParams{},
+			},
+
+			want:    nil,
+			wantErr: true,
+		},
 	}
 
 	for _, tt := range tests {
@@ -60,8 +65,10 @@ func TestCreate(t *testing.T) {
 				t.Errorf("Create() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("Create() = %v, want %v", got, tt.want)
+			if tt.want != nil {
+				if !reflect.DeepEqual(got, tt.want) {
+					t.Errorf("Create() = %v, want %v", got, tt.want)
+				}
 			}
 		})
 	}
@@ -90,7 +97,7 @@ func TestRetrieve(t *testing.T) {
 				t.Errorf("Retrieve() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
-			if !reflect.DeepEqual(got, tt.want) {
+			if tt.want != nil && !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("Retrieve() = %v, want %v", got, tt.want)
 			}
 		})
@@ -145,6 +152,14 @@ func TestUpdate(t *testing.T) {
 			want:    mockService.CategoryUpdateDataMock,
 			wantErr: false,
 		},
+		{
+			name: "Update Failed",
+			args: args{
+				params: &uiza.CategoryUpdateParams{},
+			},
+			want:    nil,
+			wantErr: true,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -153,7 +168,7 @@ func TestUpdate(t *testing.T) {
 				t.Errorf("Update() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
-			if !reflect.DeepEqual(got, tt.want) {
+			if tt.want != nil && !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("Update() = %v, want %v", got, tt.want)
 			}
 		})

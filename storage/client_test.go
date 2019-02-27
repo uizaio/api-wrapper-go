@@ -48,6 +48,14 @@ func TestAdd(t *testing.T) {
 			want:    mockService.StorageDataMock,
 			wantErr: false,
 		},
+		{
+			name: "Add Failed",
+			args: args{
+				params: &uiza.StorageAddParams{},
+			},
+			want:    nil,
+			wantErr: true,
+		},
 	}
 
 	for _, tt := range tests {
@@ -57,7 +65,7 @@ func TestAdd(t *testing.T) {
 				t.Errorf("Add() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
-			if !reflect.DeepEqual(got, tt.want) {
+			if tt.want != nil && !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("Add() = %v, want %v", got, tt.want)
 			}
 		})
@@ -117,6 +125,14 @@ func TestUpdate(t *testing.T) {
 			},
 			want:    mockService.StorageDataMock,
 			wantErr: false,
+		},
+		{
+			name: "Add Success",
+			args: args{
+				params: &uiza.StorageUpdateParams{},
+			},
+			want:    nil,
+			wantErr: true,
 		},
 	}
 

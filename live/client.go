@@ -11,12 +11,12 @@ type Client struct {
 }
 
 const (
-	baseURL         = "api/public/v3/live/entity"
-	startFeedURL    = "api/public/v3/live/entity/feed"
-	getViewURL      = "api/public/v3/live/entity/tracking/current-view"
-	stopFeedURL     = "api/public/v3/live/entity/feed"
-	convertToVODURL = "api/public/v3/live/entity/dvr/convert-to-vod"
-	recordedURL     = "api/public/v3/live/entity/dvr"
+	baseURL         = "/api/public/v3/live/entity"
+	startFeedURL    = "/api/public/v3/live/entity/feed"
+	getViewURL      = "/api/public/v3/live/entity/tracking/current-view"
+	stopFeedURL     = "/api/public/v3/live/entity/feed"
+	convertToVODURL = "/api/public/v3/live/entity/dvr/convert-to-vod"
+	recordedURL     = "/api/public/v3/live/entity/dvr"
 )
 
 // Get Backend Client
@@ -87,11 +87,11 @@ func (c Client) StartFeed(params *uiza.LiveIDParams) (*uiza.LiveIDData, error) {
 }
 
 // Get view of live feed
-func GetView(params *uiza.LiveIDParams) (*uiza.LiveGetViewParams, error) {
+func GetView(params *uiza.LiveIDParams) (*uiza.LiveGetViewData, error) {
 	return getC().GetView(params)
 }
 
-func (c Client) GetView(params *uiza.LiveIDParams) (*uiza.LiveGetViewParams, error) {
+func (c Client) GetView(params *uiza.LiveIDParams) (*uiza.LiveGetViewData, error) {
 
 	liveGetViewResponse := &uiza.LiveGetViewResponse{}
 	err := c.B.Call(http.MethodGet, getViewURL, c.Key, params, liveGetViewResponse)
@@ -113,13 +113,13 @@ func (c Client) StopFeed(params *uiza.LiveIDParams) (*uiza.LiveIDData, error) {
 }
 
 // List all recorded files
-func ListRecorded() ([]*uiza.LiveRecordedData, error) {
-	return getC().ListRecorded()
+func ListRecorded(params *uiza.LiveListRecordedParams) ([]*uiza.LiveRecordedData, error) {
+	return getC().ListRecorded(params)
 }
 
-func (c Client) ListRecorded() ([]*uiza.LiveRecordedData, error) {
+func (c Client) ListRecorded(params *uiza.LiveListRecordedParams) ([]*uiza.LiveRecordedData, error) {
 	liveListRecordedResponse := &uiza.LiveListRecordedResponse{}
-	err := c.B.Call(http.MethodGet, recordedURL, c.Key, nil, liveListRecordedResponse)
+	err := c.B.Call(http.MethodGet, recordedURL, c.Key, params, liveListRecordedResponse)
 
 	ret := make([]*uiza.LiveRecordedData, len(liveListRecordedResponse.Data))
 	for i, v := range liveListRecordedResponse.Data {
