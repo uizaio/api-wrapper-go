@@ -3,7 +3,7 @@ Create category for entity for easier management. Category use to group all the 
 See details [here](https://docs.uiza.io/#create-category).
 
 ```golang
-var typeCategory = uiza.FolderType
+var typeCategory = uiza.CategoryFolderType
 params := &uiza.CategoryCreateParams{
 	Name:        uiza.String(""),
 	Type:        &typeCategory,
@@ -106,7 +106,7 @@ Update information of category
 See details [here](https://docs.uiza.io/#update-category).
 
 ```golang
-var typeCategory = uiza.FolderType
+var typeCategory = uiza.CategoryFolderType
 params := &uiza.CategoryUpdateParams{
 	ID: uiza.String("Your category ID"),
 	Name: uiza.String(""),
@@ -114,7 +114,7 @@ params := &uiza.CategoryUpdateParams{
 	Description:uiza.String(""),
 	Icon:uiza.String(""),
 	OrderNumber:uiza.Int64(2)}
-response, _ := category.Upddate(params)
+response, _ := category.Update(params)
 log.Printf("%s", response)
 ```
 
