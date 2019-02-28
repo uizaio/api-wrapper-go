@@ -16,14 +16,14 @@ import (
     "github.com/uizaio/api-wrapper-go/storage"
 )
 
-params :=  &uiza.StorageAddParams{
-	Name:        uiza.String("FTP Uiza"),
-	Host:        uiza.String("ftp-example.uiza.io"),
-	Port:        uiza.Int64(21),
-	Type:        uiza.String("ftp"),
-	Username:    uiza.String("uiza"),
-	Password:    uiza.String("=59x@LPsd+w7qW"),
-	Description: uiza.String("FTP of Uiza, use for transcode"),
+params := &uiza.StorageAddParams{
+    Name:        uiza.String("FTP Uiza"),
+    Host:        uiza.String("ftp-example.uiza.io"),
+    Port:        uiza.Int64(21),
+    StorageType: uiza.String("ftp"),
+    Username:    uiza.String("uiza"),
+    Password:    uiza.String("=59x@LPsd+w7qW"),
+    Description: uiza.String("FTP of Uiza, use for transcode"),
 }
 
 response, _ := storage.Add(params)
