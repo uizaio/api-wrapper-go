@@ -24,7 +24,7 @@ type EntityCreateParams struct {
 	Poster           *string            `form:"poster"`
 	Thumbnail        *string            `form:"thumbnail"`
 	MetadataIds      *[]string          `form:"metadataIds"`
-	ExtendMetadata   *map[string]string `form:"extendMetadata"`
+	ExtendMetadata   *ExtendMetadata    `form:"extendMetadata"`
 	EmbedMetadata    *map[string]string `form:"embedMetadata"`
 }
 
@@ -33,27 +33,15 @@ type EntityDeleteParams struct {
 	ID     *string `form:"id"`
 }
 
-type EntityListData struct {
+type EntityListResponse struct {
 	ListMeta
-	Data []*EntityResponse `json:"data"`
+	Data []*EntityData `json:"data"`
 }
 
 type EntityListParams struct {
-	ListParams       `form:"*"`
-	ID               *string            `form:"id"`
-	Name             *string            `form:"name"`
-	Description      *string            `form:"description"`
-	ShortDescription *string            `form:"shortDescription"`
-	View             *int64             `form:"view"`
-	Poster           *string            `form:"poster"`
-	Thumbnail        *string            `form:"thumbnail"`
-	Type             *InputType         `form:"type"`
-	Duration         *string            `form:"duration"`
-	PublishToCdn     *string            `form:"publishToCdn"`
-	EmbedMetadata    *map[string]string `form:"embedMetadata"`
-	ExtendMetadata   *map[string]string `form:"extendMetadata"`
-	CreatedAt        *int64             `form:"createdAt"`
-	UpdatedAt        *int64             `form:"updatedAt"`
+	ListParams `form:"*"`
+	Page       *int64 `form:"page"`
+	Limit      *int64 `form:"limit"`
 }
 
 type EntityResponse struct {
@@ -80,7 +68,11 @@ type EntityGetAWSUploadKeyData struct {
 	RegionName       string `json:"region_name"`
 	TempAccessSecret string `json:"temp_access_secret"`
 }
-
+type ExtendMetadata struct {
+	MovieCategory string  `json:"movie_category,omitempty"`
+	IMDBScore     float64 `json:"imdb_score,omitempty"`
+	PublishedYear string  `json:"published_year,omitempty"`
+}
 type EntityData struct {
 	ID               string            `json:"id,omitempty"`
 	Name             string            `json:"name,omitempty"`
@@ -94,7 +86,7 @@ type EntityData struct {
 	Duration         string            `json:"duration,omitempty"`
 	PublishToCdn     string            `json:"publishToCdn,omitempty"`
 	EmbedMetadata    map[string]string `json:"embedMetadata,omitempty"`
-	ExtendMetadata   map[string]string `json:"extendMetadata,omitempty"`
+	ExtendMetadata   ExtendMetadata    `json:"extendMetadata,omitempty"`
 	CreatedAt        string            `json:"createdAt,omitempty"`
 	UpdatedAt        string            `json:"updatedAt,omitempty"`
 }
@@ -119,19 +111,19 @@ type EntityGetStatusPublishResponse struct {
 }
 
 type EntityGetStatusPublishData struct {
-	Progress int64  `json:"id"`
-	Status   string `json:"message"`
+	Progress int64  `json:"progress"`
+	Status   string `json:"status"`
 }
 
 type EntityUpdateParams struct {
 	Params           `form:"*"`
-	ID               *string            `form:"id"`
-	Name             *string            `form:"name"`
-	Description      *string            `form:"description"`
-	ShortDescription *string            `form:"shortDescription"`
-	Poster           *string            `form:"poster"`
-	Thumbnail        *string            `form:"thumbnail"`
-	ExtendMetadata   *map[string]string `form:"extendMetadata"`
+	ID               *string         `form:"id"`
+	Name             *string         `form:"name"`
+	Description      *string         `form:"description"`
+	ShortDescription *string         `form:"shortDescription"`
+	Poster           *string         `form:"poster"`
+	Thumbnail        *string         `form:"thumbnail"`
+	ExtendMetadata   *ExtendMetadata `form:"extendMetadata"`
 }
 
 type EntityIdResponse struct {

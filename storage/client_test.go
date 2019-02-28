@@ -15,9 +15,17 @@ type Test struct {
 	wantErr bool
 }
 
+func init() {
+	uizaMockBackend := uiza.GetBackendWithConfig(
+		uiza.APIBackend,
+		&uiza.BackendConfig{
+			MockHTTPClient: &mockService.StorageClientMock{},
+		},
+	)
+	uiza.SetBackend(uiza.APIBackend, uizaMockBackend)
+}
+
 func TestAdd(t *testing.T) {
-	mockBackendImplementation := new(mockService.BackendImplementationStorageMock)
-	mockClient := Client{mockBackendImplementation, ""}
 
 	type args struct {
 		params *uiza.StorageAddParams
@@ -37,25 +45,34 @@ func TestAdd(t *testing.T) {
 					Description: uiza.String("FTP of Uiza, use for transcode"),
 				},
 			},
-			want:    "",
+			want:    mockService.StorageDataMock,
 			wantErr: false,
+		},
+		{
+			name: "Add Failed",
+			args: args{
+				params: &uiza.StorageAddParams{},
+			},
+			want:    nil,
+			wantErr: true,
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_, err := mockClient.Add(tt.args.(args).params)
+			got, err := Add(tt.args.(args).params)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("\nAdd() error = %v", err)
+				t.Errorf("Add() error = %v, wantErr %v", err, tt.wantErr)
 				return
+			}
+			if tt.want != nil && !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Add() = %v, want %v", got, tt.want)
 			}
 		})
 	}
 }
 
 func TestRetrieve(t *testing.T) {
-	mockBackendImplementation := new(mockService.BackendImplementationStorageMock)
-	mockClient := Client{mockBackendImplementation, ""}
 
 	type args struct {
 		params *uiza.StorageRetrieveParams
@@ -67,14 +84,14 @@ func TestRetrieve(t *testing.T) {
 			args: args{
 				params: &uiza.StorageRetrieveParams{ID: uiza.String(mockService.StorageId)},
 			},
-			want:    &uiza.StorageSpec{ID: *uiza.String(mockService.StorageId)},
+			want:    mockService.StorageDataMock,
 			wantErr: false,
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := mockClient.Retrieve(tt.args.(args).params)
+			got, err := Retrieve(tt.args.(args).params)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("Retrieve() error = %v, wantErr %v", err, tt.wantErr)
 				return
@@ -87,8 +104,6 @@ func TestRetrieve(t *testing.T) {
 }
 
 func TestUpdate(t *testing.T) {
-	mockBackendImplementation := new(mockService.BackendImplementationStorageMock)
-	mockClient := Client{mockBackendImplementation, ""}
 
 	type args struct {
 		params *uiza.StorageUpdateParams
@@ -108,14 +123,22 @@ func TestUpdate(t *testing.T) {
 					Description: uiza.String("FTP of Uiza, use for transcode"),
 				},
 			},
-			want:    "",
+			want:    mockService.StorageDataMock,
 			wantErr: false,
+		},
+		{
+			name: "Add Success",
+			args: args{
+				params: &uiza.StorageUpdateParams{},
+			},
+			want:    nil,
+			wantErr: true,
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_, err := mockClient.Update(tt.args.(args).params)
+			_, err := Update(tt.args.(args).params)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("\nUpdate() error = %v", err)
 				return
@@ -125,8 +148,6 @@ func TestUpdate(t *testing.T) {
 }
 
 func TestRemove(t *testing.T) {
-	mockBackendImplementation := new(mockService.BackendImplementationStorageMock)
-	mockClient := Client{mockBackendImplementation, ""}
 
 	type args struct {
 		params *uiza.StorageRemoveParams
@@ -137,13 +158,13 @@ func TestRemove(t *testing.T) {
 			args: args{
 				params: &uiza.StorageRemoveParams{ID: uiza.String(mockService.StorageId)},
 			},
-			want:    &uiza.StorageId{ID: *uiza.String(mockService.StorageId)},
+			want:    mockService.StorageIDDataMock,
 			wantErr: false,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := mockClient.Remove(tt.args.(args).params)
+			got, err := Remove(tt.args.(args).params)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("Remove() error = %v, wantErr %v", err, tt.wantErr)
 				return

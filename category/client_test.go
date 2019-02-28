@@ -1,9 +1,11 @@
 package category
 
 import (
-	"github.com/uizaio/api-wrapper-go"
-	mockService "github.com/uizaio/api-wrapper-go/mock"
+	"reflect"
 	"testing"
+
+	uiza "github.com/uizaio/api-wrapper-go"
+	mockService "github.com/uizaio/api-wrapper-go/mock"
 )
 
 type Test struct {
@@ -13,10 +15,17 @@ type Test struct {
 	wantErr bool
 }
 
-func TestCreate(t *testing.T) {
-	mockBackendImplementation := new(mockService.BackendImplementationCategoryMock)
-	mockClient := Client{mockBackendImplementation, ""}
+func init() {
+	uizaMockBackend := uiza.GetBackendWithConfig(
+		uiza.APIBackend,
+		&uiza.BackendConfig{
+			MockHTTPClient: &mockService.CategoryClientMock{},
+		},
+	)
+	uiza.SetBackend(uiza.APIBackend, uizaMockBackend)
+}
 
+func TestCreate(t *testing.T) {
 	type args struct {
 		params *uiza.CategoryCreateParams
 	}
@@ -34,27 +43,38 @@ func TestCreate(t *testing.T) {
 					Icon:        uiza.String("Category icon"),
 				},
 			},
-			want:    "",
+
+			want:    mockService.CategoryDataMock,
 			wantErr: false,
+		},
+		{
+			name: "Create Failed",
+			args: args{
+				params: &uiza.CategoryCreateParams{},
+			},
+
+			want:    nil,
+			wantErr: true,
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_, err := mockClient.Create(tt.args.(args).params)
+			got, err := Create(tt.args.(args).params)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("\nCreate() error = %v", err)
+				t.Errorf("Create() error = %v, wantErr %v", err, tt.wantErr)
 				return
+			}
+			if tt.want != nil {
+				if !reflect.DeepEqual(got, tt.want) {
+					t.Errorf("Create() = %v, want %v", got, tt.want)
+				}
 			}
 		})
 	}
-
 }
 
 func TestRetrieve(t *testing.T) {
-	mockBackendImplementation := new(mockService.BackendImplementationCategoryMock)
-	mockClient := Client{mockBackendImplementation, ""}
-
 	type args struct {
 		params *uiza.CategoryIDParams
 	}
@@ -65,175 +85,181 @@ func TestRetrieve(t *testing.T) {
 			args: args{
 				params: &uiza.CategoryIDParams{ID: uiza.String(mockService.CategoryId)},
 			},
-			want:    &uiza.CategoryData{ID: *uiza.String(mockService.CategoryId)},
+			want:    mockService.CategoryDataMock,
 			wantErr: false,
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_, err := mockClient.Retrieve(tt.args.(args).params)
+			got, err := Retrieve(tt.args.(args).params)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("\nRetrieve() error = %v", err)
+				t.Errorf("Retrieve() error = %v, wantErr %v", err, tt.wantErr)
 				return
+			}
+			if tt.want != nil && !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Retrieve() = %v, want %v", got, tt.want)
 			}
 		})
 	}
 }
 
 func TestList(t *testing.T) {
-	mockBackendImplementation := new(mockService.BackendImplementationCategoryMock)
-	mockClient := Client{mockBackendImplementation, ""}
+	type args struct {
+		params *uiza.CategoryListParams
+	}
 
 	tests := []Test{
 		{
-			name:    " Success",
-			args:    nil,
-			want:    &uiza.CategoryListResponse{Data: []*uiza.CategoryData{}},
+			name: "Get list Success",
+			args: args{
+				params: &uiza.CategoryListParams{
+					Page:  uiza.Int64(1),
+					Limit: uiza.Int64(2),
+				},
+			},
+			want:    mockService.CategoryListDataMock,
 			wantErr: false,
 		},
 	}
-
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_, err := mockClient.List()
+			got, err := List(tt.args.(args).params)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("\nList() error = %v", err)
+				t.Errorf("List() error = %v, wantErr %v", err, tt.wantErr)
 				return
+			}
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("List() = %v, want %v", got, tt.want)
 			}
 		})
 	}
 }
 
 func TestUpdate(t *testing.T) {
-	mockBackendImplementation := new(mockService.BackendImplementationCategoryMock)
-	mockClient := Client{mockBackendImplementation, ""}
-
 	type args struct {
 		params *uiza.CategoryUpdateParams
 	}
-
-	var typeCategory = uiza.CategoryFolderType
-
 	tests := []Test{
 		{
-			name: " Success",
+			name: "Update Success",
 			args: args{
 				params: &uiza.CategoryUpdateParams{
-					ID:          uiza.String(mockService.CategoryId2),
-					Name:        uiza.String("Category name 2"),
-					Type:        &typeCategory,
-					Description: uiza.String("Category description"),
-					Icon:        uiza.String("Category icon"),
+					ID:   uiza.String(mockService.UpdateCategoryId),
+					Name: uiza.String("Category update name"),
 				},
 			},
-			want:    "",
+			want:    mockService.CategoryUpdateDataMock,
 			wantErr: false,
 		},
+		{
+			name: "Update Failed",
+			args: args{
+				params: &uiza.CategoryUpdateParams{},
+			},
+			want:    nil,
+			wantErr: true,
+		},
 	}
-
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_, err := mockClient.Update(tt.args.(args).params)
+			got, err := Update(tt.args.(args).params)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("\nCreate() error = %v", err)
+				t.Errorf("Update() error = %v, wantErr %v", err, tt.wantErr)
 				return
+			}
+			if tt.want != nil && !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Update() = %v, want %v", got, tt.want)
 			}
 		})
 	}
 }
 
 func TestDelete(t *testing.T) {
-	mockBackendImplementation := new(mockService.BackendImplementationCategoryMock)
-	mockClient := Client{mockBackendImplementation, ""}
-
 	type args struct {
 		params *uiza.CategoryIDParams
 	}
-
 	tests := []Test{
 		{
 			name: "Delete Success",
 			args: args{
-				params: &uiza.CategoryIDParams{ID: uiza.String(mockService.CategoryId)},
+				params: &uiza.CategoryIDParams{ID: uiza.String(mockService.DeleteCategoryId)},
 			},
-			want:    &uiza.CategoryIDData{ID: *uiza.String(mockService.CategoryId)},
+			want:    mockService.CategoryDeleteDataMock,
 			wantErr: false,
 		},
 	}
-
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_, err := mockClient.Delete(tt.args.(args).params)
+			got, err := Delete(tt.args.(args).params)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("\nDelete() error = %v", err)
+				t.Errorf("Delete() error = %v, wantErr %v", err, tt.wantErr)
 				return
+			}
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Delete() = %v, want %v", got, tt.want)
 			}
 		})
 	}
 }
 
 func TestCreateRelation(t *testing.T) {
-	mockBackendImplementation := new(mockService.BackendImplementationCategoryMock)
-	mockClient := Client{mockBackendImplementation, ""}
-
 	type args struct {
 		params *uiza.CategoryRelationParams
 	}
-
 	tests := []Test{
 		{
 			name: "Create Relation Success",
 			args: args{
 				params: &uiza.CategoryRelationParams{
 					EntityId:    uiza.String(mockService.CategoryId),
-					MetadataIds: []*string{uiza.String(""), uiza.String("")},
+					MetadataIds: []*string{uiza.String("")},
 				},
 			},
-			want:    "",
+			want:    mockService.CategoryDeleteRelationDataMock,
 			wantErr: false,
 		},
 	}
-
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_, err := mockClient.CreateRelation(tt.args.(args).params)
+			got, err := CreateRelation(tt.args.(args).params)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("\nCreateRelation() error = %v", err)
+				t.Errorf("CreateRelation() error = %v, wantErr %v", err, tt.wantErr)
 				return
+			}
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("CreateRelation() = %v, want %v", got, tt.want)
 			}
 		})
 	}
 }
 
 func TestDeleteRelation(t *testing.T) {
-	mockBackendImplementation := new(mockService.BackendImplementationCategoryMock)
-	mockClient := Client{mockBackendImplementation, ""}
-
 	type args struct {
 		params *uiza.CategoryRelationParams
 	}
-
 	tests := []Test{
 		{
 			name: "Delete Relation Success",
 			args: args{
 				params: &uiza.CategoryRelationParams{
 					EntityId:    uiza.String(mockService.CategoryId),
-					MetadataIds: []*string{uiza.String(""), uiza.String("")},
+					MetadataIds: []*string{uiza.String("")},
 				},
 			},
-			want:    "",
+			want:    mockService.CategoryDeleteRelationDataMock,
 			wantErr: false,
 		},
 	}
-
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_, err := mockClient.DeleteRelation(tt.args.(args).params)
+			got, err := DeleteRelation(tt.args.(args).params)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("\nDeleteRelation() error = %v", err)
+				t.Errorf("DeleteRelation() error = %v, wantErr %v", err, tt.wantErr)
 				return
+			}
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("DeleteRelation() = %v, want %v", got, tt.want)
 			}
 		})
 	}

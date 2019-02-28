@@ -2,7 +2,6 @@
 package uiza
 
 import (
-	"github.com/uizaio/api-wrapper-go/form"
 	"bytes"
 	"encoding/json"
 	"errors"
@@ -20,12 +19,29 @@ import (
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/uizaio/api-wrapper-go/form"
 )
 
 //
 // Public constants
 //
 
+type HTTPClient interface {
+	Do(req *http.Request) (*http.Response, error)
+}
+type HTTPMethod string
+
+const (
+	HTTPMethodPost    HTTPMethod = http.MethodPost
+	HTTPMethodGet     HTTPMethod = http.MethodGet
+	HTTPMethodPut     HTTPMethod = http.MethodPut
+	HTTPMethodPatch   HTTPMethod = http.MethodPatch
+	HTTPMethodDelete  HTTPMethod = http.MethodDelete
+	HTTPMethodConnect HTTPMethod = http.MethodConnect
+	HTTPMethodOptions HTTPMethod = http.MethodOptions
+	HTTPMethodtrace   HTTPMethod = http.MethodTrace
+)
 const (
 	// APIBackend is a constant representing the API service backend.
 	APIBackend SupportedBackend = "api"
@@ -127,8 +143,8 @@ type BackendConfig struct {
 	// HTTPClient is an HTTP client instance to use when making API requests.
 	//
 	// If left unset, it'll be set to a default HTTP client for the package.
-	HTTPClient *http.Client
-
+	HTTPClient     *http.Client
+	MockHTTPClient HTTPClient
 	// LogLevel is the logging level of the library and defined by:
 	//
 	// 0: no logging
@@ -167,7 +183,7 @@ type BackendImplementation struct {
 	Type              SupportedBackend
 	ClientType        ClientType
 	URL               string
-	HTTPClient        *http.Client
+	HTTPClient        HTTPClient
 	MaxNetworkRetries int
 	LogLevel          int
 	Logger            Printfer
@@ -940,8 +956,7 @@ func newBackendImplementation(backendType SupportedBackend, config *BackendConfi
 	if enableTelemetry {
 		requestMetricsBuffer = make(chan requestMetrics, telemetryBufferSize)
 	}
-
-	return &BackendImplementation{
+	backendImplementation := &BackendImplementation{
 		HTTPClient:           config.HTTPClient,
 		LogLevel:             config.LogLevel,
 		Logger:               config.Logger,
@@ -952,6 +967,12 @@ func newBackendImplementation(backendType SupportedBackend, config *BackendConfi
 		networkRetriesSleep:  true,
 		requestMetricsBuffer: requestMetricsBuffer,
 	}
+
+	if config.MockHTTPClient != nil {
+		backendImplementation.HTTPClient = config.MockHTTPClient
+	}
+
+	return backendImplementation
 }
 
 func normalizeURL(url string) string {

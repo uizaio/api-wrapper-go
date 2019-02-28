@@ -3,7 +3,7 @@ Create category for entity for easier management. Category use to group all the 
 See details [here](https://docs.uiza.io/#create-category).
 
 ```golang
-var typeCategory = uiza.FolderType
+var typeCategory = uiza.CategoryFolderType
 params := &uiza.CategoryCreateParams{
 	Name:        uiza.String(""),
 	Type:        &typeCategory,
@@ -61,9 +61,13 @@ Example Response
 Get all category
 See details [here](https://docs.uiza.io/#retrieve-category-list).
 ```golang
-response, _ := category.List()
-for _, v := range response {
-    log.Printf("%v\n", v)
+params := &uiza.CategoryListParams{
+    Page:uiza.Int64(2),
+    Limit:uiza.Int64(10),
+}
+listData, _ := category.List(params)
+for _, v := range listData {
+    log.Printf("%s\n", v)
 }
 ```
 
@@ -102,7 +106,7 @@ Update information of category
 See details [here](https://docs.uiza.io/#update-category).
 
 ```golang
-var typeCategory = uiza.FolderType
+var typeCategory = uiza.CategoryFolderType
 params := &uiza.CategoryUpdateParams{
 	ID: uiza.String("Your category ID"),
 	Name: uiza.String(""),
@@ -110,7 +114,7 @@ params := &uiza.CategoryUpdateParams{
 	Description:uiza.String(""),
 	Icon:uiza.String(""),
 	OrderNumber:uiza.Int64(2)}
-response, _ := category.Upddate(params)
+response, _ := category.Update(params)
 log.Printf("%s", response)
 ```
 
@@ -186,13 +190,7 @@ response, _ := category.DeleteRelation(params)
 for _, v := range response {
 	log.Printf("%v\n", v)
 }
-```[
-        {
-            "id": "5620ed3c-b725-4a9a-8ec1-ecc9df3e5aa6",
-            "entityId": "16ab25d3-fd0f-4568-8aa0-0339bbfd674f",
-            "metadataId": "095778fa-7e42-45cc-8a0e-6118e540b61d"
-        },
-    ]
+```
 
 Example Response
 
