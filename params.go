@@ -279,4 +279,5 @@ const (
 	CategoryClientType ClientType = "Category"
 	CallbackClientType ClientType = "Callback"
 	LiveClientType     ClientType = "Live"
+	AnalyticClientType ClientType = "Analytic"
 )

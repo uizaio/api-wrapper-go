@@ -190,13 +190,7 @@ response, _ := category.DeleteRelation(params)
 for _, v := range response {
 	log.Printf("%v\n", v)
 }
-```[
-        {
-            "id": "5620ed3c-b725-4a9a-8ec1-ecc9df3e5aa6",
-            "entityId": "16ab25d3-fd0f-4568-8aa0-0339bbfd674f",
-            "metadataId": "095778fa-7e42-45cc-8a0e-6118e540b61d"
-        },
-    ]
+```
 
 Example Response
 
