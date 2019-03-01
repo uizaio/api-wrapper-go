@@ -245,10 +245,9 @@ func (s *BackendImplementation) CallMultipart(method, path, key, boundary string
 func (s *BackendImplementation) CallRaw(method, path, key string, form *form.Values, params *Params, v interface{}) error {
 	var body string
 	if form != nil && !form.Empty() {
-		body = form.Encode()
-
 		// On `GET`, move the payload into the URL
 		if method == http.MethodGet {
+			body = form.Encode()
 			path += "?" + body
 			body = ""
 		} else {
