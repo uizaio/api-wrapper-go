@@ -150,21 +150,13 @@ func boolEncoder(values *Values, v reflect.Value, keyParts []string, encodeZero 
 }
 
 func buildArrayOrSliceEncoder(t reflect.Type) encoderFunc {
-	// Gets an encoder for the type that the array or slice will hold
-	elemF := getCachedOrBuildTypeEncoder(t.Elem())
-
 	return func(values *Values, v reflect.Value, keyParts []string, _ bool, options *formOptions) {
-		var arrNames []string
+		if slice, ok := v.Interface().([]*string); ok {
+			values.Add(FormatKey(keyParts), slice)
+		}
 
-		for i := 0; i < v.Len(); i++ {
-			arrNames = append(keyParts, strconv.Itoa(i))
-
-			indexV := v.Index(i)
-			elemF(values, indexV, arrNames, indexV.Kind() == reflect.Ptr, nil)
-
-			if isAppender(indexV.Type()) && !indexV.IsNil() {
-				indexV.Interface().(Appender).AppendTo(values, arrNames)
-			}
+		if isAppender(v.Type()) && !v.IsNil() {
+			v.Interface().(Appender).AppendTo(values, keyParts)
 		}
 	}
 }

@@ -20,14 +20,14 @@ dvrType := uiza.DvrTypeOne
 resourceMode := uiza.ResourceModeSingle
 
 params := &uiza.LiveCreateParams{
-	Name:          uiza.String("test event Go"),
-	Mode:          uiza.String("push"),
-	Encode:        uiza.Int64(1),
-	Dvr:           &dvrType,
-	Description:   uiza.String("This is for test event"),
-	Thumbnail:     uiza.String("//image1.jpeg"),
-	LinkStream:    &[]string{*uiza.String("https://playlist.m3u8")},
-	ResourceMode:  &resourceMode,
+    Name: uiza.String("test event Go"),
+    Mode: uiza.String("push"),
+    Encode: uiza.Int64(1),
+    Dvr: &dvrType,
+    Description: uiza.String("This is for test event"),
+    Thumbnail: uiza.String("//image1.jpeg"),
+    LinkStream: []*string{uiza.String("https://playlist.m3u8")},
+    ResourceMode: &resourceMode,
 }
 response, _ := live.Create(params)
 log.Printf("%s\n", response)

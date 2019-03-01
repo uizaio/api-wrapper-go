@@ -19,11 +19,11 @@ type EntityCreateParams struct {
 	URL              *string            `form:"url"`
 	InputType        *InputType         `form:"inputType"`
 	Description      *string            `form:"description"`
-	MetadataID       *[]string          `form:"metadataId"`
+	MetadataID       []*string          `form:"metadataId"`
 	ShortDescription *string            `form:"shortDescription"`
 	Poster           *string            `form:"poster"`
 	Thumbnail        *string            `form:"thumbnail"`
-	MetadataIds      *[]string          `form:"metadataIds"`
+	MetadataIds      []*string          `form:"metadataIds"`
 	ExtendMetadata   *ExtendMetadata    `form:"extendMetadata"`
 	EmbedMetadata    *map[string]string `form:"embedMetadata"`
 }
