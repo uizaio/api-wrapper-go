@@ -158,7 +158,7 @@ params := &uiza.EntityUpdateParams{
     Name: uiza.String("Update entity name"),
 }
 response, _ := entity.Update(params)
-log.Printf("%s\n", response)
+log.Printf("%v\n", response)
 ```
 Example Response
 
@@ -203,7 +203,7 @@ import (
 
 params := &uiza.EntityDeleteParams{ID: uiza.String("Your entity ID")}
 response, _ := entity.Delete(params)
-log.Printf("%s\n", response)
+log.Printf("%v\n", response)
 ```
 Example Response
 
@@ -296,7 +296,7 @@ import (
 
 params := &uiza.EntityPublishParams{ID: uiza.String("Your entity ID")}
 response, _ := entity.Publish(params)
-log.Printf("%s\n", response)
+log.Printf("%v\n", response)
 ```
 Example Response
 
@@ -319,7 +319,7 @@ import (
 
 params := &uiza.EntityPublishParams{ID: uiza.String("Your entity ID")}
 response, _ := entity.GetStatusPublish(params)
-log.Printf("%s\n", response)
+log.Printf("%v\n", response)
 ```
 Example Response
 
@@ -341,7 +341,7 @@ import (
 )
 
 response, _ := entity.GetAWSUploadKey()
-log.Printf("%s\n", response)
+log.Printf("%v\n", response)
 ```
 Example Response
 

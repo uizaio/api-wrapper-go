@@ -27,7 +27,7 @@ params := &uiza.StorageAddParams{
 }
 
 response, _ := storage.Add(params)
-log.Printf("%s\n", response)
+log.Printf("%v\n", response)
 ```
 
 Example Response
@@ -55,7 +55,7 @@ import (
 
 params := &uiza.StorageRetrieveParams{ID: uiza.String("Your entity ID")}
 response, _ := storage.Retrieve(params)
-log.Printf("%s\n", response)
+log.Printf("%v\n", response)
 ```
 
 Example Response
@@ -106,7 +106,7 @@ params :=  &uiza.StorageUpdateParams{
 }
 
 response, _ := storage.Update(params)
-log.Printf("%s\n", response)
+log.Printf("%v\n", response)
 ```
 
 Example Response
@@ -139,7 +139,7 @@ import (
 
 params := &uiza.StorageRemoveParams{ID: uiza.String("Your entity ID")}
 response, _ := storage.Remove(params)
-log.Printf("%s\n", response)
+log.Printf("%v\n", response)
 ```
 
 Example Response
