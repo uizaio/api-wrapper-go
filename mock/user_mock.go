@@ -126,6 +126,12 @@ func (m *UserClientMock) Do(req *http.Request) (*http.Response, error) {
 			responseString: RetrieveUserSuccessResponse,
 		},
 		{
+			method:         "GET",
+			path:           UserBaseUrl,
+			params:         &uiza.UserIDParams{ID: uiza.String(UserIdUpdate)},
+			responseString: UpdateUserSuccessResponse,
+		},
+		{
 			method: "GET",
 			path:   UserBaseUrl,
 			params: &uiza.UserListParams{
@@ -170,7 +176,7 @@ func (m *UserClientMock) Do(req *http.Request) (*http.Response, error) {
 		{
 			method:         "POST",
 			path:           UserLogOutUrl,
-			params:         &uiza.UserIDParams{},
+			params:         &uiza.UserIDParams{ID: uiza.String("")},
 			responseString: LogoutUserSuccessResponse,
 		},
 	}
