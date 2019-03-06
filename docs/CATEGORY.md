@@ -186,7 +186,10 @@ import (
 	
 params := &uiza.CategoryRelationParams{
 		EntityId: uiza.String("16ab25d3-fd0f-4568-8aa0-0339bbfd674f"),
-		MetadataIds: []*string{uiza.String("095778fa-7e42-45cc-8a0e-6118e540b61d"), uiza.String("e00586b9-032a-46a3-af71-d275f01b03cf")}}
+		MetadataIds: []*string{
+		uiza.String("095778fa-7e42-45cc-8a0e-6118e540b61d"),
+		uiza.String("e00586b9-032a-46a3-af71-d275f01b03cf"),
+		}}
 response, _ := category.CreateRelation(params)
 for _, v := range response {
 	log.Printf("%v\n", v)
@@ -220,7 +223,10 @@ import (
 
 params := &uiza.CategoryRelationParams{
 		EntityId: uiza.String("16ab25d3-fd0f-4568-8aa0-0339bbfd674f"),
-		MetadataIds: []*string{uiza.String("095778fa-7e42-45cc-8a0e-6118e540b61d"), uiza.String("e00586b9-032a-46a3-af71-d275f01b03cf")}}
+		MetadataIds: []*string{
+		uiza.String("095778fa-7e42-45cc-8a0e-6118e540b61d"), 
+		uiza.String("e00586b9-032a-46a3-af71-d275f01b03cf"),
+		}}
 response, _ := category.DeleteRelation(params)
 for _, v := range response {
 	log.Printf("%v\n", v)
