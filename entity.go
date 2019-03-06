@@ -82,7 +82,6 @@ type EntityData struct {
 	Poster           string            `json:"poster,omitempty"`
 	Thumbnail        string            `json:"thumbnail,omitempty"`
 	Type             string            `json:"type,omitempty"`
-	Status           int64             `json:"status,omitempty"`
 	Duration         string            `json:"duration,omitempty"`
 	PublishToCdn     string            `json:"publishToCdn,omitempty"`
 	EmbedMetadata    map[string]string `json:"embedMetadata,omitempty"`
@@ -101,7 +100,6 @@ type EntityPublishResponse struct {
 }
 
 type EntityPublishData struct {
-	ID       string `json:"id"`
 	Message  string `json:"message"`
 	EntityId string `json:"entityId"`
 }
