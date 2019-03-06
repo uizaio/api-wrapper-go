@@ -98,7 +98,7 @@ func (m *LiveClientMock) Do(req *http.Request) (*http.Response, error) {
 				Dvr:          &dvrType,
 				Description:  uiza.String("This is for test event"),
 				Thumbnail:    uiza.String("//image1.jpeg"),
-				LinkStream:   &[]string{*uiza.String("https://playlist.m3u8")},
+				LinkStream:   []*string{uiza.String("https://playlist.m3u8")},
 				ResourceMode: &resourceMode,
 			},
 			responseString: CreateLiveSuccessResponse,
