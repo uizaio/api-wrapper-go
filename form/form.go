@@ -152,6 +152,9 @@ func boolEncoder(values *Values, v reflect.Value, keyParts []string, encodeZero 
 func buildArrayOrSliceEncoder(t reflect.Type) encoderFunc {
 	return func(values *Values, v reflect.Value, keyParts []string, _ bool, options *formOptions) {
 		if slice, ok := v.Interface().([]*string); ok {
+			if len(slice) == 0 {
+				return
+			}
 			values.Add(FormatKey(keyParts), slice)
 		}
 
