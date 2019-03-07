@@ -31,9 +31,9 @@ type LiveCreateParams struct {
 	Encode            *int64            `form:"encode"`
 	Dvr               *DvrType          `form:"dvr"`
 	Description       *string           `form:"description"`
-	LinkPublishSocial *[]string         `form:"linkPublishSocial"`
+	LinkPublishSocial []*string         `form:"linkPublishSocial"`
 	Thumbnail         *string           `form:"thumbnail"`
-	LinkStream        *[]string         `form:"linkStream"`
+	LinkStream        []*string         `form:"linkStream"`
 	ResourceMode      *ResourceModeType `form:"resourceMode"`
 }
 

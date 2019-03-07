@@ -16,7 +16,7 @@ params := &uiza.CallbackCreateParams{
         Url:    uiza.String("https://callback-url.uiza.co"),
         Method: &callbackMethodPOST}
 response, _ := callback.Create(params)
-log.Printf("%s\n", response)
+log.Printf("%v\n", response)
 ```
 
 Example Response
@@ -49,7 +49,7 @@ import (
 )
 params := &uiza.CallbackIDParams{ID: uiza.String("Your ID")}
 response, _ := callback.Retrieve(params)
-log.Printf("%s\n", response)
+log.Printf("%v\n", response)
 ```
 
 Example Response
@@ -87,7 +87,7 @@ params := &uiza.CallbackUpdateParams{
 		Url:    uiza.String("https://callback-url.uiza.commm"),
 		Method: &callbackMethodPOST}
 response, _ := callback.Update(params)
-log.Printf("%s\n", response)
+log.Printf("%v\n", response)
 ```
 
 Example Response
@@ -121,7 +121,7 @@ import (
 
 params := &uiza.CallbackIDParams{ID: uiza.String("Your ID")}
 response, _ := callback.Delete(params)
-log.Printf("%s\n", response)
+log.Printf("%v\n", response)
 ```
 Example Response
 ```golang

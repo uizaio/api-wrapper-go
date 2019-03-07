@@ -72,20 +72,42 @@ func init() {
 }
 ```
 
+## User Management
+
+You can manage user with APIs user. Uiza have 2 levels of user
+Admin - This account will have the highest priority, can have permission to create & manage users.
+User - This account level is under Admin level. It only manages APIs that relates to this account.
+
+See details [here](https://docs.uiza.io/?go#user-management).
+
 ## Entity
 
 These below APIs used to take action with your media files (we called Entity)
-See details [here](https://github.com/uizaio/api-wrapper-go/blob/master/docs/ENTITY.md).
+See details [here](https://docs.uiza.io/?go#video).
 
 ## Category
 
 Category has been splits into 3 types: folder, playlist and tag. These will make the management of entity more easier.
-See details [here](https://github.com/uizaio/api-wrapper-go/blob/master/docs/CATEGORY.md).
+See details [here](https://docs.uiza.io/?go#category).
 
 ## Storage
 
 You can add your storage (FTP, AWS S3) with UIZA. After synced, you can select your content easier from your storage to create entity.
-See details [here](https://github.com/uizaio/api-wrapper-go/blob/master/docs/STORAGE.md).
+See details [here](https://docs.uiza.io/?go#storage).
+
+## Live Streaming
+
+These APIs used to create and manage live streaming event.
+See details [here](https://docs.uiza.io/?go#live-streaming).
+
+## Callback
+
+Callback used to retrieve an information for Uiza to your server, so you can have a trigger notice about an entity is upload completed and .
+See details [here](https://docs.uiza.io/?go#callback).
+
+## Analytic
+
+See details [here](https://docs.uiza.io/?go#analytic).
 
 ## Development
 

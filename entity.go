@@ -19,11 +19,11 @@ type EntityCreateParams struct {
 	URL              *string            `form:"url"`
 	InputType        *InputType         `form:"inputType"`
 	Description      *string            `form:"description"`
-	MetadataID       *[]string          `form:"metadataId"`
+	MetadataID       []*string          `form:"metadataId"`
 	ShortDescription *string            `form:"shortDescription"`
 	Poster           *string            `form:"poster"`
 	Thumbnail        *string            `form:"thumbnail"`
-	MetadataIds      *[]string          `form:"metadataIds"`
+	MetadataIds      []*string          `form:"metadataIds"`
 	ExtendMetadata   *ExtendMetadata    `form:"extendMetadata"`
 	EmbedMetadata    *map[string]string `form:"embedMetadata"`
 }
@@ -82,7 +82,6 @@ type EntityData struct {
 	Poster           string            `json:"poster,omitempty"`
 	Thumbnail        string            `json:"thumbnail,omitempty"`
 	Type             string            `json:"type,omitempty"`
-	Status           int64             `json:"status,omitempty"`
 	Duration         string            `json:"duration,omitempty"`
 	PublishToCdn     string            `json:"publishToCdn,omitempty"`
 	EmbedMetadata    map[string]string `json:"embedMetadata,omitempty"`
@@ -101,7 +100,6 @@ type EntityPublishResponse struct {
 }
 
 type EntityPublishData struct {
-	ID       string `json:"id"`
 	Message  string `json:"message"`
 	EntityId string `json:"entityId"`
 }
