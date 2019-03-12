@@ -1,30 +1,42 @@
 package entity
 
 import (
+	"errors"
 	"net/http"
 
-	"github.com/uizaio/api-wrapper-go"
+	uiza "github.com/uizaio/api-wrapper-go"
 )
 
 // Client is used to invoke /Entity and entity-related APIs.
 type Client struct {
-	B   uiza.Backend
-	Key string
+	B     uiza.Backend
+	Key   string
+	AppID string
 }
 
 const (
-	baseURL          = "api/public/v3/media/entity"
+	baseURL          = "api/public/v4/media/entity"
 	publishURL       = baseURL + "/publish"
 	publishStatusURL = baseURL + "/publish/status"
 	searchURL        = baseURL + "/search"
-	awsUploadKeyURL  = "api/public/v3/admin/app/config/aws"
+	awsUploadKeyURL  = "api/public/v4/admin/app/config/aws"
 )
 
 // Get Backend Client
 func getC() Client {
 	b := uiza.GetBackend(uiza.APIBackend)
 	b.SetClientType(uiza.EntityClientType)
-	return Client{b, uiza.Key}
+	return Client{b, uiza.Key, uiza.AppID}
+}
+
+// Preprocess params
+func preprocessParams(params interface{}) {
+	switch v := params.(type) {
+	case *uiza.Params:
+		v.AppID = getC().AppID
+	case *uiza.ListParams:
+		v.AppID = getC().AppID
+	}
 }
 
 // Search Entity by Keyword
@@ -50,7 +62,13 @@ func Retrieve(params *uiza.EntityRetrieveParams) (*uiza.EntityData, error) {
 
 // Retrieve Entity API
 func (c Client) Retrieve(params *uiza.EntityRetrieveParams) (*uiza.EntityData, error) {
+	preprocessParams(params.GetParams())
 	entityData := &uiza.EntityResponse{}
+
+	if params.ID == nil || *params.ID == "" {
+		return &uiza.EntityData{}, errors.New("Missing enity ID")
+	}
+
 	path := uiza.FormatURLPath(baseURL)
 	err := c.B.Call(http.MethodGet, path, c.Key, params, entityData)
 
@@ -64,6 +82,7 @@ func Create(params *uiza.EntityCreateParams) (*uiza.EntityData, error) {
 
 // Create Entity API
 func (c Client) Create(params *uiza.EntityCreateParams) (*uiza.EntityData, error) {
+	preprocessParams(params.GetParams())
 	entityCreate := &uiza.EntityIdResponse{}
 
 	err := c.B.Call(http.MethodPost, baseURL, c.Key, params, entityCreate)
@@ -83,6 +102,7 @@ func Delete(params *uiza.EntityDeleteParams) (*uiza.EntityIdData, error) {
 
 // Delete Entity API
 func (c Client) Delete(params *uiza.EntityDeleteParams) (*uiza.EntityIdData, error) {
+	preprocessParams(params.GetParams())
 	entity := &uiza.EntityIdResponse{}
 	err := c.B.Call(http.MethodDelete, baseURL, c.Key, params, entity)
 	return entity.Data, err
@@ -95,6 +115,7 @@ func List(params *uiza.EntityListParams) ([]*uiza.EntityData, error) {
 
 // List returns a list of entity.
 func (c Client) List(params *uiza.EntityListParams) ([]*uiza.EntityData, error) {
+	preprocessParams(&params.ListParams)
 	entity := &uiza.EntityDataList{}
 	err := c.B.Call(http.MethodGet, baseURL, c.Key, params, entity)
 	ret := make([]*uiza.EntityData, len(entity.Data))
