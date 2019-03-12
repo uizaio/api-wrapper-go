@@ -58,6 +58,9 @@ const (
 
 	// UploadsURL is the URL of the uploads service backend.
 	UploadsURL string = "https://uiza.io"
+
+	// Version of SDK
+	Version string = "1.2.0"
 )
 
 //
@@ -76,8 +79,11 @@ var EnableTelemetry = false
 // Key is the Uiza API key used globally in the binding.
 var Key string
 
+// AppID.
+var AppID string
+
 // Workspace API domain.
-var WorkspaceAPIDomain string
+var WorkspaceAPIDomain = "https://stag-ap-southeast-1-api.uizadev.io/"
 
 // LogLevel is the logging level for this library.
 // 0: no logging
@@ -301,21 +307,6 @@ func (s *BackendImplementation) NewRequest(method, path, key, contentType string
 		if params.Context != nil {
 			req = req.WithContext(params.Context)
 		}
-
-		if params.IdempotencyKey != nil {
-			idempotencyKey := strings.TrimSpace(*params.IdempotencyKey)
-			if len(idempotencyKey) > 255 {
-				return nil, errors.New("cannot use an idempotency key longer than 255 characters")
-			}
-
-			req.Header.Add("Idempotency-Key", idempotencyKey)
-		} else if isHTTPWriteMethod(method) {
-			req.Header.Add("Idempotency-Key", NewIdempotencyKey())
-		}
-
-		// if params.UizaAccount != nil {
-		// 	req.Header.Add("Uiza-Account", strings.TrimSpace(*params.UizaAccount))
-		// }
 
 		for k, v := range params.Headers {
 			for _, line := range v {

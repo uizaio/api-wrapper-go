@@ -1,14 +1,15 @@
 package main
 
 import (
+	"log"
+
 	uiza "github.com/uizaio/api-wrapper-go"
 	"github.com/uizaio/api-wrapper-go/entity"
 	_ "github.com/uizaio/api-wrapper-go/testing"
-	"log"
 )
 
 func main() {
-	params := &uiza.EntityRetrieveParams{ID: uiza.String("")}
-	response, _ := entity.Retrieve(params)
-	log.Printf("%s\n", response)
+	params := &uiza.EntityDeleteParams{ID: uiza.String("f7c07eae-4911-45d5-b687-2ba063d2b223")}
+	response, err := entity.Delete(params)
+	log.Printf("%v %v\n", response, err)
 }

@@ -7,25 +7,33 @@ type EntityRetrieveParams struct {
 type InputType string
 
 const (
-	InputTypeHTTP   InputType = "http"
-	InputTypeS3     InputType = "s3"
-	InputTypeFTP    InputType = "ftp"
-	InputTypeS3UIZA InputType = "s3-uiza"
+	InputTypeHTTP      InputType = "http"
+	InputTypeS3        InputType = "s3"
+	InputTypeFTP       InputType = "ftp"
+	InputTypeS3UIZA    InputType = "s3-uiza"
+	InputTypeS3UIZADVR InputType = "s3-uiza-dvr"
 )
 
 type EntityCreateParams struct {
-	Params           `form:"*"`
-	Name             *string            `form:"name"`
-	URL              *string            `form:"url"`
-	InputType        *InputType         `form:"inputType"`
-	Description      *string            `form:"description"`
-	MetadataID       []*string          `form:"metadataId"`
-	ShortDescription *string            `form:"shortDescription"`
-	Poster           *string            `form:"poster"`
-	Thumbnail        *string            `form:"thumbnail"`
-	MetadataIds      []*string          `form:"metadataIds"`
-	ExtendMetadata   *ExtendMetadata    `form:"extendMetadata"`
-	EmbedMetadata    *map[string]string `form:"embedMetadata"`
+	Params             `form:"*"`
+	Name               *string            `form:"name"`
+	URL                *string            `form:"url"`
+	InputType          *InputType         `form:"inputType"`
+	Description        *string            `form:"description"`
+	MasterTaskID       *string            `form:"masterTaskId"`
+	StandardTaskID     *string            `form:"standardTaskId"`
+	ScheduledStartDate *string            `form:"scheduledStartDate"`
+	ScheduledEndDate   *string            `form:"scheduledEndDate"`
+	GeoFiltering       *string            `form:"geoFiltering"`
+	GeoFilteringValue  *string            `form:"geoFilteringValue"`
+	Social             *string            `form:"social"`
+	Type               *string            `form:"type"`
+	ShortDescription   *string            `form:"shortDescription"`
+	Poster             *string            `form:"poster"`
+	Thumbnail          *string            `form:"thumbnail"`
+	MetadataIds        []*string          `form:"metadataIds"`
+	ExtendMetadata     *ExtendMetadata    `form:"extendMetadata"`
+	EmbedMetadata      *map[string]string `form:"embedMetadata"`
 }
 
 type EntityDeleteParams struct {
@@ -78,11 +86,18 @@ type EntityData struct {
 	Name             string            `json:"name,omitempty"`
 	Description      string            `json:"description,omitempty"`
 	ShortDescription string            `json:"shortDescription,omitempty"`
+	InputType        string            `json:"inputType,omitempty"`
+	URL              string            `json:"url,omitempty"`
+	MasterTaskID     string            `json:"masterTaskId,omitempty"`
+	MasterProgress   string            `json:"masterProgress,omitempty"`
+	StandardTaskID   string            `json:"standardTaskId,omitempty"`
 	View             int64             `json:"view,omitempty"`
 	Poster           string            `json:"poster,omitempty"`
 	Thumbnail        string            `json:"thumbnail,omitempty"`
 	Type             string            `json:"type,omitempty"`
+	Status           int64             `json:"status,omitempty"`
 	Duration         string            `json:"duration,omitempty"`
+	ReadyToPublish   string            `json:"readyToPublish,omitempty"`
 	PublishToCdn     string            `json:"publishToCdn,omitempty"`
 	EmbedMetadata    map[string]string `json:"embedMetadata,omitempty"`
 	ExtendMetadata   ExtendMetadata    `json:"extendMetadata,omitempty"`
