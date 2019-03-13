@@ -210,6 +210,8 @@ type BackendImplementation struct {
 // Call is the Backend.Call implementation for invoking Uiza APIs.
 func (s *BackendImplementation) Call(method, path, key string, params ParamsContainer, v interface{}) error {
 	var body *form.Values
+	body = &form.Values{}
+
 	var commonParams *Params
 
 	if params != nil {
@@ -226,12 +228,13 @@ func (s *BackendImplementation) Call(method, path, key string, params ParamsCont
 		if reflectValue.Kind() == reflect.Ptr && !reflectValue.IsNil() {
 			commonParams = params.GetParams()
 			commonParams.AppID = s.AppID
-			body = &form.Values{}
 			form.AppendTo(body, params)
-			// add appId params to all request.form
-			body.Set("appId", s.AppID)
+
 		}
 	}
+
+	// add appId params to all request.form
+	body.Set("appId", s.AppID)
 
 	return s.CallRaw(method, path, key, body, commonParams, v)
 }

@@ -87,6 +87,7 @@ type EntityGetAWSUploadKeyData struct {
 	TempAccessID     string `json:"temp_access_id"`
 	BucketName       string `json:"bucket_name"`
 	TempSessionToken string `json:"temp_session_token"`
+	TempSessionName  string `json:"temp_session_name"`
 	RegionName       string `json:"region_name"`
 	TempAccessSecret string `json:"temp_access_secret"`
 }
@@ -117,6 +118,7 @@ type EntityData struct {
 	ExtendMetadata   ExtendMetadata    `json:"extendMetadata,omitempty"`
 	CreatedAt        string            `json:"createdAt,omitempty"`
 	UpdatedAt        string            `json:"updatedAt,omitempty"`
+	KeySearch        string            `json:"keySearch,omitempty"`
 }
 
 type EntitySearchParams struct {
