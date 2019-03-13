@@ -136,6 +136,7 @@ type Backend interface {
 	CallMultipart(method, path, key, boundary string, body *bytes.Buffer, params *Params, v interface{}) error
 	SetMaxNetworkRetries(maxNetworkRetries int)
 	SetClientType(clientType ClientType)
+	SetAppID(appID string)
 }
 
 // BackendConfig is used to configure a new Uiza backend.
@@ -188,6 +189,7 @@ type BackendConfig struct {
 type BackendImplementation struct {
 	Type              SupportedBackend
 	ClientType        ClientType
+	AppID             string
 	URL               string
 	HTTPClient        HTTPClient
 	MaxNetworkRetries int
@@ -223,8 +225,11 @@ func (s *BackendImplementation) Call(method, path, key string, params ParamsCont
 
 		if reflectValue.Kind() == reflect.Ptr && !reflectValue.IsNil() {
 			commonParams = params.GetParams()
+			commonParams.AppID = s.AppID
 			body = &form.Values{}
 			form.AppendTo(body, params)
+			// add appId params to all request.form
+			body.Set("appId", s.AppID)
 		}
 	}
 
@@ -287,7 +292,7 @@ func (s *BackendImplementation) NewRequest(method, path, key, contentType string
 	}
 
 	path = s.URL + path
-
+	s.Logger.Printf("path: %v", path)
 	// Body is set later by `Do`.
 	req, err := http.NewRequest(method, path, nil)
 	if err != nil {
@@ -510,6 +515,11 @@ func (s *BackendImplementation) SetMaxNetworkRetries(maxNetworkRetries int) {
 // Set ClientType. Using it for check where Backend called
 func (s *BackendImplementation) SetClientType(clientType ClientType) {
 	s.ClientType = clientType
+}
+
+// Set ClientType. Using it for check where Backend called
+func (s *BackendImplementation) SetAppID(appID string) {
+	s.AppID = appID
 }
 
 // SetNetworkRetriesSleep allows the normal sleep between network retries to be

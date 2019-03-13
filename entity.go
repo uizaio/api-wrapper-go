@@ -14,6 +14,20 @@ const (
 	InputTypeS3UIZADVR InputType = "s3-uiza-dvr"
 )
 
+type VideoType string
+
+const (
+	VideoTypeVOD VideoType = "vod"
+	VideoTypeAOD VideoType = "aod"
+)
+
+type PublishType string
+
+const (
+	ReadyToPublishON  PublishType = "on"
+	ReadyToPublishOFF PublishType = "off"
+)
+
 type EntityCreateParams struct {
 	Params             `form:"*"`
 	Name               *string            `form:"name"`
@@ -27,7 +41,7 @@ type EntityCreateParams struct {
 	GeoFiltering       *string            `form:"geoFiltering"`
 	GeoFilteringValue  *string            `form:"geoFilteringValue"`
 	Social             *string            `form:"social"`
-	Type               *string            `form:"type"`
+	Type               *VideoType         `form:"type"`
 	ShortDescription   *string            `form:"shortDescription"`
 	Poster             *string            `form:"poster"`
 	Thumbnail          *string            `form:"thumbnail"`
@@ -137,6 +151,9 @@ type EntityUpdateParams struct {
 	Poster           *string         `form:"poster"`
 	Thumbnail        *string         `form:"thumbnail"`
 	ExtendMetadata   *ExtendMetadata `form:"extendMetadata"`
+	MasterTaskID     *string         `json:"masterTaskId,omitempty"`
+	StandardTaskID   *string         `json:"standardTaskId,omitempty"`
+	ReadyToPublish   *PublishType    `json:"readyToPublish,omitempty"`
 }
 
 type EntityIdResponse struct {

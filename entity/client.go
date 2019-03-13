@@ -9,9 +9,8 @@ import (
 
 // Client is used to invoke /Entity and entity-related APIs.
 type Client struct {
-	B     uiza.Backend
-	Key   string
-	AppID string
+	B   uiza.Backend
+	Key string
 }
 
 const (
@@ -26,17 +25,8 @@ const (
 func getC() Client {
 	b := uiza.GetBackend(uiza.APIBackend)
 	b.SetClientType(uiza.EntityClientType)
-	return Client{b, uiza.Key, uiza.AppID}
-}
-
-// Preprocess params
-func preprocessParams(params interface{}) {
-	switch v := params.(type) {
-	case *uiza.Params:
-		v.AppID = getC().AppID
-	case *uiza.ListParams:
-		v.AppID = getC().AppID
-	}
+	b.SetAppID(uiza.AppID)
+	return Client{b, uiza.Key}
 }
 
 // Search Entity by Keyword
@@ -62,7 +52,6 @@ func Retrieve(params *uiza.EntityRetrieveParams) (*uiza.EntityData, error) {
 
 // Retrieve Entity API
 func (c Client) Retrieve(params *uiza.EntityRetrieveParams) (*uiza.EntityData, error) {
-	preprocessParams(params.GetParams())
 	entityData := &uiza.EntityResponse{}
 
 	if params.ID == nil || *params.ID == "" {
@@ -82,7 +71,6 @@ func Create(params *uiza.EntityCreateParams) (*uiza.EntityData, error) {
 
 // Create Entity API
 func (c Client) Create(params *uiza.EntityCreateParams) (*uiza.EntityData, error) {
-	preprocessParams(params.GetParams())
 	entityCreate := &uiza.EntityIdResponse{}
 
 	err := c.B.Call(http.MethodPost, baseURL, c.Key, params, entityCreate)
@@ -102,7 +90,6 @@ func Delete(params *uiza.EntityDeleteParams) (*uiza.EntityIdData, error) {
 
 // Delete Entity API
 func (c Client) Delete(params *uiza.EntityDeleteParams) (*uiza.EntityIdData, error) {
-	preprocessParams(params.GetParams())
 	entity := &uiza.EntityIdResponse{}
 	err := c.B.Call(http.MethodDelete, baseURL, c.Key, params, entity)
 	return entity.Data, err
@@ -115,7 +102,6 @@ func List(params *uiza.EntityListParams) ([]*uiza.EntityData, error) {
 
 // List returns a list of entity.
 func (c Client) List(params *uiza.EntityListParams) ([]*uiza.EntityData, error) {
-	preprocessParams(&params.ListParams)
 	entity := &uiza.EntityDataList{}
 	err := c.B.Call(http.MethodGet, baseURL, c.Key, params, entity)
 	ret := make([]*uiza.EntityData, len(entity.Data))
@@ -166,13 +152,11 @@ func (c Client) GetAWSUploadKey() (*uiza.EntityGetAWSUploadKeyData, error) {
 
 // Update an entity
 func Update(params *uiza.EntityUpdateParams) (*uiza.EntityData, error) {
-
 	return getC().Update(params)
 }
 
 // Update an entity
 func (c Client) Update(params *uiza.EntityUpdateParams) (*uiza.EntityData, error) {
-
 	entityUpdateData := &uiza.EntityIdResponse{}
 	err := c.B.Call(http.MethodPut, baseURL, c.Key, params, entityUpdateData)
 
