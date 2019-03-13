@@ -72,7 +72,6 @@ type ListParams struct {
 	Single bool `form:"-"` // Not an API parameter
 
 	StartingAfter *string `form:"starting_after"`
-	AppID         string  `form:"appId"`
 }
 
 func (p *ListParams) GetParams() *Params {
@@ -83,7 +82,6 @@ func (p *ListParams) GetParams() *Params {
 func (p *ListParams) ToParams() *Params {
 	return &Params{
 		Context: p.Context,
-		AppID:   p.AppID,
 	}
 }
 

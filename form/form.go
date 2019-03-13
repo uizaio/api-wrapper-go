@@ -448,7 +448,7 @@ func parseTag(tag string) (string, *formOptions) {
 // request that specifically allows for duplicate keys and encodes its entries
 // in the same order that they were added.
 type Values struct {
-	values []formValue
+	values []FormValue
 }
 
 // RawValues store raw value of objects.
@@ -456,7 +456,7 @@ type RawValues interface{}
 
 // Add adds a key/value tuple to the form.
 func (f *Values) Add(key string, val RawValues) {
-	f.values = append(f.values, formValue{key, val})
+	f.values = append(f.values, FormValue{key, val})
 }
 
 func (f *Values) MarshalJSON() ([]byte, error) {
@@ -554,7 +554,7 @@ func (f *Values) ToValues() url.Values {
 }
 
 // A key/value tuple for use in the Values type.
-type formValue struct {
+type FormValue struct {
 	Key   string
 	Value RawValues
 }
