@@ -10,11 +10,14 @@ import (
 
 var typeCategory = uiza.CategoryFolderType
 params := &uiza.CategoryCreateParams{
-	Name:        uiza.String("Category name example"),
-	Type:        &typeCategory,
-	Description: uiza.String("Category description"),
-	Icon:        uiza.String("https:///example.com/image002.png"),
-	OrderNumber:uiza.Int64(1)}
+    Name: uiza.String("Category name example"),
+    Slug: uiza.String("Category slug example"),
+    Type: &typeCategory,
+    Description: uiza.String("Category description"),
+    Icon: uiza.String("https:///example.com/image002.png"),
+    OrderNumber:uiza.Int64(1),
+    Status:uiza.Int64(1),
+}
 
 response, _ := category.Create(params)
 log.Printf("%v", response)
@@ -45,7 +48,12 @@ import (
 	"github.com/uizaio/api-wrapper-go/category"
 )
 
-params := &uiza.CategoryIDParams{ID :uiza.String("Your category ID")}
+var typeCategory = uiza.CategoryFolderType
+params := &uiza.CategoryIDParams{
+    ID:       uiza.String("197166f9-8566-4f39-9402-c8bddcee080c"),
+    EntityID: uiza.String(""),
+    Type:     &typeCategory,
+}
 response, _ := category.Retrieve(params)
 log.Printf("%v\n", response)
 
@@ -128,12 +136,16 @@ import (
 	
 var typeCategory = uiza.CategoryFolderType
 params := &uiza.CategoryUpdateParams{
-	ID: uiza.String("Your category ID"),
-	Name: uiza.String(""),
-	Type: &typeCategory,
-	Description:uiza.String(""),
-	Icon:uiza.String(""),
-	OrderNumber:uiza.Int64(2)}
+    ID: uiza.String("197166f9-8566-4f39-9402-c8bddcee080c"),
+    Name: uiza.String("Category name update"),
+    Slug: uiza.String("Category slug update"),
+    Type: &typeCategory,
+    Description: uiza.String("Category description update"),
+    Icon: uiza.String("https:///example.com/image002.png"),
+    OrderNumber:uiza.Int64(1),
+    Status:uiza.Int64(1),
+}
+
 response, _ := category.Update(params)
 log.Printf("%v", response)
 ```
@@ -163,7 +175,7 @@ import (
 	"github.com/uizaio/api-wrapper-go/category"
 )
 
-params := &uiza.CategoryIDParams{ID: uiza.String("Your category ID")}
+params := &uiza.CategoryDeleteParams{ID: uiza.String("197166f9-8566-4f39-9402-c8bddcee080c")}
 response, _ := category.Delete(params)
 log.Printf("%v", response)
 ```
@@ -175,7 +187,7 @@ Example Response
    "id": "095778fa-7e42-45cc-8a0e-6118e540b61d"
 }
 ```
-## Create category relation
+## create n entities for one metadata
 Add relation for entity and category.
 See details [here](https://docs.uiza.io/#create-category-relation).
 ```golang
@@ -185,14 +197,13 @@ import (
 )
 	
 params := &uiza.CategoryRelationParams{
-		EntityId: uiza.String("16ab25d3-fd0f-4568-8aa0-0339bbfd674f"),
-		MetadataIds: []*string{
-		uiza.String("095778fa-7e42-45cc-8a0e-6118e540b61d"),
-		uiza.String("e00586b9-032a-46a3-af71-d275f01b03cf"),
-		}}
+    MetadataId: uiza.String("14152268-e409-4111-adb8-bf88a2435b62"),
+    EntityIds: []*string{
+        uiza.String("095778fa-7e42-45cc-8a0e-6118e540b61d"),
+    }}
 response, _ := category.CreateRelation(params)
 for _, v := range response {
-	log.Printf("%v\n", v)
+    log.Printf("%v\n", v)
 }
 ```
 
@@ -221,15 +232,14 @@ import (
 	"github.com/uizaio/api-wrapper-go/category"
 )
 
-params := &uiza.CategoryRelationParams{
-		EntityId: uiza.String("16ab25d3-fd0f-4568-8aa0-0339bbfd674f"),
-		MetadataIds: []*string{
-		uiza.String("095778fa-7e42-45cc-8a0e-6118e540b61d"), 
-		uiza.String("e00586b9-032a-46a3-af71-d275f01b03cf"),
-		}}
+params :=  &uiza.CategoryRelationParams{
+    MetadataId: uiza.String("14152268-e409-4111-adb8-bf88a2435b62"),
+    EntityIds: []*string{
+        uiza.String("095778fa-7e42-45cc-8a0e-6118e540b61d"),
+    }}
 response, _ := category.DeleteRelation(params)
 for _, v := range response {
-	log.Printf("%v\n", v)
+    log.Printf("%v\n", v)
 }
 ```
 
