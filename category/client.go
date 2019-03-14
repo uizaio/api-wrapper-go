@@ -1,7 +1,8 @@
 package category
 
 import (
-	uiza "github.com/uizaio/api-wrapper-go"
+	"errors"
+	"github.com/uizaio/api-wrapper-go"
 	"net/http"
 )
 
@@ -11,24 +12,28 @@ type Client struct {
 }
 
 const (
-	baseURL     = "/api/public/v3/media/metadata"
-	relationURL = "/api/public/v3/media/entity/related/metadata"
+	baseURL                   = "/api/public/v4/media/metadata"
+	metadataRelationEntityURL = "/api/public/v4/media/metadata/related/entity"
 )
 
 // Get Backend Client
 func getC() Client {
 	b := uiza.GetBackend(uiza.APIBackend)
 	b.SetClientType(uiza.CategoryClientType)
+	b.SetAppID(uiza.AppID)
 	return Client{b, uiza.Key}
 }
 
 func Retrieve(params *uiza.CategoryIDParams) (*uiza.CategoryData, error) {
-
 	return getC().Retrieve(params)
 }
 
 func (c Client) Retrieve(params *uiza.CategoryIDParams) (*uiza.CategoryData, error) {
 	categoryResponse := &uiza.CategoryResponse{}
+
+	if params.ID == nil || *params.ID == "" {
+		return &uiza.CategoryData{}, errors.New("missing category ID")
+	}
 
 	err := c.B.Call(http.MethodGet, baseURL, c.Key, params, categoryResponse)
 
@@ -36,12 +41,10 @@ func (c Client) Retrieve(params *uiza.CategoryIDParams) (*uiza.CategoryData, err
 }
 
 func Create(params *uiza.CategoryCreateParams) (*uiza.CategoryData, error) {
-
 	return getC().Create(params)
 }
 
 func (c Client) Create(params *uiza.CategoryCreateParams) (*uiza.CategoryData, error) {
-
 	categoryIDData := &uiza.CategoryIDResponse{}
 	err := c.B.Call(http.MethodPost, baseURL, c.Key, params, categoryIDData)
 
@@ -55,7 +58,6 @@ func (c Client) Create(params *uiza.CategoryCreateParams) (*uiza.CategoryData, e
 }
 
 func Update(params *uiza.CategoryUpdateParams) (*uiza.CategoryData, error) {
-
 	return getC().Update(params)
 }
 
@@ -73,25 +75,23 @@ func (c Client) Update(params *uiza.CategoryUpdateParams) (*uiza.CategoryData, e
 
 }
 
-func Delete(params *uiza.CategoryIDParams) (*uiza.CategoryIDData, error) {
+func Delete(params *uiza.CategoryDeleteParams) (*uiza.CategoryIDData, error) {
 	return getC().Delete(params)
 }
 
-func (c Client) Delete(params *uiza.CategoryIDParams) (*uiza.CategoryIDData, error) {
+func (c Client) Delete(params *uiza.CategoryDeleteParams) (*uiza.CategoryIDData, error) {
 	categoryIDData := &uiza.CategoryIDResponse{}
 	err := c.B.Call(http.MethodDelete, baseURL, c.Key, params, categoryIDData)
 	return categoryIDData.Data, err
 }
 
 func CreateRelation(params *uiza.CategoryRelationParams) ([]*uiza.CategoryRelationData, error) {
-
 	return getC().CreateRelation(params)
 }
 
 func (c Client) CreateRelation(params *uiza.CategoryRelationParams) ([]*uiza.CategoryRelationData, error) {
-
 	categoryRelationData := &uiza.CategoryRelationResponse{}
-	err := c.B.Call(http.MethodPost, relationURL, c.Key, params, categoryRelationData)
+	err := c.B.Call(http.MethodPost, metadataRelationEntityURL, c.Key, params, categoryRelationData)
 
 	return categoryRelationData.Data, err
 }
@@ -101,15 +101,13 @@ func DeleteRelation(params *uiza.CategoryRelationParams) ([]*uiza.CategoryRelati
 }
 
 func (c Client) DeleteRelation(params *uiza.CategoryRelationParams) ([]*uiza.CategoryRelationData, error) {
-
 	categoryRelationData := &uiza.CategoryRelationResponse{}
-	err := c.B.Call(http.MethodDelete, relationURL, c.Key, params, categoryRelationData)
+	err := c.B.Call(http.MethodDelete, metadataRelationEntityURL, c.Key, params, categoryRelationData)
 
 	return categoryRelationData.Data, err
 }
 
 func List(params *uiza.CategoryListParams) ([]*uiza.CategoryData, error) {
-
 	return getC().List(params)
 }
 

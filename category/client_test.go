@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	uiza "github.com/uizaio/api-wrapper-go"
+	"github.com/uizaio/api-wrapper-go"
 	mockService "github.com/uizaio/api-wrapper-go/mock"
 )
 
@@ -38,9 +38,12 @@ func TestCreate(t *testing.T) {
 			args: args{
 				params: &uiza.CategoryCreateParams{
 					Name:        uiza.String("Category name 1"),
+					Slug:        uiza.String("Category slug 1"),
 					Type:        &typeCategory,
 					Description: uiza.String("Category description"),
 					Icon:        uiza.String("Category icon"),
+					OrderNumber: uiza.Int64(1),
+					Status:      uiza.Int64(1),
 				},
 			},
 
@@ -87,6 +90,14 @@ func TestRetrieve(t *testing.T) {
 			},
 			want:    mockService.CategoryDataMock,
 			wantErr: false,
+		},
+		{
+			name: "Retrieve failed",
+			args: args{
+				params: &uiza.CategoryIDParams{},
+			},
+			want:    &uiza.CategoryData{},
+			wantErr: true,
 		},
 	}
 
@@ -177,13 +188,13 @@ func TestUpdate(t *testing.T) {
 
 func TestDelete(t *testing.T) {
 	type args struct {
-		params *uiza.CategoryIDParams
+		params *uiza.CategoryDeleteParams
 	}
 	tests := []Test{
 		{
 			name: "Delete Success",
 			args: args{
-				params: &uiza.CategoryIDParams{ID: uiza.String(mockService.DeleteCategoryId)},
+				params: &uiza.CategoryDeleteParams{ID: uiza.String(mockService.DeleteCategoryId)},
 			},
 			want:    mockService.CategoryDeleteDataMock,
 			wantErr: false,
@@ -212,8 +223,8 @@ func TestCreateRelation(t *testing.T) {
 			name: "Create Relation Success",
 			args: args{
 				params: &uiza.CategoryRelationParams{
-					EntityId:    uiza.String(mockService.CategoryId),
-					MetadataIds: []*string{uiza.String("")},
+					EntityIds:  []*string{uiza.String(mockService.CategoryId)},
+					MetadataId: uiza.String(""),
 				},
 			},
 			want:    mockService.CategoryDeleteRelationDataMock,
@@ -243,8 +254,8 @@ func TestDeleteRelation(t *testing.T) {
 			name: "Delete Relation Success",
 			args: args{
 				params: &uiza.CategoryRelationParams{
-					EntityId:    uiza.String(mockService.CategoryId),
-					MetadataIds: []*string{uiza.String("")},
+					EntityIds:  []*string{uiza.String(mockService.CategoryId)},
+					MetadataId: uiza.String(""),
 				},
 			},
 			want:    mockService.CategoryDeleteRelationDataMock,
