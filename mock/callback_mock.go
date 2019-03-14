@@ -10,7 +10,7 @@ type CallbackClientMock struct {
 }
 
 const (
-	CallBackBaseURL = "/api/public/v3/media/entity/callback"
+	CallBackBaseURL = "/api/public/v4/media/entity/callback"
 	CallBackId      = "43f68248-7c54-4100-baf7-9e312c6ec787"
 
 	CreateCallbackFailedResponse    = "{\r\n    \"code\": 422,\r\n    \"type\": \"ERROR\",\r\n    \"data\": [\r\n        {\r\n            \"type\": \"required\",\r\n            \"field\": \"url\",\r\n            \"message\": \"The 'url' field is required!\"\r\n        },\r\n        {\r\n            \"type\": \"required\",\r\n            \"field\": \"method\",\r\n            \"message\": \"The 'method' field is required!\"\r\n        }\r\n    ],\r\n    \"retryable\": false,\r\n    \"message\": \"Parameters validation error!\",\r\n    \"version\": 3,\r\n    \"datetime\": \"2019-02-27T14:12:58.770Z\",\r\n    \"policy\": \"public\",\r\n    \"requestId\": \"5870ad86-d804-496b-af3f-14acc9d8977f\",\r\n    \"serviceName\": \"api\"\r\n}"
@@ -55,7 +55,7 @@ func (m *CallbackClientMock) Do(req *http.Request) (*http.Response, error) {
 		{
 			method:         "GET",
 			path:           CallBackBaseURL,
-			params:         &uiza.CallbackIDParams{ID: uiza.String(CallBackId)},
+			params:         &uiza.CallbackIDParams{},
 			responseString: RetrieveCallbackSuccessResponse,
 		},
 		{
@@ -76,7 +76,7 @@ func (m *CallbackClientMock) Do(req *http.Request) (*http.Response, error) {
 		{
 			method:         "DELETE",
 			path:           CallBackBaseURL,
-			params:         &uiza.CallbackIDParams{ID: uiza.String(CallBackId)},
+			params:         &uiza.CallbackIDParams{},
 			responseString: DeleteCallbackSuccessResponse,
 		},
 	}
