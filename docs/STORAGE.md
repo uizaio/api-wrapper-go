@@ -16,13 +16,14 @@ import (
     "github.com/uizaio/api-wrapper-go/storage"
 )
 
-params := &uiza.StorageAddParams{
-    Name:        uiza.String("FTP Uiza"),
-    Host:        uiza.String("ftp-example.uiza.io"),
-    Port:        uiza.Int64(21),
-    StorageType: uiza.String("ftp"),
-    Username:    uiza.String("uiza"),
-    Password:    uiza.String("=59x@LPsd+w7qW"),
+var storageType = uiza.StorageTypeFtp
+params :=  &uiza.StorageAddParams{
+    Name: uiza.String("FTP Uiza"),
+    Host: uiza.String("ftp-example.uiza.io"),
+    Port: uiza.Int64(21),
+    StorageType: &storageType,
+    Username: uiza.String("uiza"),
+    Password: uiza.String("=59x@LPsd+w7qW"),
     Description: uiza.String("FTP of Uiza, use for transcode"),
 }
 
@@ -94,15 +95,16 @@ import (
     "github.com/uizaio/api-wrapper-go/storage"
 )
 
+var storageType = uiza.StorageTypeFtp
 params :=  &uiza.StorageUpdateParams{
-	ID:          uiza.String("f3a94046-b1de-40db-95b6-84cf85b9352f"),
-	Name:        uiza.String("FTP Uiza Edit"),
-	Host:        uiza.String("ftp-example.uiza.io"),
-	Port:        uiza.Int64(21),
-	StorageType: uiza.String("ftp"),
-	Username:    uiza.String("uiza"),
-	Password:    uiza.String("=59x@LPsd+w7qW"),
-	Description: uiza.String("FTP of Uiza, use for transcode"),
+    ID: uiza.String("d82b5d29-c041-4300-b98b-d9ae6b222342"),
+    Name: uiza.String("FTP Uiza Edit"),
+    Host: uiza.String("ftp-example.uiza.io"),
+    Port: uiza.Int64(22),
+    StorageType: &storageType,
+    Username: uiza.String("uiza"),
+    Password: uiza.String("=59x@LPsd+w7qW"),
+    Description: uiza.String("FTP of Uiza, use for transcode"),
 }
 
 response, _ := storage.Update(params)

@@ -31,6 +31,7 @@ func TestAdd(t *testing.T) {
 		params *uiza.StorageAddParams
 	}
 
+	var storageType = uiza.StorageTypeFtp
 	tests := []Test{
 		{
 			name: "Add Success",
@@ -39,7 +40,7 @@ func TestAdd(t *testing.T) {
 					Name:        uiza.String("FTP Uiza"),
 					Host:        uiza.String("ftp-example.uiza.io"),
 					Port:        uiza.Int64(21),
-					StorageType: uiza.String("ftp"),
+					StorageType: &storageType,
 					Username:    uiza.String("uiza"),
 					Password:    uiza.String("=59x@LPsd+w7qW"),
 					Description: uiza.String("FTP of Uiza, use for transcode"),
@@ -109,6 +110,7 @@ func TestUpdate(t *testing.T) {
 		params *uiza.StorageUpdateParams
 	}
 
+	var storageType = uiza.StorageTypeFtp
 	tests := []Test{
 		{
 			name: "Add Success",
@@ -117,7 +119,7 @@ func TestUpdate(t *testing.T) {
 					Name:        uiza.String("FTP Uiza Edit"),
 					Host:        uiza.String("ftp-example.uiza.io"),
 					Port:        uiza.Int64(21),
-					StorageType: uiza.String("ftp"),
+					StorageType: &storageType,
 					Username:    uiza.String("uiza"),
 					Password:    uiza.String("=59x@LPsd+w7qW"),
 					Description: uiza.String("FTP of Uiza, use for transcode"),
