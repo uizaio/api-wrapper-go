@@ -1,14 +1,23 @@
 package uiza
 
+type StorageType string
+
+const (
+	StorageTypeS3           StorageType = "s3"
+	StorageTypeFtp          StorageType = "ftp"
+	StorageTypeS3Uiza       StorageType = "s3-uiza"
+	StorageTypeS3Compatible StorageType = "s3-compatible"
+)
+
 type StorageAddParams struct {
 	Params      `form:"*"`
-	Name        *string `form:"name"`
-	Host        *string `form:"host"`
-	Port        *int64  `form:"port"`
-	StorageType *string `form:"storageType"`
-	Username    *string `form:"username"`
-	Password    *string `form:"password"`
-	Description *string `form:"description"`
+	Name        *string      `form:"name"`
+	Host        *string      `form:"host"`
+	Port        *int64       `form:"port"`
+	StorageType *StorageType `form:"storageType"`
+	Username    *string      `form:"username"`
+	Password    *string      `form:"password"`
+	Description *string      `form:"description"`
 }
 
 type StorageRetrieveParams struct {
@@ -18,14 +27,14 @@ type StorageRetrieveParams struct {
 
 type StorageUpdateParams struct {
 	Params      `form:"*"`
-	ID          *string `form:"id"`
-	Name        *string `form:"name"`
-	Host        *string `form:"host"`
-	Port        *int64  `form:"port"`
-	StorageType *string `form:"storageType"`
-	Username    *string `form:"username"`
-	Password    *string `form:"password"`
-	Description *string `form:"description"`
+	ID          *string      `form:"id"`
+	Name        *string      `form:"name"`
+	Host        *string      `form:"host"`
+	Port        *int64       `form:"port"`
+	StorageType *StorageType `form:"storageType"`
+	Username    *string      `form:"username"`
+	Password    *string      `form:"password"`
+	Description *string      `form:"description"`
 }
 
 type StorageRemoveParams struct {

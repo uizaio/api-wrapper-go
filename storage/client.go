@@ -12,13 +12,14 @@ type Client struct {
 }
 
 const (
-	baseURL = "api/public/v3/media/storage"
+	baseURL = "/api/public/v4/media/storage"
 )
 
 // Get Backend Client
 func getC() Client {
 	b := uiza.GetBackend(uiza.APIBackend)
 	b.SetClientType(uiza.StorageClientType)
+	b.SetAppID(uiza.AppID)
 	return Client{b, uiza.Key}
 }
 
