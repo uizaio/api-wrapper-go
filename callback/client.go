@@ -11,12 +11,13 @@ type Client struct {
 }
 
 const (
-	baseURL = "api/public/v3/media/entity/callback"
+	baseURL = "api/public/v4/media/entity/callback"
 )
 
 func getC() Client {
 	b := uiza.GetBackend(uiza.APIBackend)
 	b.SetClientType(uiza.CallbackClientType)
+	b.SetAppID(uiza.AppID)
 	return Client{b, uiza.Key}
 }
 
@@ -35,7 +36,7 @@ func (c Client) Create(params *uiza.CallbackCreateParams) (*uiza.CallbackData, e
 		return nil, err
 	}
 
-	callbackIDParam := &uiza.CallbackIDParams{ID: uiza.String(callbackIDResponse.Data.ID)}
+	callbackIDParam := &uiza.CallbackIDParams{}
 
 	return c.Retrieve(callbackIDParam)
 }
@@ -66,7 +67,7 @@ func (c Client) Update(params *uiza.CallbackUpdateParams) (*uiza.CallbackData, e
 		return nil, err
 	}
 
-	callbackIDParam := &uiza.CallbackIDParams{ID: uiza.String(callbackIDResponse.Data.ID)}
+	callbackIDParam := &uiza.CallbackIDParams{}
 
 	return c.Retrieve(callbackIDParam)
 }

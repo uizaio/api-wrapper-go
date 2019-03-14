@@ -78,7 +78,7 @@ func TestRetrieve(t *testing.T) {
 		{
 			name: "Get Success",
 			args: args{
-				params: &uiza.CallbackIDParams{ID: uiza.String(mockService.CallBackId)},
+				params: &uiza.CallbackIDParams{},
 			},
 			want:    mockService.CallbackDataMock,
 			wantErr: false,
@@ -154,9 +154,7 @@ func TestDelete(t *testing.T) {
 		{
 			name: "Delete Success",
 			args: args{
-				params: &uiza.CallbackIDParams{
-					ID: uiza.String(mockService.CallBackId),
-				},
+				params: &uiza.CallbackIDParams{},
 			},
 			want:    mockService.CallbackIDDataMock,
 			wantErr: false,

@@ -2,10 +2,10 @@ package uiza
 
 type CallbackCreateParams struct {
 	Params      `form:"*"`
-	Url         *string     `form:"url"`
-	Method      *HTTPMethod `form:"method"`
-	JsonData    *string     `form:"jsonData"`
-	HeadersData *string     `form:"headersData"`
+	Url         *string      `form:"url"`
+	Method      *HTTPMethod  `form:"method"`
+	JsonData    *string      `form:"jsonData"`
+	HeadersData *HeadersData `form:"headersData"`
 }
 
 type CallbackIDResponse struct {
@@ -18,7 +18,6 @@ type CallbackIDData struct {
 
 type CallbackIDParams struct {
 	Params `form:"*"`
-	ID     *string `form:"id"`
 }
 
 type CallbackResponse struct {
