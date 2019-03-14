@@ -1,21 +1,22 @@
 package mock
 
 import (
-	"github.com/uizaio/api-wrapper-go"
 	"net/http"
+
+	uiza "github.com/uizaio/api-wrapper-go"
 )
 
 const (
 	LiveId              = "8dbf3639-57fb-404f-b013-161c10a237e4"
-	LiveBaseURL         = "/api/public/v3/live/entity"
-	LiveFeedURL         = "/api/public/v3/live/entity/feed"
-	LiveGetViewURL      = "/api/public/v3/live/entity/tracking/current-view"
-	LiveConvertToVODURL = "/api/public/v3/live/entity/dvr/convert-to-vod"
-	LiveRecordedURL     = "/api/public/v3/live/entity/dvr"
+	LiveBaseURL         = "/api/public/v4/live/entity"
+	LiveFeedURL         = "/api/public/v4/live/entity/feed"
+	LiveGetViewURL      = "/api/public/v4/live/entity/tracking/current-view"
+	LiveConvertToVODURL = "/api/public/v4/live/entity/dvr/convert-to-vod"
+	LiveRecordedURL     = "/api/public/v4/live/entity/dvr"
 	// Response
-	CreateLiveSuccessResponse         = "{\r\n    \"data\": {\r\n        \"id\": \"8dbf3639-57fb-404f-b013-161c10a237e4\"\r\n    },\r\n    \"version\": 3,\r\n    \"datetime\": \"2019-02-27T13:03:52.547Z\",\r\n    \"policy\": \"public\",\r\n    \"requestId\": \"6dc69fb1-2652-47f7-98b9-fa6a980f4b66\",\r\n    \"serviceName\": \"api\",\r\n    \"message\": \"OK\",\r\n    \"code\": 200,\r\n    \"type\": \"SUCCESS\"\r\n}"
+	CreateLiveSuccessResponse         = "{\"data\":{\"id\":\"" + LiveId + "\",\"appId\":\"d6342a7b4a6c40d2b851a54a4442ea83\",\"name\":\"Test Event Go\",\"description\":\"This is for test event\",\"mode\":\"pull\",\"resourceMode\":\"redundant\",\"encode\":1,\"channelName\":\"fdb5e931-c904-4251-93f2-c9d76bbfffc3\",\"thumbnail\":\"//image1.jpeg\",\"drm\":\"0\",\"dvr\":\"1\"},\"version\":4,\"datetime\":\"2019-03-14T03:47:21.828Z\",\"policy\":\"public\",\"requestId\":\"b2378f51-5f18-4236-b893-f2f0c8f18a17\",\"serviceName\":\"api-v4\",\"message\":\"OK\",\"code\":200,\"type\":\"SUCCESS\"}"
 	CreateLiveFailedResponse          = "{\r\n    \"code\": 422,\r\n    \"type\": \"ERROR\",\r\n    \"data\": [\r\n        {\r\n            \"type\": \"required\",\r\n            \"field\": \"name\",\r\n            \"message\": \"The 'name' field is required!\"\r\n        },\r\n        {\r\n            \"type\": \"required\",\r\n            \"field\": \"mode\",\r\n            \"message\": \"The 'mode' field is required!\"\r\n        },\r\n        {\r\n            \"type\": \"required\",\r\n            \"field\": \"resourceMode\",\r\n            \"message\": \"The 'resourceMode' field is required!\"\r\n        },\r\n        {\r\n            \"type\": \"required\",\r\n            \"field\": \"encode\",\r\n            \"message\": \"The 'encode' field is required!\"\r\n        }\r\n    ],\r\n    \"retryable\": false,\r\n    \"message\": \"Parameters validation error!\",\r\n    \"version\": 3,\r\n    \"datetime\": \"2019-02-27T14:59:41.928Z\",\r\n    \"policy\": \"public\",\r\n    \"requestId\": \"ef75260a-844e-4bbe-9cf2-9892a721950b\",\r\n    \"serviceName\": \"api\"\r\n}"
-	RetrieveLiveSuccessResponse       = "{\r\n    \"data\": {\r\n        \"id\": \"8dbf3639-57fb-404f-b013-161c10a237e4\",\r\n        \"name\": \"test event Go\",\r\n        \"description\": \"This is for test event\",\r\n        \"mode\": \"push\",\r\n        \"resourceMode\": \"single\",\r\n        \"encode\": 1,\r\n        \"channelName\": \"3c9a3c82-9594-406a-bc46-8acbe7b474e4\",\r\n        \"lastPresetId\": null,\r\n        \"lastFeedId\": null,\r\n        \"poster\": null,\r\n        \"thumbnail\": \"//image1.jpeg\",\r\n        \"linkPublishSocial\": null,\r\n        \"linkStream\": null,\r\n        \"lastPullInfo\": null,\r\n        \"lastPushInfo\": null,\r\n        \"lastProcess\": null,\r\n        \"eventType\": null,\r\n        \"drm\": \"0\",\r\n        \"dvr\": \"1\",\r\n        \"createdAt\": \"2019-02-27T12:47:29.000Z\",\r\n        \"updatedAt\": \"2019-02-27T12:47:29.000Z\"\r\n    },\r\n    \"version\": 3,\r\n    \"datetime\": \"2019-02-27T12:47:49.467Z\",\r\n    \"policy\": \"public\",\r\n    \"requestId\": \"9a962af4-7f14-4917-bb5a-1035e60bcef3\",\r\n    \"serviceName\": \"api\",\r\n    \"message\": \"OK\",\r\n    \"code\": 200,\r\n    \"type\": \"SUCCESS\"\r\n}"
+	RetrieveLiveSuccessResponse       = "{\"data\":{\"id\":\"" + LiveId + "\",\"name\":\"Test Event Go\",\"description\":\"This is for test event\",\"mode\":\"pull\",\"resourceMode\":\"redundant\",\"encode\":1,\"channelName\":\"fdb5e931-c904-4251-93f2-c9d76bbfffc3\",\"lastPresetId\":null,\"lastFeedId\":null,\"poster\":null,\"thumbnail\":\"//image1.jpeg\",\"linkPublishSocial\":null,\"lastPullInfo\":null,\"lastPushInfo\":null,\"lastProcess\":null,\"eventType\":null,\"drm\":0,\"dvr\":1,\"createdAt\":\"2019-03-14T03:47:21.000Z\",\"updatedAt\":\"2019-03-14T03:47:21.000Z\"},\"version\":4,\"datetime\":\"2019-03-14T03:47:21.893Z\",\"policy\":\"public\",\"requestId\":\"7055839f-dba4-43e2-9a6f-3f25c6bd27f3\",\"serviceName\":\"api-v4\",\"message\":\"OK\",\"code\":200,\"type\":\"SUCCESS\"}"
 	UpdateLiveSuccessResponse         = "{\r\n    \"data\": {\r\n        \"id\": \"8dbf3639-57fb-404f-b013-161c10a237e4\"\r\n    },\r\n    \"version\": 3,\r\n    \"datetime\": \"2019-02-27T13:08:16.401Z\",\r\n    \"policy\": \"public\",\r\n    \"requestId\": \"b78dedb7-435b-495e-9417-4fbe4aba8b68\",\r\n    \"serviceName\": \"api\",\r\n    \"message\": \"OK\",\r\n    \"code\": 200,\r\n    \"type\": \"SUCCESS\"\r\n}"
 	UpdateLiveFailedResponse          = ""
 	StartFeedLiveSuccessResponse      = "{\r\n    \"data\": {\r\n        \"id\": \"8dbf3639-57fb-404f-b013-161c10a237e4\"\r\n    },\r\n    \"version\": 3,\r\n    \"datetime\": \"2019-02-27T13:03:52.547Z\",\r\n    \"policy\": \"public\",\r\n    \"requestId\": \"6dc69fb1-2652-47f7-98b9-fa6a980f4b66\",\r\n    \"serviceName\": \"api\",\r\n    \"message\": \"OK\",\r\n    \"code\": 200,\r\n    \"type\": \"SUCCESS\"\r\n}"
@@ -28,26 +29,26 @@ const (
 
 var LiveDataMock = &uiza.LiveData{
 	ID:                *uiza.String(LiveId),
-	Name:              *uiza.String("test event Go"),
+	Name:              *uiza.String("Test Event Go"),
 	Description:       *uiza.String("This is for test event"),
-	Mode:              *uiza.String("push"),
-	ResourceMode:      *uiza.String("single"),
-	Encode:            *uiza.Int64(1),
-	ChannelName:       *uiza.String("3c9a3c82-9594-406a-bc46-8acbe7b474e4"),
+	Mode:              *uiza.String("pull"),
+	ResourceMode:      uiza.ResourceModeType("redundant"),
+	Encode:            uiza.EncodeType(1),
+	ChannelName:       *uiza.String("fdb5e931-c904-4251-93f2-c9d76bbfffc3"),
 	LastPresetId:      *uiza.String(""),
 	LastFeedId:        *uiza.String(""),
 	Poster:            *uiza.String(""),
 	Thumbnail:         *uiza.String("//image1.jpeg"),
-	LinkPublishSocial: *uiza.String(""),
+	LinkPublishSocial: nil,
 	LinkStream:        nil,
-	LastPullInfo:      *uiza.String(""),
+	LastPullInfo:      nil,
 	LastPushInfo:      *uiza.String(""),
 	LastProcess:       *uiza.String(""),
 	EventType:         *uiza.String(""),
-	Drm:               *uiza.String("0"),
-	Dvr:               *uiza.String("1"),
-	CreatedAt:         *uiza.String("2019-02-27T12:47:29.000Z"),
-	UpdatedAt:         *uiza.String("2019-02-27T12:47:29.000Z"),
+	Drm:               uiza.DrmType(0),
+	Dvr:               uiza.DvrType(1),
+	CreatedAt:         *uiza.String("2019-03-14T03:47:21.000Z"),
+	UpdatedAt:         *uiza.String("2019-03-14T03:47:21.000Z"),
 }
 
 var LiveIdDataMock = &uiza.LiveIDData{ID: *uiza.String(LiveId)}
@@ -85,20 +86,22 @@ type LiveClientMock struct {
 }
 
 func (m *LiveClientMock) Do(req *http.Request) (*http.Response, error) {
-	dvrType := uiza.DvrTypeOne
-	resourceMode := uiza.ResourceModeSingle
+	var mode = uiza.ModeTypePull
+	var encode = uiza.EncodeTypeOne
+	var dvrType = uiza.DvrTypeOne
+	var resourceMode = uiza.ResourceModeRedundant
 	mockCallTest := []MockData{
 		{
 			method: "POST",
 			path:   LiveBaseURL,
 			params: &uiza.LiveCreateParams{
 				Name:         uiza.String("Test Event Go"),
-				Mode:         uiza.String("push"),
-				Encode:       uiza.Int64(1),
+				Mode:         &mode,
+				Encode:       &encode,
 				Dvr:          &dvrType,
 				Description:  uiza.String("This is for test event"),
-				Thumbnail:    uiza.String("//image1.jpeg"),
-				LinkStream:   []*string{uiza.String("https://playlist.m3u8")},
+				Thumbnail:    uiza.String("image1.jpeg"),
+				LinkStream:   []*string{uiza.String("playlist.m3u8")},
 				ResourceMode: &resourceMode,
 			},
 			responseString: CreateLiveSuccessResponse,
@@ -122,8 +125,8 @@ func (m *LiveClientMock) Do(req *http.Request) (*http.Response, error) {
 				ID:           uiza.String(LiveId),
 				Name:         uiza.String("Test Event Go Update"),
 				Dvr:          &dvrType,
-				Mode:         uiza.String("push"),
-				Encode:       uiza.Int64(1),
+				Mode:         &mode,
+				Encode:       &encode,
 				ResourceMode: &resourceMode,
 			},
 			responseString: UpdateLiveSuccessResponse,

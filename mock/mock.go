@@ -5,18 +5,18 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/uizaio/api-wrapper-go"
+	uiza "github.com/uizaio/api-wrapper-go"
 	"github.com/uizaio/api-wrapper-go/form"
 )
 
 const (
 	EntityId                  = "bd0d08b5-b42e-4bbf-84cf-9d685ac19b0c"
 	EntityId2                 = "a980990d-f500-4d8d-9d22-ce93d74b558d"
-	EntityBaseUrl             = "/api/public/v3/media/entity"
+	EntityBaseUrl             = "/api/public/v4/media/entity"
 	EntityPublishUrl          = EntityBaseUrl + "/publish"
 	EntitySearchUrl           = EntityBaseUrl + "/search"
 	EntityGetPublishStatusUrl = EntityPublishUrl + "/status"
-	GetAwsUploadKeyUrl        = "/api/public/v3/admin/app/config/aws"
+	GetAwsUploadKeyUrl        = "/api/public/v4/admin/app/config/aws"
 )
 
 const (
@@ -35,7 +35,7 @@ func getParamsString(params uiza.ParamsContainer) string {
 
 	bodyFormValue = &form.Values{}
 	form.AppendTo(bodyFormValue, params)
-	bodyFormValue.Set("appId", "")
+	bodyFormValue.Set("appId", uiza.AppID)
 	jsonObject, _ := bodyFormValue.MarshalJSON()
 	return string(jsonObject)
 }
@@ -44,8 +44,8 @@ func getParamsRawPath(params uiza.ParamsContainer) string {
 	var bodyFormValue *form.Values
 
 	bodyFormValue = &form.Values{}
+	bodyFormValue.Set("appId", uiza.AppID)
 	form.AppendTo(bodyFormValue, params)
-	bodyFormValue.Set("appId", "")
 	return bodyFormValue.Encode()
 }
 
@@ -64,7 +64,6 @@ func getMockResponse(req *http.Request, mockCallTest []MockData) (*http.Response
 	buf.ReadFrom(req.Body)
 	bodyString := buf.String()
 	for _, mockData := range mockCallTest {
-
 		if mockData.method == req.Method && mockData.path == req.URL.Path {
 			if mockData.params == nil {
 				return getSuccessResponse(mockData.responseString), nil

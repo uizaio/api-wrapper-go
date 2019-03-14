@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/uizaio/api-wrapper-go"
+	uiza "github.com/uizaio/api-wrapper-go"
 	mockService "github.com/uizaio/api-wrapper-go/mock"
 	_ "github.com/uizaio/api-wrapper-go/testing"
 )
@@ -15,6 +15,11 @@ type Test struct {
 	want    interface{}
 	wantErr bool
 }
+
+var mode = uiza.ModeTypePull
+var encode = uiza.EncodeTypeOne
+var dvrType = uiza.DvrTypeOne
+var resourceMode = uiza.ResourceModeRedundant
 
 func init() {
 	uizaMockBackend := uiza.GetBackendWithConfig(
@@ -46,11 +51,11 @@ func TestRetrieve(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got, err := Retrieve(tt.args.(args).params)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("Retrieve() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("Retrieve() error = %v\n wantErr %v \n", err, tt.wantErr)
 				return
 			}
 			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("Retrieve() = %v, want %v", got, tt.want)
+				t.Errorf("Retrieve() = %v\n want %v \n", got, tt.want)
 			}
 		})
 	}
@@ -61,21 +66,18 @@ func TestCreate(t *testing.T) {
 		params *uiza.LiveCreateParams
 	}
 
-	dvrType := uiza.DvrTypeOne
-	resourceMode := uiza.ResourceModeSingle
-
 	tests := []Test{
 		{
 			name: "Create Success",
 			args: args{
 				params: &uiza.LiveCreateParams{
 					Name:         uiza.String("Test Event Go"),
-					Mode:         uiza.String("push"),
-					Encode:       uiza.Int64(1),
+					Mode:         &mode,
+					Encode:       &encode,
 					Dvr:          &dvrType,
 					Description:  uiza.String("This is for test event"),
-					Thumbnail:    uiza.String("//image1.jpeg"),
-					LinkStream:   []*string{uiza.String("https://playlist.m3u8")},
+					Thumbnail:    uiza.String("image1.jpeg"),
+					LinkStream:   []*string{uiza.String("playlist.m3u8")},
 					ResourceMode: &resourceMode,
 				},
 			},
@@ -113,9 +115,6 @@ func TestUpdate(t *testing.T) {
 		params *uiza.LiveUpdateParams
 	}
 
-	dvrType := uiza.DvrTypeOne
-	resourceMode := uiza.ResourceModeSingle
-
 	tests := []Test{
 		{
 			name: "Update Success",
@@ -123,9 +122,9 @@ func TestUpdate(t *testing.T) {
 				params: &uiza.LiveUpdateParams{
 					ID:           uiza.String(mockService.LiveId),
 					Name:         uiza.String("Test Event Go Update"),
+					Mode:         &mode,
+					Encode:       &encode,
 					Dvr:          &dvrType,
-					Mode:         uiza.String("push"),
-					Encode:       uiza.Int64(1),
 					ResourceMode: &resourceMode,
 				},
 			},
@@ -258,8 +257,7 @@ func TestListRecorded(t *testing.T) {
 			name: "List Record Success",
 			args: args{
 				params: &uiza.LiveListRecordedParams{
-					Page:  uiza.Int64(2),
-					Limit: uiza.Int64(2),
+					ID: uiza.String(mockService.LiveId),
 				},
 			},
 			want:    mockService.LiveRecordedDataListMock,
