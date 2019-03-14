@@ -1,8 +1,9 @@
 package live
 
 import (
-	"github.com/uizaio/api-wrapper-go"
 	"net/http"
+
+	uiza "github.com/uizaio/api-wrapper-go"
 )
 
 type Client struct {
@@ -11,18 +12,19 @@ type Client struct {
 }
 
 const (
-	baseURL         = "/api/public/v3/live/entity"
-	startFeedURL    = "/api/public/v3/live/entity/feed"
-	getViewURL      = "/api/public/v3/live/entity/tracking/current-view"
-	stopFeedURL     = "/api/public/v3/live/entity/feed"
-	convertToVODURL = "/api/public/v3/live/entity/dvr/convert-to-vod"
-	recordedURL     = "/api/public/v3/live/entity/dvr"
+	baseURL         = "/api/public/v4/live/entity"
+	startFeedURL    = "/api/public/v4/live/entity/feed"
+	getViewURL      = "/api/public/v4/live/entity/tracking/current-view"
+	stopFeedURL     = "/api/public/v4/live/entity/feed"
+	convertToVODURL = "/api/public/v4/live/entity/dvr/convert-to-vod"
+	recordedURL     = "/api/public/v4/live/entity/dvr"
 )
 
 // Get Backend Client
 func getC() Client {
 	b := uiza.GetBackend(uiza.APIBackend)
 	b.SetClientType(uiza.LiveClientType)
+	b.SetAppID(uiza.AppID)
 	return Client{b, uiza.Key}
 }
 

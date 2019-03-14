@@ -295,7 +295,7 @@ func (s *BackendImplementation) NewRequest(method, path, key, contentType string
 	}
 
 	path = s.URL + path
-	s.Logger.Printf("path: %v", path)
+	s.Logger.Printf("NewRequest path: %v", path)
 	// Body is set later by `Do`.
 	req, err := http.NewRequest(method, path, nil)
 	if err != nil {

@@ -7,11 +7,32 @@ const (
 	ResourceModeRedundant ResourceModeType = "redundant"
 )
 
-type DvrType int
+type ModeType string
+
+const (
+	ModeTypePull ModeType = "pull"
+	ModeTypePush ModeType = "push"
+)
+
+type DvrType int64
 
 const (
 	DvrTypeZero DvrType = 0
 	DvrTypeOne  DvrType = 1
+)
+
+type EncodeType int64
+
+const (
+	EncodeTypeZero EncodeType = 0
+	EncodeTypeOne  EncodeType = 1
+)
+
+type DrmType int64
+
+const (
+	DrmTypeZero DrmType = 0
+	DrmTypeOne  DrmType = 1
 )
 
 type LiveRetrieveParams struct {
@@ -20,21 +41,33 @@ type LiveRetrieveParams struct {
 }
 
 type LiveIDParams struct {
-	Params `form:"*"`
-	ID     *string `form:"id"`
+	Params   `form:"*"`
+	ID       *string   `form:"id"`
+	PullInfo *PullInfo `form:"pullInfo"`
 }
-
+type PublishSocialLink struct {
+	address   string
+	streamKey string
+}
+type PullInfo interface{}
 type LiveCreateParams struct {
 	Params            `form:"*"`
-	Name              *string           `form:"name"`
-	Mode              *string           `form:"mode"`
-	Encode            *int64            `form:"encode"`
-	Dvr               *DvrType          `form:"dvr"`
-	Description       *string           `form:"description"`
-	LinkPublishSocial []*string         `form:"linkPublishSocial"`
-	Thumbnail         *string           `form:"thumbnail"`
-	LinkStream        []*string         `form:"linkStream"`
-	ResourceMode      *ResourceModeType `form:"resourceMode"`
+	Name              *string              `form:"name"`
+	Description       *string              `form:"description"`
+	Mode              *ModeType            `form:"mode"`
+	ResourceMode      *ResourceModeType    `form:"resourceMode"`
+	Encode            *EncodeType          `form:"encode"`
+	Dvr               *DvrType             `form:"dvr"`
+	Drm               *DrmType             `form:"drm"`
+	LastPresetID      *string              `form:"lastPresetId"`
+	LastFeedID        *string              `form:"lastFeedId"`
+	Poster            *string              `form:"poster"`
+	Thumbnail         *string              `form:"thumbnail"`
+	LinkPublishSocial []*PublishSocialLink `form:"linkPublishSocial"`
+	LinkStream        []*string            `form:"linkStream"`
+	LastPullInfo      *PullInfo            `form:"lastPullInfo"`
+	LastProcess       *string              `form:"lastProcess"`
+	EventType         *string              `form:"eventType"`
 }
 
 type LiveGetViewData struct {
@@ -60,43 +93,54 @@ type LiveResponse struct {
 }
 
 type LiveData struct {
-	ID                string   `json:"id"`
-	Name              string   `json:"name"`
-	Description       string   `json:"description"`
-	Mode              string   `json:"mode"`
-	ResourceMode      string   `json:"resourceMode"`
-	Encode            int64    `json:"encode"`
-	ChannelName       string   `json:"channelName"`
-	LastPresetId      string   `json:"lastPresetId"`
-	LastFeedId        string   `json:"lastFeedId"`
-	Poster            string   `json:"poster"`
-	Thumbnail         string   `json:"thumbnail"`
-	LinkPublishSocial string   `json:"linkPublishSocial"`
-	LinkStream        []string `json:"linkStream"`
-	LastPullInfo      string   `json:"lastPullInfo"`
-	LastPushInfo      string   `json:"lastPushInfo"`
-	LastProcess       string   `json:"lastProcess"`
-	EventType         string   `json:"eventType"`
-	Drm               string   `json:"drm"`
-	Dvr               string   `json:"dvr"`
-	CreatedAt         string   `json:"createdAt"`
-	UpdatedAt         string   `json:"updatedAt"`
+	ID                string              `json:"id"`
+	Name              string              `json:"name"`
+	Description       string              `json:"description"`
+	Mode              string              `json:"mode"`
+	ResourceMode      ResourceModeType    `json:"resourceMode"`
+	Encode            EncodeType          `json:"encode"`
+	ChannelName       string              `json:"channelName"`
+	LastPresetId      string              `json:"lastPresetId"`
+	LastFeedId        string              `json:"lastFeedId"`
+	Poster            string              `json:"poster"`
+	Thumbnail         string              `json:"thumbnail"`
+	LinkPublishSocial []PublishSocialLink `json:"linkPublishSocial"`
+	LinkStream        []string            `json:"linkStream"`
+	LastPullInfo      PullInfo            `json:"lastPullInfo"`
+	LastPushInfo      string              `json:"lastPushInfo"`
+	LastProcess       string              `json:"lastProcess"`
+	EventType         string              `json:"eventType"`
+	Drm               DrmType             `json:"drm"`
+	Dvr               DvrType             `json:"dvr"`
+	CreatedAt         string              `json:"createdAt"`
+	UpdatedAt         string              `json:"updatedAt"`
 }
 
 type LiveUpdateParams struct {
-	Params       `form:"*"`
-	ID           *string           `form:"id"`
-	Name         *string           `form:"name"`
-	Mode         *string           `form:"mode"`
-	Encode       *int64            `form:"encode"`
-	Dvr          *DvrType          `form:"dvr"`
-	ResourceMode *ResourceModeType `form:"resourceMode"`
+	Params            `form:"*"`
+	Name              *string              `json:"name"`
+	Description       *string              `json:"description"`
+	Mode              *ModeType            `json:"mode"`
+	ResourceMode      *ResourceModeType    `json:"resourceMode"`
+	Encode            *EncodeType          `json:"encode"`
+	Drm               *DrmType             `json:"drm"`
+	Dvr               *DvrType             `json:"dvr"`
+	LastPresetID      *string              `json:"lastPresetId"`
+	LastFeedID        *string              `json:"lastFeedId"`
+	Poster            *string              `json:"poster"`
+	Thumbnail         *string              `json:"thumbnail"`
+	LinkStream        []*string            `json:"linkStream"`
+	LastPullInfo      *PullInfo            `json:"lastPullInfo"`
+	LastPushInfo      *string              `json:"lastPushInfo"`
+	LinkPublishSocial []*PublishSocialLink `json:"linkPublishSocial"`
+	LastProcess       *string              `json:"lastProcess"`
+	EventType         *string              `json:"eventType"`
+	ID                *string              `json:"id"`
 }
 
 type LiveListRecordedParams struct {
 	Params `form:"*"`
-	Page   *int64 `form:"page"`
-	Limit  *int64 `form:"limit"`
+	ID     *string `json:"id"`
 }
 
 type LiveListRecordedResponse struct {
