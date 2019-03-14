@@ -47,7 +47,7 @@ import (
     uiza "github.com/uizaio/api-wrapper-go"
     "github.com/uizaio/api-wrapper-go/callback"
 )
-params := &uiza.CallbackIDParams{ID: uiza.String("Your ID")}
+params := &uiza.CallbackIDParams{}
 response, _ := callback.Retrieve(params)
 log.Printf("%v\n", response)
 ```

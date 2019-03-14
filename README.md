@@ -30,7 +30,7 @@ import (
 )
 
 func init() {
-  Uiza.WorkspaceAPIDomain = "your-workspace-api-domain.uiza.co"
+  Uiza.AppID = "your-AppId"
   Uiza.Key = "your-API-key"
 }
 
@@ -46,7 +46,7 @@ import (
 )
 
 func init() {
-  Uiza.WorkspaceAPIDomain = "your-workspace-api-domain.uiza.co"
+  Uiza.AppID = "your-AppId"
   Uiza.Key = "your-API-key"
 
   // custom your transport of httpClient
