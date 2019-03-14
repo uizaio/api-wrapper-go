@@ -80,7 +80,7 @@ var EnableTelemetry = false
 var Key string
 
 // AppID.
-var AppID string
+var AppID = ""
 
 // Workspace API domain.
 var WorkspaceAPIDomain = "https://stag-ap-southeast-1-api.uizadev.io/"

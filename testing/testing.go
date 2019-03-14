@@ -6,5 +6,5 @@ import (
 
 func init() {
 	uiza.Key = ""
-	uiza.WorkspaceAPIDomain = ""
+	uiza.AppID = "Input Your AppID Here"
 }
