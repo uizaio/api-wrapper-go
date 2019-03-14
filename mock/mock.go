@@ -5,7 +5,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	uiza "github.com/uizaio/api-wrapper-go"
+	"github.com/uizaio/api-wrapper-go"
 	"github.com/uizaio/api-wrapper-go/form"
 )
 
@@ -35,6 +35,7 @@ func getParamsString(params uiza.ParamsContainer) string {
 
 	bodyFormValue = &form.Values{}
 	form.AppendTo(bodyFormValue, params)
+	bodyFormValue.Set("appId", "")
 	jsonObject, _ := bodyFormValue.MarshalJSON()
 	return string(jsonObject)
 }
@@ -44,6 +45,7 @@ func getParamsRawPath(params uiza.ParamsContainer) string {
 
 	bodyFormValue = &form.Values{}
 	form.AppendTo(bodyFormValue, params)
+	bodyFormValue.Set("appId", "")
 	return bodyFormValue.Encode()
 }
 

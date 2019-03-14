@@ -11,9 +11,11 @@ const (
 type CategoryCreateParams struct {
 	Params      `form:"*"`
 	Name        *string       `form:"name"`
+	Slug        *string       `form:"slug"`
 	Type        *CategoryType `form:"type"`
 	Description *string       `form:"description"`
 	OrderNumber *int64        `form:"orderNumber"`
+	Status      *int64        `form:"status"`
 	Icon        *string       `form:"icon"`
 }
 
@@ -39,6 +41,13 @@ type CategoryData struct {
 }
 
 type CategoryIDParams struct {
+	Params   `form:"*"`
+	ID       *string       `form:"id"`
+	EntityID *string       `form:"entityId"`
+	Type     *CategoryType `form:"type"`
+}
+
+type CategoryDeleteParams struct {
 	Params `form:"*"`
 	ID     *string `form:"id"`
 }
@@ -51,16 +60,18 @@ type CategoryUpdateParams struct {
 	Params      `form:"*"`
 	ID          *string       `form:"id"`
 	Name        *string       `form:"name"`
+	Slug        *string       `form:"slug"`
 	Type        *CategoryType `form:"type"`
 	Description *string       `form:"description"`
 	OrderNumber *int64        `form:"orderNumber"`
+	Status      *int64        `form:"status"`
 	Icon        *string       `form:"icon"`
 }
 
 type CategoryRelationParams struct {
-	Params      `form:"*"`
-	EntityId    *string   `form:"entityId"`
-	MetadataIds []*string `form:"metadataIds"`
+	Params     `form:"*"`
+	EntityIds  []*string `form:"entityIds"`
+	MetadataId *string   `form:"metadataId"`
 }
 
 type CategoryRelationResponse struct {
