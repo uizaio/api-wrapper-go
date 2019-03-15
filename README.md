@@ -72,14 +72,6 @@ func init() {
 }
 ```
 
-## User Management
-
-You can manage user with APIs user. Uiza have 2 levels of user
-Admin - This account will have the highest priority, can have permission to create & manage users.
-User - This account level is under Admin level. It only manages APIs that relates to this account.
-
-See details [here](https://docs.uiza.io/?go#user-management).
-
 ## Entity
 
 These below APIs used to take action with your media files (we called Entity)
@@ -104,10 +96,6 @@ See details [here](https://docs.uiza.io/?go#live-streaming).
 
 Callback used to retrieve an information for Uiza to your server, so you can have a trigger notice about an entity is upload completed and .
 See details [here](https://docs.uiza.io/?go#callback).
-
-## Analytic
-
-See details [here](https://docs.uiza.io/?go#analytic).
 
 ## Development
 
