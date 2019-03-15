@@ -87,7 +87,7 @@ See details [here](https://docs.uiza.io/?go#category).
 You can add your storage (FTP, AWS S3) with UIZA. After synced, you can select your content easier from your storage to create entity.
 See details [here](https://docs.uiza.io/?go#storage).
 
-## Live Streaming
+## Live
 
 These APIs used to create and manage live streaming event.
 See details [here](https://docs.uiza.io/?go#live-streaming).
