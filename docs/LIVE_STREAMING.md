@@ -119,9 +119,11 @@ import (
 dvrType := uiza.DvrTypeOne
 resourceMode := uiza.ResourceModeSingle
 params := &uiza.LiveUpdateParams{
-    ID: uiza.String("5c607bc8-1063-4025-ad36-6c6516a7dd5b"),
-    Name: uiza.String("Live streaming Update name"),
-    Dvr: &dvrType,
+    ID:           uiza.String(mockService.LiveId),
+    Name:         uiza.String("Test Event Go Update"),
+    Mode:         &mode,
+    Encode:       &encode,
+    Dvr:          &dvrType,
     ResourceMode: &resourceMode,
 }
 response, _ := live.Update(params)
