@@ -106,18 +106,3 @@ func (c Client) DeleteRelation(params *uiza.CategoryRelationParams) ([]*uiza.Cat
 
 	return categoryRelationData.Data, err
 }
-
-func List(params *uiza.CategoryListParams) ([]*uiza.CategoryData, error) {
-	return getC().List(params)
-}
-
-func (c Client) List(params *uiza.CategoryListParams) ([]*uiza.CategoryData, error) {
-	category := &uiza.CategoryListResponse{}
-	err := c.B.Call(http.MethodGet, baseURL, c.Key, params, category)
-
-	ret := make([]*uiza.CategoryData, len(category.Data))
-	for i, v := range category.Data {
-		ret[i] = v
-	}
-	return ret, err
-}

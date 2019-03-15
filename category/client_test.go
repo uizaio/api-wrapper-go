@@ -115,38 +115,6 @@ func TestRetrieve(t *testing.T) {
 	}
 }
 
-func TestList(t *testing.T) {
-	type args struct {
-		params *uiza.CategoryListParams
-	}
-
-	tests := []Test{
-		{
-			name: "Get list Success",
-			args: args{
-				params: &uiza.CategoryListParams{
-					Page:  uiza.Int64(1),
-					Limit: uiza.Int64(2),
-				},
-			},
-			want:    mockService.CategoryListDataMock,
-			wantErr: false,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			got, err := List(tt.args.(args).params)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("List() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("List() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
 func TestUpdate(t *testing.T) {
 	type args struct {
 		params *uiza.CategoryUpdateParams
