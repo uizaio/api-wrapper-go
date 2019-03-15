@@ -75,55 +75,6 @@ Example Response
      "updatedAt": "2018-06-18T04:29:05.000Z"
 }
 ```
-## Retrieve category list
-Get all category
-See details [here](https://docs.uiza.io/#retrieve-category-list).
-```golang
-import (
-	"github.com/uizaio/api-wrapper-go"
-	"github.com/uizaio/api-wrapper-go/category"
-)
-
-params := &uiza.CategoryListParams{
-    Page:uiza.Int64(2),
-    Limit:uiza.Int64(10),
-}
-listData, _ := category.List(params)
-for _, v := range listData {
-    log.Printf("%v\n", v)
-}
-```
-
-Example Response
-
-```golang
-[
-    {
-        "id": "f932aa79-852a-41f7-9adc-19935034f944",
-        "name": "Playlist sample",
-        "description": "Playlist desciption",
-        "slug": "playlist-sample",
-        "type": "playlist",
-        "orderNumber": 3,
-        "icon": "/example.com/image002.png",
-        "status": 1,
-        "createdAt": "2018-06-18T04:29:05.000Z",
-        "updatedAt": "2018-06-18T04:29:05.000Z"
-    },
-    {
-        "id": "ab54db88-0c8c-4928-b1be-1e7120ad2c39",
-        "name": "Folder sample",
-        "description": "Folder's description",
-        "slug": "folder-sample",
-        "type": "folder",
-        "orderNumber": 1,
-        "icon": "/example.com/icon.png",
-        "status": 1,
-        "createdAt": "2018-06-18T03:17:07.000Z",
-        "updatedAt": "2018-06-18T03:17:07.000Z"
-    }
-]
-```
 ## Update category
 Update information of category
 See details [here](https://docs.uiza.io/#update-category).
