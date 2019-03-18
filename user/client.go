@@ -1,8 +1,9 @@
 package user
 
 import (
-	"github.com/uizaio/api-wrapper-go"
 	"net/http"
+
+	uiza "github.com/uizaio/api-wrapper-go"
 )
 
 type Client struct {
@@ -11,15 +12,16 @@ type Client struct {
 }
 
 const (
-	baseURL   = "/api/public/v3/admin/user"
-	updateURL = "/api/public/v3/admin/user/changepassword"
-	logoutURL = "/api/public/v3/admin/user/logout"
+	baseURL   = "/api/public/v4/admin/user"
+	updateURL = "/api/public/v4/admin/user/changepassword"
+	logoutURL = "/api/public/v4/admin/user/logout"
 )
 
 // Get Backend Client
 func getC() Client {
 	b := uiza.GetBackend(uiza.APIBackend)
 	b.SetClientType(uiza.UserClientType)
+	b.SetAppID(uiza.AppID)
 	return Client{b, uiza.Key}
 }
 
@@ -33,23 +35,6 @@ func (c Client) Retrieve(params *uiza.UserIDParams) (*uiza.UserData, error) {
 	err := c.B.Call(http.MethodGet, baseURL, c.Key, params, userResponse)
 
 	return userResponse.Data, err
-}
-
-func Create(params *uiza.UserCreateParams) (*uiza.UserData, error) {
-	return getC().Create(params)
-}
-
-func (c Client) Create(params *uiza.UserCreateParams) (*uiza.UserData, error) {
-	userIDData := &uiza.UserIDResponse{}
-	err := c.B.Call(http.MethodPost, baseURL, c.Key, params, userIDData)
-
-	if err != nil {
-		return nil, err
-	}
-
-	userIDParam := &uiza.UserIDParams{ID: uiza.String(userIDData.Data.ID)}
-
-	return c.Retrieve(userIDParam)
 }
 
 func Update(params *uiza.UserUpdateParams) (*uiza.UserData, error) {
@@ -76,6 +61,7 @@ func List(params *uiza.UserListParams) ([]*uiza.UserData, error) {
 
 func (c Client) List(params *uiza.UserListParams) ([]*uiza.UserData, error) {
 	user := &uiza.UserListResponse{}
+
 	err := c.B.Call(http.MethodGet, baseURL, c.Key, params, user)
 
 	ret := make([]*uiza.UserData, len(user.Data))
@@ -84,17 +70,6 @@ func (c Client) List(params *uiza.UserListParams) ([]*uiza.UserData, error) {
 	}
 
 	return ret, err
-}
-
-func Delete(params *uiza.UserIDParams) (*uiza.UserIDData, error) {
-	return getC().Delete(params)
-}
-
-func (c Client) Delete(params *uiza.UserIDParams) (*uiza.UserIDData, error) {
-	user := &uiza.UserIDResponse{}
-	err := c.B.Call(http.MethodDelete, baseURL, c.Key, params, user)
-
-	return user.Data, err
 }
 
 func ChangePassword(params *uiza.UserChangePasswordParams) (*uiza.UserIDData, error) {

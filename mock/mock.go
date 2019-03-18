@@ -44,8 +44,8 @@ func getParamsRawPath(params uiza.ParamsContainer) string {
 	var bodyFormValue *form.Values
 
 	bodyFormValue = &form.Values{}
-	bodyFormValue.Set("appId", uiza.AppID)
 	form.AppendTo(bodyFormValue, params)
+	bodyFormValue.Set("appId", uiza.AppID)
 	return bodyFormValue.Encode()
 }
 
