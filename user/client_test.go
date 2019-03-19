@@ -136,9 +136,9 @@ func TestChangePassword(t *testing.T) {
 			name: "ChangePassword Success",
 			args: args{
 				params: &uiza.UserChangePasswordParams{
-					ID:          uiza.String(mockService.UserIdChangePassword),
-					OldPassword: uiza.String("S57Eb{:aMZhW=)G$"),
-					NewPassword: uiza.String("S57Eb{:aMZhW=)G$"),
+					UserID:      uiza.String("5167cf93-6fcd-454d-80a7-92f1b2d81fd4"),
+					OldPassword: uiza.String("Huulockfc1"),
+					NewPassword: uiza.String("Huulockfc1"),
 				},
 			},
 			want:    mockService.UserChangePasswordDataMock,
@@ -175,7 +175,7 @@ func TestLogOut(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := LogOut(tt.args.(args).params)
+			got, err := LogOut()
 			if (err != nil) != tt.wantErr {
 				t.Errorf("LogOut() error = %v, wantErr %v", err, tt.wantErr)
 				return

@@ -24,8 +24,8 @@ const (
 	RetrieveUserSuccessResponse       = "{\"data\":{\"id\":\"" + UserId + "\",\"email\":\"lehoangtrung013@gmail.com\",\"dob\":null,\"name\":\"user_test Python\",\"status\":1,\"avatar\":null,\"createdAt\":\"2019-03-16T10:39:00.000Z\",\"updatedAt\":\"2019-03-18T02:59:32.000Z\"},\"version\":4,\"datetime\":\"2019-03-18T03:09:33.086Z\",\"policy\":\"public\",\"requestId\":\"839ddde8-d14d-4eaf-a0ea-69c506da88f0\",\"serviceName\":\"api-v4\",\"message\":\"OK\",\"code\":200,\"type\":\"SUCCESS\"}"
 	ListUserSuccessResponse           = "{\r\n    \"data\": [\r\n        {\r\n            \"id\": \"" + UserId + "\",\r\n            \"email\": \"lehoangtrung013@gmail.com\",\r\n            \"dob\": null,\r\n            \"name\": \"user_test Python\",\r\n            \"status\": 1,\r\n            \"avatar\": null,\r\n            \"createdAt\": \"2019-03-16T10:39:00.000Z\",\r\n            \"updatedAt\": \"2019-03-18T02:59:32.000Z\"\r\n        },\r\n        {\r\n            \"id\": \"" + UserId1 + "\",\r\n            \"email\": \"duyqt@uiza.io\",\r\n            \"dob\": null,\r\n            \"name\": null,\r\n            \"status\": 1,\r\n            \"avatar\": null,\r\n            \"createdAt\": \"2019-03-15T09:10:42.000Z\",\r\n            \"updatedAt\": \"2019-03-15T09:10:42.000Z\"\r\n        }\r\n    ],\r\n    \"version\": 4,\r\n    \"datetime\": \"2019-03-18T03:02:03.121Z\",\r\n    \"policy\": \"public\",\r\n    \"requestId\": \"f13e6212-edf4-494f-b4d0-7f4056a2af10\",\r\n    \"serviceName\": \"api-v4\",\r\n    \"message\": \"OK\",\r\n    \"code\": 200,\r\n    \"type\": \"SUCCESS\"\r\n}"
 	UpdateUserSuccessResponse         = "{\"data\":{\"id\":\"" + UserId + "\",\"email\":\"lehoangtrung013@gmail.com\",\"dob\":null,\"name\":\"user_update\",\"status\":1,\"avatar\":null,\"createdAt\":\"2019-03-16T10:39:00.000Z\",\"updatedAt\":\"2019-03-18T02:59:32.000Z\"},\"version\":4,\"datetime\":\"2019-03-18T03:09:33.086Z\",\"policy\":\"public\",\"requestId\":\"839ddde8-d14d-4eaf-a0ea-69c506da88f0\",\"serviceName\":\"api-v4\",\"message\":\"OK\",\"code\":200,\"type\":\"SUCCESS\"}"
-	ChangePasswordUserSuccessResponse = "{\"data\":{\"result\":\"ok\"},\"version\":3,\"datetime\":\"2019-03-04T04:08:27.288Z\",\"policy\":\"public\",\"requestId\":\"dd8af8e1-822a-47c2-a511-f0024d34ba84\",\"serviceName\":\"api\",\"message\":\"OK\",\"code\":200,\"type\":\"SUCCESS\"}"
-	LogoutUserSuccessResponse         = "{\"message\":\"Logout success\",\"code\":200,\"type\":\"SUCCESS\"}"
+	ChangePasswordUserSuccessResponse = "{\"data\":{\"id\":\"5167cf93-6fcd-454d-80a7-92f1b2d81fd4\",\"email\":\"dontsuckmyemail@gmail.com\",\"dob\":\"2019-02-27T00:00:00.000Z\",\"name\":\"user_test\",\"status\":1,\"avatar\":\"https://example.avatar.com/user_test.png\",\"createdAt\":\"2019-02-27T07:46:28.000Z\",\"updatedAt\":\"2019-03-19T02:29:47.000Z\"},\"version\":4,\"datetime\":\"2019-03-19T02:29:47.497Z\",\"policy\":\"public\",\"requestId\":\"68ea8c9b-afce-4499-a817-a0f98ac9303c\",\"serviceName\":\"api-v4\",\"message\":\"OK\",\"code\":200,\"type\":\"SUCCESS\"}"
+	LogoutUserSuccessResponse         = "{\"data\":{\"message\":\"success\"},\"message\":\"Logout success\",\"version\":4,\"datetime\":\"2019-03-19T03:10:41.249Z\",\"policy\":\"public\",\"requestId\":\"d4fc7333-e039-4a95-82ab-4c55cad62566\",\"serviceName\":\"api-v4\",\"code\":200,\"type\":\"SUCCESS\"}"
 )
 
 var UserDataMock = &uiza.UserData{
@@ -71,7 +71,7 @@ var UserDeleteDataMock = &uiza.UserIDData{
 }
 
 var UserChangePasswordDataMock = &uiza.UserIDData{
-	ID: *uiza.String(""),
+	ID: *uiza.String("5167cf93-6fcd-454d-80a7-92f1b2d81fd4"),
 }
 
 var UserLogoutDataMock = &uiza.UserLogOutResponse{
@@ -108,16 +108,16 @@ func (m *UserClientMock) Do(req *http.Request) (*http.Response, error) {
 			method: "POST",
 			path:   UserUpdateUrl,
 			params: &uiza.UserChangePasswordParams{
-				ID:          uiza.String(UserIdChangePassword),
-				OldPassword: uiza.String("S57Eb{:aMZhW=)G$"),
-				NewPassword: uiza.String("S57Eb{:aMZhW=)G$"),
+				UserID:      uiza.String("5167cf93-6fcd-454d-80a7-92f1b2d81fd4"),
+				OldPassword: uiza.String("Huulockfc1"),
+				NewPassword: uiza.String("Huulockfc1"),
 			},
 			responseString: ChangePasswordUserSuccessResponse,
 		},
 		{
 			method:         "POST",
 			path:           UserLogOutUrl,
-			params:         &uiza.UserIDParams{ID: uiza.String("")},
+			params:         nil,
 			responseString: LogoutUserSuccessResponse,
 		},
 	}

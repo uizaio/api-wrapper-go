@@ -28,13 +28,14 @@ type UserResponse struct {
 
 type UserListParams struct {
 	ListParams `form:"*"`
-	Page       *int64 `form:"page"`
-	Limit      *int64 `form:"limit"`
+	ID         *string `form:"id"`
+	Page       *int64  `form:"page"`
+	Limit      *int64  `form:"limit"`
 }
 
 type UserChangePasswordParams struct {
 	Params      `form:"*"`
-	ID          *string `form:"id"`
+	UserID      *string `form:"userId"`
 	OldPassword *string `form:"oldPassword"`
 	NewPassword *string `form:"newPassword"`
 }

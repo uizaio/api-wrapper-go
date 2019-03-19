@@ -61,7 +61,7 @@ func List(params *uiza.UserListParams) ([]*uiza.UserData, error) {
 
 func (c Client) List(params *uiza.UserListParams) ([]*uiza.UserData, error) {
 	user := &uiza.UserListResponse{}
-
+	params.ID = uiza.String("")
 	err := c.B.Call(http.MethodGet, baseURL, c.Key, params, user)
 
 	ret := make([]*uiza.UserData, len(user.Data))
@@ -83,13 +83,13 @@ func (c Client) ChangePassword(params *uiza.UserChangePasswordParams) (*uiza.Use
 	return user.Data, err
 }
 
-func LogOut(params *uiza.UserIDParams) (*uiza.UserLogOutResponse, error) {
-	return getC().LogOut(params)
+func LogOut() (*uiza.UserLogOutResponse, error) {
+	return getC().LogOut()
 }
 
-func (c Client) LogOut(params *uiza.UserIDParams) (*uiza.UserLogOutResponse, error) {
+func (c Client) LogOut() (*uiza.UserLogOutResponse, error) {
 	user := &uiza.UserLogOutResponse{}
-	err := c.B.Call(http.MethodPost, logoutURL, c.Key, params, user)
+	err := c.B.Call(http.MethodPost, logoutURL, c.Key, nil, user)
 
 	return user, err
 }
