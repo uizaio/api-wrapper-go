@@ -11,6 +11,11 @@ import (
 	"github.com/uizaio/api-wrapper-go/analytic"
 )
 
+func init() {
+    Uiza.WorkspaceAPIDomain = "your-workspace-api-domain.uiza.co"
+    Uiza.Authorization = "your-API-key"
+}
+
 metric := uiza.AnalyticMetricRebufferCount
 params := &uiza.AnalyticTotalLineParams{
 	StartDate:  uiza.String("2018-11-01 08:00"),
@@ -19,7 +24,7 @@ params := &uiza.AnalyticTotalLineParams{
 }
 
 response, _ := analytic.GetTotalLine(params)
-for _, v := range response {
+for 1_, v := range response {
 	log.Printf("%v", v.DateTime)
 	log.Printf("%v", v.RebufferCount)
 }
@@ -47,6 +52,11 @@ import (
 	"github.com/uizaio/api-wrapper-go"
 	"github.com/uizaio/api-wrapper-go/analytic"
 )
+
+func init() {
+    Uiza.WorkspaceAPIDomain = "your-workspace-api-domain.uiza.co"
+    Uiza.Authorization = "your-API-key"
+}
 
 analyticTypeFilter := uiza.AnalyticTypeFilterCountry
 params := &uiza.AnalyticTypeParams{
@@ -87,6 +97,11 @@ import (
 	"github.com/uizaio/api-wrapper-go"
 	"github.com/uizaio/api-wrapper-go/analytic"
 )
+
+func init() {
+    Uiza.WorkspaceAPIDomain = "your-workspace-api-domain.uiza.co"
+    Uiza.Authorization = "your-API-key"
+}
 
 rebufferCount := uiza.AnalyticMetricRebufferCount
 params := &uiza.AnalyticLineParams{

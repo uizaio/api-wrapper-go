@@ -1,10 +1,12 @@
 package analytic
 
 import (
-	"github.com/uizaio/api-wrapper-go"
 	"net/http"
+
+	uiza "github.com/uizaio/api-wrapper-go"
 )
 
+// Client for analytic
 type Client struct {
 	B   uiza.Backend
 	Key string
@@ -20,10 +22,10 @@ const (
 func getC() Client {
 	b := uiza.GetBackend(uiza.APIBackend)
 	b.SetClientType(uiza.AnalyticClientType)
-	return Client{b, uiza.Key}
+	return Client{b, uiza.Authorization}
 }
 
-// Total Line
+// GetTotalLine
 func GetTotalLine(params *uiza.AnalyticTotalLineParams) ([]*uiza.AnalyticTotalLineData, error) {
 	return getC().GetTotalLine(params)
 }

@@ -14,6 +14,11 @@ import (
     "github.com/uizaio/api-wrapper-go/entity"
 )
 
+func init() {
+    Uiza.WorkspaceAPIDomain = "your-workspace-api-domain.uiza.co"
+    Uiza.Authorization = "your-API-key"
+}
+
 var typeHTTP = uiza.InputTypeHTTP
 params :=  &uiza.EntityCreateParams{
     Name:      uiza.String("Sample Video"),
@@ -57,6 +62,11 @@ import (
     "github.com/uizaio/api-wrapper-go/entity"
 )
 
+func init() {
+    Uiza.WorkspaceAPIDomain = "your-workspace-api-domain.uiza.co"
+    Uiza.Authorization = "your-API-key"
+}
+
 params := &uiza.EntityRetrieveParams{ID: uiza.String("Your entity ID")}
 response, _ := entity.Retrieve(params)
 log.Printf("%s\n", response)
@@ -92,6 +102,11 @@ import (
     uiza "github.com/uizaio/api-wrapper-go"
     "github.com/uizaio/api-wrapper-go/entity"
 )
+
+func init() {
+    Uiza.WorkspaceAPIDomain = "your-workspace-api-domain.uiza.co"
+    Uiza.Authorization = "your-API-key"
+}
 
 params := &uiza.EntityListParams{}
 listEntity, _ := entity.List(params)
@@ -153,6 +168,12 @@ import (
     uiza "github.com/uizaio/api-wrapper-go"
     "github.com/uizaio/api-wrapper-go/entity"
 )
+
+func init() {
+    Uiza.WorkspaceAPIDomain = "your-workspace-api-domain.uiza.co"
+    Uiza.Authorization = "your-API-key"
+}
+
 params := &uiza.EntityUpdateParams{
     ID: uiza.String("Your entity ID"),
     Name: uiza.String("Update entity name"),
@@ -201,6 +222,11 @@ import (
     "github.com/uizaio/api-wrapper-go/entity"
 )
 
+func init() {
+    Uiza.WorkspaceAPIDomain = "your-workspace-api-domain.uiza.co"
+    Uiza.Authorization = "your-API-key"
+}
+
 params := &uiza.EntityDeleteParams{ID: uiza.String("Your entity ID")}
 response, _ := entity.Delete(params)
 log.Printf("%v\n", response)
@@ -223,6 +249,11 @@ import (
     uiza "github.com/uizaio/api-wrapper-go"
     "github.com/uizaio/api-wrapper-go/entity"
 )
+
+func init() {
+    Uiza.WorkspaceAPIDomain = "your-workspace-api-domain.uiza.co"
+    Uiza.Authorization = "your-API-key"
+}
 
 params := &uiza.EntitySearchParams{Keyword: uiza.String("Sample")}
 listEntity, _ := entity.Search(params)
@@ -294,6 +325,11 @@ import (
     "github.com/uizaio/api-wrapper-go/entity"
 )
 
+func init() {
+    Uiza.WorkspaceAPIDomain = "your-workspace-api-domain.uiza.co"
+    Uiza.Authorization = "your-API-key"
+}
+
 params := &uiza.EntityPublishParams{ID: uiza.String("Your entity ID")}
 response, _ := entity.Publish(params)
 log.Printf("%v\n", response)
@@ -317,6 +353,11 @@ import (
     "github.com/uizaio/api-wrapper-go/entity"
 )
 
+func init() {
+    Uiza.WorkspaceAPIDomain = "your-workspace-api-domain.uiza.co"
+    Uiza.Authorization = "your-API-key"
+}
+
 params := &uiza.EntityPublishParams{ID: uiza.String("Your entity ID")}
 response, _ := entity.GetStatusPublish(params)
 log.Printf("%v\n", response)
@@ -339,6 +380,11 @@ import (
     uiza "github.com/uizaio/api-wrapper-go"
     "github.com/uizaio/api-wrapper-go/entity"
 )
+
+func init() {
+    Uiza.WorkspaceAPIDomain = "your-workspace-api-domain.uiza.co"
+    Uiza.Authorization = "your-API-key"
+}
 
 response, _ := entity.GetAWSUploadKey()
 log.Printf("%v\n", response)

@@ -1,8 +1,9 @@
 package storage
 
 import (
-	uiza "github.com/uizaio/api-wrapper-go"
 	"net/http"
+
+	uiza "github.com/uizaio/api-wrapper-go"
 )
 
 // Client is used to invoke /Storage and storage-related APIs.
@@ -19,7 +20,7 @@ const (
 func getC() Client {
 	b := uiza.GetBackend(uiza.APIBackend)
 	b.SetClientType(uiza.StorageClientType)
-	return Client{b, uiza.Key}
+	return Client{b, uiza.Authorization}
 }
 
 // Add Storage API

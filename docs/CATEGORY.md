@@ -8,6 +8,11 @@ import (
 	"github.com/uizaio/api-wrapper-go/category"
 )
 
+func init() {
+    Uiza.WorkspaceAPIDomain = "your-workspace-api-domain.uiza.co"
+    Uiza.Authorization = "your-API-key"
+}
+
 var typeCategory = uiza.CategoryFolderType
 params := &uiza.CategoryCreateParams{
 	Name:        uiza.String("Category name example"),
@@ -45,6 +50,11 @@ import (
 	"github.com/uizaio/api-wrapper-go/category"
 )
 
+func init() {
+    Uiza.WorkspaceAPIDomain = "your-workspace-api-domain.uiza.co"
+    Uiza.Authorization = "your-API-key"
+}
+
 params := &uiza.CategoryIDParams{ID :uiza.String("Your category ID")}
 response, _ := category.Retrieve(params)
 log.Printf("%v\n", response)
@@ -75,6 +85,11 @@ import (
 	"github.com/uizaio/api-wrapper-go"
 	"github.com/uizaio/api-wrapper-go/category"
 )
+
+func init() {
+    Uiza.WorkspaceAPIDomain = "your-workspace-api-domain.uiza.co"
+    Uiza.Authorization = "your-API-key"
+}
 
 params := &uiza.CategoryListParams{
     Page:uiza.Int64(2),
@@ -125,7 +140,12 @@ import (
 	"github.com/uizaio/api-wrapper-go"
 	"github.com/uizaio/api-wrapper-go/category"
 )
-	
+    
+func init() {
+    Uiza.WorkspaceAPIDomain = "your-workspace-api-domain.uiza.co"
+    Uiza.Authorization = "your-API-key"
+}
+
 var typeCategory = uiza.CategoryFolderType
 params := &uiza.CategoryUpdateParams{
 	ID: uiza.String("Your category ID"),
@@ -163,6 +183,11 @@ import (
 	"github.com/uizaio/api-wrapper-go/category"
 )
 
+func init() {
+    Uiza.WorkspaceAPIDomain = "your-workspace-api-domain.uiza.co"
+    Uiza.Authorization = "your-API-key"
+}
+
 params := &uiza.CategoryIDParams{ID: uiza.String("Your category ID")}
 response, _ := category.Delete(params)
 log.Printf("%v", response)
@@ -183,7 +208,12 @@ import (
 	"github.com/uizaio/api-wrapper-go"
 	"github.com/uizaio/api-wrapper-go/category"
 )
-	
+
+func init() {
+    Uiza.WorkspaceAPIDomain = "your-workspace-api-domain.uiza.co"
+    Uiza.Authorization = "your-API-key"
+}
+
 params := &uiza.CategoryRelationParams{
 		EntityId: uiza.String("16ab25d3-fd0f-4568-8aa0-0339bbfd674f"),
 		MetadataIds: []*string{
@@ -220,6 +250,11 @@ import (
 	"github.com/uizaio/api-wrapper-go"
 	"github.com/uizaio/api-wrapper-go/category"
 )
+
+func init() {
+    Uiza.WorkspaceAPIDomain = "your-workspace-api-domain.uiza.co"
+    Uiza.Authorization = "your-API-key"
+}
 
 params := &uiza.CategoryRelationParams{
 		EntityId: uiza.String("16ab25d3-fd0f-4568-8aa0-0339bbfd674f"),

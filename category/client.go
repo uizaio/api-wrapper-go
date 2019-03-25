@@ -1,8 +1,9 @@
 package category
 
 import (
-	uiza "github.com/uizaio/api-wrapper-go"
 	"net/http"
+
+	uiza "github.com/uizaio/api-wrapper-go"
 )
 
 type Client struct {
@@ -19,7 +20,7 @@ const (
 func getC() Client {
 	b := uiza.GetBackend(uiza.APIBackend)
 	b.SetClientType(uiza.CategoryClientType)
-	return Client{b, uiza.Key}
+	return Client{b, uiza.Authorization}
 }
 
 func Retrieve(params *uiza.CategoryIDParams) (*uiza.CategoryData, error) {
