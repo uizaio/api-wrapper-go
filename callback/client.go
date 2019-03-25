@@ -1,8 +1,9 @@
 package callback
 
 import (
-	"github.com/uizaio/api-wrapper-go"
 	"net/http"
+
+	uiza "github.com/uizaio/api-wrapper-go"
 )
 
 type Client struct {
@@ -17,7 +18,7 @@ const (
 func getC() Client {
 	b := uiza.GetBackend(uiza.APIBackend)
 	b.SetClientType(uiza.CallbackClientType)
-	return Client{b, uiza.Key}
+	return Client{b, uiza.Authorization}
 }
 
 func Create(params *uiza.CallbackCreateParams) (*uiza.CallbackData, error) {

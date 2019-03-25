@@ -3,7 +3,7 @@ package entity
 import (
 	"net/http"
 
-	"github.com/uizaio/api-wrapper-go"
+	uiza "github.com/uizaio/api-wrapper-go"
 )
 
 // Client is used to invoke /Entity and entity-related APIs.
@@ -24,7 +24,7 @@ const (
 func getC() Client {
 	b := uiza.GetBackend(uiza.APIBackend)
 	b.SetClientType(uiza.EntityClientType)
-	return Client{b, uiza.Key}
+	return Client{b, uiza.Authorization}
 }
 
 // Search Entity by Keyword

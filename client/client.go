@@ -21,7 +21,7 @@ func (a *API) Init(key string, backends *uiza.Backends) {
 		}
 	}
 
-	a.Entity = &entity.Client{B: backends.API, Key: key}
+	a.Entity = &entity.Client{B: backends.API, Authorization: key}
 }
 
 // New creates a new Uiza client with the appropriate secret key

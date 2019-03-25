@@ -20,7 +20,7 @@ type Response struct {
 }
 
 func setupClientMock() {
-	uiza.Key = ""
+	uiza.Authorization = ""
 	uiza.WorkspaceAPIDomain = "https://localhost"
 	uizaMockBackend := uiza.GetBackendWithConfig(
 		uiza.APIBackend,
