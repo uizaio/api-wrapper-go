@@ -53,6 +53,11 @@ import (
     "github.com/uizaio/api-wrapper-go/storage"
 )
 
+func init() {
+    Uiza.WorkspaceAPIDomain = "your-workspace-api-domain.uiza.co"
+    Uiza.Authorization = "your-API-key"
+}
+
 params := &uiza.StorageRetrieveParams{ID: uiza.String("Your entity ID")}
 response, _ := storage.Retrieve(params)
 log.Printf("%v\n", response)
@@ -93,6 +98,11 @@ import (
     uiza "github.com/uizaio/api-wrapper-go"
     "github.com/uizaio/api-wrapper-go/storage"
 )
+
+func init() {
+    Uiza.WorkspaceAPIDomain = "your-workspace-api-domain.uiza.co"
+    Uiza.Authorization = "your-API-key"
+}
 
 params :=  &uiza.StorageUpdateParams{
 	ID:          uiza.String("f3a94046-b1de-40db-95b6-84cf85b9352f"),
@@ -136,6 +146,11 @@ import (
     uiza "github.com/uizaio/api-wrapper-go"
     "github.com/uizaio/api-wrapper-go/storage"
 )
+
+func init() {
+    Uiza.WorkspaceAPIDomain = "your-workspace-api-domain.uiza.co"
+    Uiza.Authorization = "your-API-key"
+}
 
 params := &uiza.StorageRemoveParams{ID: uiza.String("Your entity ID")}
 response, _ := storage.Remove(params)

@@ -31,7 +31,7 @@ import (
 
 func init() {
   Uiza.WorkspaceAPIDomain = "your-workspace-api-domain.uiza.co"
-  Uiza.Key = "your-API-key"
+  Uiza.Authorization = "your-API-key"
 }
 
 ```
@@ -47,7 +47,7 @@ import (
 
 func init() {
   Uiza.WorkspaceAPIDomain = "your-workspace-api-domain.uiza.co"
-  Uiza.Key = "your-API-key"
+  Uiza.Authorization = "your-API-key"
 
   // custom your transport of httpClient
   transport := &http.Transport{
