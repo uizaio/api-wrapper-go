@@ -26,7 +26,7 @@ func getC() Client {
 	b := uiza.GetBackend(uiza.APIBackend)
 	b.SetClientType(uiza.EntityClientType)
 	b.SetAppID(uiza.AppID)
-	return Client{b, uiza.Key}
+	return Client{b, uiza.Authorization}
 }
 
 // Search Entity by Keyword

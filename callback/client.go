@@ -18,7 +18,7 @@ func getC() Client {
 	b := uiza.GetBackend(uiza.APIBackend)
 	b.SetClientType(uiza.CallbackClientType)
 	b.SetAppID(uiza.AppID)
-	return Client{b, uiza.Key}
+	return Client{b, uiza.Authorization}
 }
 
 func Create(params *uiza.CallbackCreateParams) (*uiza.CallbackData, error) {

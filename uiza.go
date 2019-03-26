@@ -77,7 +77,7 @@ const (
 var EnableTelemetry = false
 
 // Key is the Uiza API key used globally in the binding.
-var Key string
+var Authorization string
 
 // AppID.
 var AppID = ""

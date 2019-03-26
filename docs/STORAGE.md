@@ -16,6 +16,12 @@ import (
     "github.com/uizaio/api-wrapper-go/storage"
 )
 
+
+func init() {
+    Uiza.AppID = "your app id"
+    Uiza.Authorization = "your-API-key"
+}
+
 var storageType = uiza.StorageTypeFtp
 params :=  &uiza.StorageAddParams{
     Name: uiza.String("FTP Uiza"),
@@ -53,6 +59,10 @@ import (
     uiza "github.com/uizaio/api-wrapper-go"
     "github.com/uizaio/api-wrapper-go/storage"
 )
+func init() {
+    Uiza.AppID = "your app id"
+    Uiza.Authorization = "your-API-key"
+}
 
 params := &uiza.StorageRetrieveParams{ID: uiza.String("Your entity ID")}
 response, _ := storage.Retrieve(params)
@@ -95,6 +105,10 @@ import (
     "github.com/uizaio/api-wrapper-go/storage"
 )
 
+func init() {
+    Uiza.AppID = "your app id"
+    Uiza.Authorization = "your-API-key"
+}
 var storageType = uiza.StorageTypeFtp
 params :=  &uiza.StorageUpdateParams{
     ID: uiza.String("d82b5d29-c041-4300-b98b-d9ae6b222342"),
@@ -139,6 +153,10 @@ import (
     "github.com/uizaio/api-wrapper-go/storage"
 )
 
+func init() {
+    Uiza.AppID = "your app id"
+    Uiza.Authorization = "your-API-key"
+}
 params := &uiza.StorageRemoveParams{ID: uiza.String("Your entity ID")}
 response, _ := storage.Remove(params)
 log.Printf("%v\n", response)

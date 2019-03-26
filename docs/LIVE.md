@@ -16,6 +16,11 @@ import (
     "github.com/uizaio/api-wrapper-go/live"
 )
 
+func init() {
+    Uiza.AppID = "your app id"
+    Uiza.Authorization = "your-API-key"
+}
+
 dvrType := uiza.DvrTypeOne
 resourceMode := uiza.ResourceModeSingle
 
@@ -74,6 +79,11 @@ import (
     "github.com/uizaio/api-wrapper-go/live"
 )
 
+func init() {
+    Uiza.AppID = "your app id"
+    Uiza.Authorization = "your-API-key"
+}
+
 params := &uiza.LiveRetrieveParams{ID: uiza.String("247014d5-3dae-453f-97b2-93a441bc1c80")}
 response, _ := live.Retrieve(params)
 log.Printf("%v\n", response)
@@ -116,6 +126,12 @@ import (
     uiza "github.com/uizaio/api-wrapper-go"
     "github.com/uizaio/api-wrapper-go/live"
 )
+
+func init() {
+    Uiza.AppID = "your app id"
+    Uiza.Authorization = "your-API-key"
+}
+
 dvrType := uiza.DvrTypeOne
 resourceMode := uiza.ResourceModeSingle
 params := &uiza.LiveUpdateParams{
@@ -168,6 +184,11 @@ import (
     "github.com/uizaio/api-wrapper-go/live"
 )
 
+func init() {
+    Uiza.AppID = "your app id"
+    Uiza.Authorization = "your-API-key"
+}
+
 params := &uiza.LiveIDParams{ID: uiza.String("c6b23cc3-e47d-4e87-8f40-5da64221ad4e")}
 response, _ := live.StartFeed(params)
 log.Printf("%v\n", response)
@@ -192,6 +213,11 @@ import (
     "github.com/uizaio/api-wrapper-go/live"
 )
 
+func init() {
+    Uiza.AppID = "your app id"
+    Uiza.Authorization = "your-API-key"
+}
+
 params := &uiza.LiveIDParams{ID: uiza.String("Your live ID")}
 response, _ := live.GetView(params)
 log.Printf("%s\n", response)
@@ -212,6 +238,17 @@ See details [here](https://docs.uiza.io/?shell#stop-a-live-feed).
 
 Example Request
 ```golang
+
+import (
+    uiza "github.com/uizaio/api-wrapper-go"
+    "github.com/uizaio/api-wrapper-go/live"
+)
+
+func init() {
+    Uiza.AppID = "your app id"
+    Uiza.Authorization = "your-API-key"
+}
+
 params := &uiza.LiveIDParams{ID: uiza.String("c6b23cc3-e47d-4e87-8f40-5da64221ad4e")}
 response, _ := live.StopFeed(params)
 log.Printf("%s\n", response)
@@ -232,9 +269,14 @@ See details [here](https://docs.uiza.io/#list-all-recorded-files).
 
 ```golang
 import (
-	"github.com/uizaio/api-wrapper-go"
-	"github.com/uizaio/api-wrapper-go/live"
+    uiza "github.com/uizaio/api-wrapper-go"
+    "github.com/uizaio/api-wrapper-go/live"
 )
+
+func init() {
+    Uiza.AppID = "your app id"
+    Uiza.Authorization = "your-API-key"
+}
 
 params := &uiza.LiveListRecordedParams{Page:uiza.Int64(1), Limit:uiza.Int64(2)}
 response, _ := live.ListRecorded(params)
@@ -288,9 +330,14 @@ See details [here](https://docs.uiza.io/#delete-a-record-file).
 
 ```golang
 import (
-	"github.com/uizaio/api-wrapper-go"
-	"github.com/uizaio/api-wrapper-go/live"
+    uiza "github.com/uizaio/api-wrapper-go"
+    "github.com/uizaio/api-wrapper-go/live"
 )
+
+func init() {
+    Uiza.AppID = "your app id"
+    Uiza.Authorization = "your-API-key"
+}
 
 param := &uiza.LiveIDParams{ID: uiza.String("Your Recorded ID ")}
 response, _ := live.Delete(param)
@@ -314,9 +361,14 @@ See details [here](https://docs.uiza.io/#convert-into-vod).
 
 ```golang
 import (
-	"github.com/uizaio/api-wrapper-go"
-	"github.com/uizaio/api-wrapper-go/live"
+    uiza "github.com/uizaio/api-wrapper-go"
+    "github.com/uizaio/api-wrapper-go/live"
 )
+
+func init() {
+    Uiza.AppID = "your app id"
+    Uiza.Authorization = "your-API-key"
+}
 
 param := &uiza.LiveIDParams{ID: uiza.String("Your Recorded ID ")}
 response, _ := live.ConvertToVOD(param)

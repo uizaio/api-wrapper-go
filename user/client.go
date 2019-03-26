@@ -22,7 +22,7 @@ func getC() Client {
 	b := uiza.GetBackend(uiza.APIBackend)
 	b.SetClientType(uiza.UserClientType)
 	b.SetAppID(uiza.AppID)
-	return Client{b, uiza.Key}
+	return Client{b, uiza.Authorization}
 }
 
 func Retrieve(params *uiza.UserIDParams) (*uiza.UserData, error) {
