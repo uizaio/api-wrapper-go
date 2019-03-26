@@ -8,6 +8,11 @@ import (
 	"github.com/uizaio/api-wrapper-go/category"
 )
 
+func init() {
+    Uiza.AppID = "your app id"
+    Uiza.Authorization = "your-API-key"
+}
+
 var typeCategory = uiza.CategoryFolderType
 params := &uiza.CategoryCreateParams{
     Name: uiza.String("Category name example"),
@@ -48,6 +53,11 @@ import (
 	"github.com/uizaio/api-wrapper-go/category"
 )
 
+func init() {
+    Uiza.AppID = "your app id"
+    Uiza.Authorization = "your-API-key"
+}
+
 var typeCategory = uiza.CategoryFolderType
 params := &uiza.CategoryIDParams{
     ID:       uiza.String("197166f9-8566-4f39-9402-c8bddcee080c"),
@@ -84,6 +94,10 @@ import (
 	"github.com/uizaio/api-wrapper-go"
 	"github.com/uizaio/api-wrapper-go/category"
 )
+func init() {
+    Uiza.AppID = "your app id"
+    Uiza.Authorization = "your-API-key"
+}
 	
 var typeCategory = uiza.CategoryFolderType
 params := &uiza.CategoryUpdateParams{
@@ -126,6 +140,10 @@ import (
 	"github.com/uizaio/api-wrapper-go/category"
 )
 
+func init() {
+    Uiza.AppID = "your app id"
+    Uiza.Authorization = "your-API-key"
+}
 params := &uiza.CategoryDeleteParams{ID: uiza.String("197166f9-8566-4f39-9402-c8bddcee080c")}
 response, _ := category.Delete(params)
 log.Printf("%v", response)
@@ -146,6 +164,10 @@ import (
 	"github.com/uizaio/api-wrapper-go"
 	"github.com/uizaio/api-wrapper-go/category"
 )
+func init() {
+    Uiza.AppID = "your app id"
+    Uiza.Authorization = "your-API-key"
+}
 	
 params := &uiza.CategoryRelationParams{
     MetadataId: uiza.String("14152268-e409-4111-adb8-bf88a2435b62"),
@@ -183,6 +205,10 @@ import (
 	"github.com/uizaio/api-wrapper-go/category"
 )
 
+func init() {
+    Uiza.AppID = "your app id"
+    Uiza.Authorization = "your-API-key"
+}
 params :=  &uiza.CategoryRelationParams{
     MetadataId: uiza.String("14152268-e409-4111-adb8-bf88a2435b62"),
     EntityIds: []*string{

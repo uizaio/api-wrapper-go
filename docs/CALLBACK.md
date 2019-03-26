@@ -11,6 +11,11 @@ import (
     "github.com/uizaio/api-wrapper-go/callback"
 )
 
+func init() {
+    Uiza.AppID = "your app id"
+    Uiza.Authorization = "your-API-key"
+}
+
 callbackMethodPOST := uiza.HTTPMethodPost
 params := &uiza.CallbackCreateParams{
         Url:    uiza.String("https://callback-url.uiza.co"),
@@ -47,7 +52,14 @@ import (
     uiza "github.com/uizaio/api-wrapper-go"
     "github.com/uizaio/api-wrapper-go/callback"
 )
-params := &uiza.CallbackIDParams{}
+
+func init() {
+    Uiza.AppID = "your app id"
+    Uiza.Authorization = "your-API-key"
+}
+
+
+params := &uiza.CallbackIDParams{ID: uiza.String("Your ID")}
 response, _ := callback.Retrieve(params)
 log.Printf("%v\n", response)
 ```
@@ -80,6 +92,11 @@ import (
     uiza "github.com/uizaio/api-wrapper-go"
     "github.com/uizaio/api-wrapper-go/callback"
 )
+
+func init() {
+    Uiza.AppID = "your app id"
+    Uiza.Authorization = "your-API-key"
+}
 
 callbackMethodPOST := uiza.HTTPMethodPost
 params := &uiza.CallbackUpdateParams{
@@ -118,6 +135,11 @@ import (
     uiza "github.com/uizaio/api-wrapper-go"
     "github.com/uizaio/api-wrapper-go/callback"
 )
+
+func init() {
+    Uiza.AppID = "your app id"
+    Uiza.Authorization = "your-API-key"
+}
 
 params := &uiza.CallbackIDParams{ID: uiza.String("Your ID")}
 response, _ := callback.Delete(params)
