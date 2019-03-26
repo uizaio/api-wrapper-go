@@ -5,31 +5,13 @@ type UserIDParams struct {
 	ID     *string `form:"id"`
 }
 
-type UserCreateParams struct {
-	Params   `form:"*"`
-	Status   *int64  `form:"status"`
-	Username *string `form:"username"`
-	Email    *string `form:"email"`
-	Password *string `form:"password"`
-	Avatar   *string `form:"avatar"`
-	Fullname *string `form:"fullname"`
-	Dob      *string `form:"dob"`
-	Gender   *int64  `form:"gender"`
-	IsAdmin  *int64  `form:"isAdmin"`
-}
-
 type UserUpdateParams struct {
-	Params   `form:"*"`
-	ID       *string `form:"id"`
-	Status   *int64  `form:"status"`
-	Username *string `form:"username"`
-	Email    *string `form:"email"`
-	Password *string `form:"password"`
-	Avatar   *string `form:"avatar"`
-	Fullname *string `form:"fullname"`
-	Dob      *string `form:"dob"`
-	Gender   *int64  `form:"gender"`
-	IsAdmin  *int64  `form:"isAdmin"`
+	Params `form:"*"`
+	ID     *string `form:"id"`
+	Name   *string `form:"name"`
+	Status *int64  `form:"status"`
+	Avatar *string `form:"avatar"`
+	Dob    *string `form:"dob"`
 }
 
 type UserIDResponse struct {
@@ -46,13 +28,14 @@ type UserResponse struct {
 
 type UserListParams struct {
 	ListParams `form:"*"`
-	Page       *int64 `form:"page"`
-	Limit      *int64 `form:"limit"`
+	ID         *string `form:"id"`
+	Page       *int64  `form:"page"`
+	Limit      *int64  `form:"limit"`
 }
 
 type UserChangePasswordParams struct {
 	Params      `form:"*"`
-	ID          *string `form:"id"`
+	UserID      *string `form:"userId"`
 	OldPassword *string `form:"oldPassword"`
 	NewPassword *string `form:"newPassword"`
 }
@@ -63,14 +46,13 @@ type UserLogOutResponse struct {
 
 type UserData struct {
 	ID        string `json:"id"`
-	IsAdmin   int64  `json:"isAdmin"`
-	Username  string `json:"username"`
+	Name      string `json:"name"`
 	Email     string `json:"email"`
 	Avatar    string `json:"avatar"`
-	Fullname  string `json:"fullname"`
-	UpdatedAt string `json:"updatedAt"`
 	CreatedAt string `json:"createdAt"`
+	UpdatedAt string `json:"updatedAt"`
 	Status    int64  `json:"status"`
+	Dob       string `json:"dob"`
 }
 
 type UserListResponse struct {

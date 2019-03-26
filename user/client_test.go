@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/uizaio/api-wrapper-go"
+	uiza "github.com/uizaio/api-wrapper-go"
 	mockService "github.com/uizaio/api-wrapper-go/mock"
 )
 
@@ -55,58 +55,6 @@ func TestRetrieve(t *testing.T) {
 	}
 }
 
-func TestCreate(t *testing.T) {
-	type args struct {
-		params *uiza.UserCreateParams
-	}
-
-	tests := []Test{
-		{
-			name: "Create Success",
-			args: args{
-				params: &uiza.UserCreateParams{
-					Status:   uiza.Int64(1),
-					Username: uiza.String("user_test_go"),
-					Email:    uiza.String("user_test@uiza.io"),
-					Password: uiza.String("FMpsr<4[dGPu?B#u"),
-					Avatar:   uiza.String("https://exemple.com/avatar.jpeg"),
-					Fullname: uiza.String("User Test Go"),
-					Dob:      uiza.String("05/15/2018"),
-					Gender:   uiza.Int64(0),
-					IsAdmin:  uiza.Int64(1),
-				},
-			},
-
-			want:    mockService.UserDataMock,
-			wantErr: false,
-		},
-		{
-			name: "Create Failed",
-			args: args{
-				params: &uiza.UserCreateParams{},
-			},
-
-			want:    nil,
-			wantErr: true,
-		},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			got, err := Create(tt.args.(args).params)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("Create() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if tt.want != nil {
-				if !reflect.DeepEqual(got, tt.want) {
-					t.Errorf("Create() = %v, want %v", got, tt.want)
-				}
-			}
-		})
-	}
-}
-
 func TestUpdate(t *testing.T) {
 	type args struct {
 		params *uiza.UserUpdateParams
@@ -116,16 +64,8 @@ func TestUpdate(t *testing.T) {
 			name: "Update Success",
 			args: args{
 				params: &uiza.UserUpdateParams{
-					ID:       uiza.String("a6b039cf-4f1e-4b3a-bece-8a5f800496df"),
-					Status:   uiza.Int64(0),
-					Username: uiza.String("user_test_123"),
-					Email:    uiza.String("user_test@uiza.io"),
-					Password: uiza.String("123456789"),
-					Avatar:   uiza.String("https://exemple.com/avatar1.jpeg"),
-					Fullname: uiza.String("User Test"),
-					Dob:      uiza.String("02/28/2019"),
-					Gender:   uiza.Int64(1),
-					IsAdmin:  uiza.Int64(0),
+					ID:   uiza.String(mockService.UserId),
+					Name: uiza.String("user_update"),
 				},
 			},
 			want:    mockService.UserUpdateDataMock,
@@ -186,34 +126,6 @@ func TestList(t *testing.T) {
 	}
 }
 
-func TestDelete(t *testing.T) {
-	type args struct {
-		params *uiza.UserIDParams
-	}
-	tests := []Test{
-		{
-			name: "Delete Success",
-			args: args{
-				params: &uiza.UserIDParams{ID: uiza.String(mockService.UserIdDelete)},
-			},
-			want:    mockService.UserDeleteDataMock,
-			wantErr: false,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			got, err := Delete(tt.args.(args).params)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("Delete() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("Delete() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
 func TestChangePassword(t *testing.T) {
 	type args struct {
 		params *uiza.UserChangePasswordParams
@@ -223,9 +135,9 @@ func TestChangePassword(t *testing.T) {
 			name: "ChangePassword Success",
 			args: args{
 				params: &uiza.UserChangePasswordParams{
-					ID:          uiza.String(mockService.UserIdChangePassword),
-					OldPassword: uiza.String("S57Eb{:aMZhW=)G$"),
-					NewPassword: uiza.String("S57Eb{:aMZhW=)G$"),
+					UserID:      uiza.String("5167cf93-6fcd-454d-80a7-92f1b2d81fd4"),
+					OldPassword: uiza.String("Huulockfc1"),
+					NewPassword: uiza.String("Huulockfc1"),
 				},
 			},
 			want:    mockService.UserChangePasswordDataMock,
@@ -262,7 +174,7 @@ func TestLogOut(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := LogOut(tt.args.(args).params)
+			got, err := LogOut()
 			if (err != nil) != tt.wantErr {
 				t.Errorf("LogOut() error = %v, wantErr %v", err, tt.wantErr)
 				return
