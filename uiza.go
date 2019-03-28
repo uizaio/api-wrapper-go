@@ -83,7 +83,7 @@ var Authorization string
 var AppID = ""
 
 // Workspace API domain.
-var WorkspaceAPIDomain = "https://stag-ap-southeast-1-api.uizadev.io/"
+var WorkspaceAPIDomain = "https://ap-southeast-1-api.uiza.co"
 
 // LogLevel is the logging level for this library.
 // 0: no logging
