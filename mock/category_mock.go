@@ -1,13 +1,14 @@
 package mock
 
 import (
-	"github.com/uizaio/api-wrapper-go"
 	"net/http"
+
+	uiza "github.com/uizaio/api-wrapper-go"
 )
 
 const (
 	CategoryBaseURL                       = "/api/public/v4/media/metadata"
-	metadataRelationEntityURL             = "/api/public/v4/media/metadata/related/entity"
+	metadataRelationEntityURL             = "/api/public/v4/media/entity/related/metadata"
 	CategoryId                            = "917ff8b3-1a73-49c6-b989-9604babf785e"
 	CategoryId2                           = "1aa8cf57-ab0c-4dca-9a7b-feb2c803905a"
 	UpdateCategoryId                      = "3177aac5-8af8-45ec-93cd-1613c832db9e"
@@ -159,8 +160,8 @@ func (m *CategoryClientMock) Do(req *http.Request) (*http.Response, error) {
 			method: "POST",
 			path:   metadataRelationEntityURL,
 			params: &uiza.CategoryRelationParams{
-				EntityIds:  []*string{uiza.String(CategoryId)},
-				MetadataId: uiza.String(""),
+				MetadataIds: []*string{uiza.String(CategoryId)},
+				EntityId:    uiza.String(""),
 			},
 			responseString: CreateCategoryRelationSuccessResponse,
 		},
@@ -168,8 +169,8 @@ func (m *CategoryClientMock) Do(req *http.Request) (*http.Response, error) {
 			method: "DELETE",
 			path:   metadataRelationEntityURL,
 			params: &uiza.CategoryRelationParams{
-				EntityIds:  []*string{uiza.String(CategoryId)},
-				MetadataId: uiza.String(""),
+				MetadataIds: []*string{uiza.String(CategoryId)},
+				EntityId:    uiza.String(""),
 			},
 			responseString: DeleteCategoryRelationSuccessResponse,
 		},

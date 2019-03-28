@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/uizaio/api-wrapper-go"
+	uiza "github.com/uizaio/api-wrapper-go"
 	mockService "github.com/uizaio/api-wrapper-go/mock"
 )
 
@@ -191,8 +191,8 @@ func TestCreateRelation(t *testing.T) {
 			name: "Create Relation Success",
 			args: args{
 				params: &uiza.CategoryRelationParams{
-					EntityIds:  []*string{uiza.String(mockService.CategoryId)},
-					MetadataId: uiza.String(""),
+					MetadataIds: []*string{uiza.String(mockService.CategoryId)},
+					EntityId:    uiza.String(""),
 				},
 			},
 			want:    mockService.CategoryDeleteRelationDataMock,
@@ -222,8 +222,8 @@ func TestDeleteRelation(t *testing.T) {
 			name: "Delete Relation Success",
 			args: args{
 				params: &uiza.CategoryRelationParams{
-					EntityIds:  []*string{uiza.String(mockService.CategoryId)},
-					MetadataId: uiza.String(""),
+					MetadataIds: []*string{uiza.String(mockService.CategoryId)},
+					EntityId:    uiza.String(""),
 				},
 			},
 			want:    mockService.CategoryDeleteRelationDataMock,
