@@ -19,7 +19,7 @@ go get -u github.com/uizaio/api-wrapper-go
 
 The library needs to be configured with your account's `WorkspaceAPIDomain` and `Key` (API key).
 See details [here](https://docs.uiza.io/#authentication).
-Set `Uiza.WorkspaceAPIDomain` and `Uiza.Key` with your values:
+Set `Uiza.AppId` and `Uiza.Authorization` with your values:
 
 ## Init
 
@@ -31,7 +31,7 @@ import (
 
 func init() {
   Uiza.AppID = "your-AppId"
-  Uiza.Key = "your-API-key"
+  Uiza.Authorization = "your-API-key"
 }
 
 ```
@@ -47,7 +47,7 @@ import (
 
 func init() {
   Uiza.AppID = "your-AppId"
-  Uiza.Key = "your-API-key"
+  Uiza.Authorization = "your-API-key"
 
   // custom your transport of httpClient
   transport := &http.Transport{
