@@ -69,9 +69,9 @@ type CategoryUpdateParams struct {
 }
 
 type CategoryRelationParams struct {
-	Params     `form:"*"`
-	EntityIds  []*string `form:"entityIds"`
-	MetadataId *string   `form:"metadataId"`
+	Params      `form:"*"`
+	EntityId    *string   `form:"entityId"`
+	MetadataIds []*string `form:"metadataIds"`
 }
 
 type CategoryRelationResponse struct {
