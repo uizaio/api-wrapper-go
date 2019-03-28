@@ -2,8 +2,9 @@ package category
 
 import (
 	"errors"
-	"github.com/uizaio/api-wrapper-go"
 	"net/http"
+
+	uiza "github.com/uizaio/api-wrapper-go"
 )
 
 type Client struct {
@@ -13,7 +14,7 @@ type Client struct {
 
 const (
 	baseURL                   = "/api/public/v4/media/metadata"
-	metadataRelationEntityURL = "/api/public/v4/media/metadata/related/entity"
+	metadataRelationEntityURL = "/api/public/v4/media/entity/related/metadata"
 )
 
 // Get Backend Client

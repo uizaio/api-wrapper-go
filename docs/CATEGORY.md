@@ -156,7 +156,7 @@ Example Response
    "id": "095778fa-7e42-45cc-8a0e-6118e540b61d"
 }
 ```
-## create n entities for one metadata
+## create one entities for n metadata
 Add relation for entity and category.
 See details [here](https://docs.uiza.io/#create-category-relation).
 ```golang
@@ -169,10 +169,11 @@ func init() {
     Uiza.Authorization = "your-API-key"
 }
 	
-params := &uiza.CategoryRelationParams{
-    MetadataId: uiza.String("14152268-e409-4111-adb8-bf88a2435b62"),
-    EntityIds: []*string{
+params :=  &uiza.CategoryRelationParams{
+    EntityId: uiza.String("14152268-e409-4111-adb8-bf88a2435b62"),
+    MetadataIds: []*string{
         uiza.String("095778fa-7e42-45cc-8a0e-6118e540b61d"),
+        uiza.String("e00586b9-032a-46a3-af71-d275f01b03cf"),
     }}
 response, _ := category.CreateRelation(params)
 for _, v := range response {
@@ -210,9 +211,10 @@ func init() {
     Uiza.Authorization = "your-API-key"
 }
 params :=  &uiza.CategoryRelationParams{
-    MetadataId: uiza.String("14152268-e409-4111-adb8-bf88a2435b62"),
-    EntityIds: []*string{
+    EntityId: uiza.String("14152268-e409-4111-adb8-bf88a2435b62"),
+    MetadataIds: []*string{
         uiza.String("095778fa-7e42-45cc-8a0e-6118e540b61d"),
+        uiza.String("e00586b9-032a-46a3-af71-d275f01b03cf"),
     }}
 response, _ := category.DeleteRelation(params)
 for _, v := range response {
