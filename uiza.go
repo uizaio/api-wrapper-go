@@ -60,7 +60,7 @@ const (
 	UploadsURL string = "https://uiza.io"
 
 	// Version of SDK
-	Version string = "1.2.0"
+	Version string = "1.2.1"
 )
 
 //
