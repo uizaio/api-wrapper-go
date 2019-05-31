@@ -153,9 +153,9 @@ type EntityUpdateParams struct {
 	Poster           *string         `form:"poster"`
 	Thumbnail        *string         `form:"thumbnail"`
 	ExtendMetadata   *ExtendMetadata `form:"extendMetadata"`
-	MasterTaskID     *string         `json:"masterTaskId,omitempty"`
-	StandardTaskID   *string         `json:"standardTaskId,omitempty"`
-	ReadyToPublish   *PublishType    `json:"readyToPublish,omitempty"`
+	MasterTaskID     *string         `form:"masterTaskId,omitempty"`
+	StandardTaskID   *string         `form:"standardTaskId,omitempty"`
+	ReadyToPublish   *PublishType    `form:"readyToPublish,omitempty"`
 }
 
 type EntityIdResponse struct {
