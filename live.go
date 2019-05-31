@@ -99,7 +99,7 @@ type LiveData struct {
 	ID                string              `json:"id"`
 	Name              string              `json:"name"`
 	Description       string              `json:"description"`
-	Mode              string              `json:"mode"`
+	Mode              ModeType            `json:"mode"`
 	ResourceMode      ResourceModeType    `json:"resourceMode"`
 	Encode            EncodeType          `json:"encode"`
 	ChannelName       string              `json:"channelName"`
@@ -121,24 +121,24 @@ type LiveData struct {
 
 type LiveUpdateParams struct {
 	Params            `form:"*"`
-	Name              *string              `json:"name"`
-	Description       *string              `json:"description"`
-	Mode              *ModeType            `json:"mode"`
-	ResourceMode      *ResourceModeType    `json:"resourceMode"`
-	Encode            *EncodeType          `json:"encode"`
-	Drm               *DrmType             `json:"drm"`
-	Dvr               *DvrType             `json:"dvr"`
-	LastPresetID      *string              `json:"lastPresetId"`
-	LastFeedID        *string              `json:"lastFeedId"`
-	Poster            *string              `json:"poster"`
-	Thumbnail         *string              `json:"thumbnail"`
-	LinkStream        []*string            `json:"linkStream"`
-	LastPullInfo      *PullInfo            `json:"lastPullInfo"`
-	LastPushInfo      []*PushInfo          `json:"lastPushInfo"`
-	LinkPublishSocial []*PublishSocialLink `json:"linkPublishSocial"`
-	LastProcess       *string              `json:"lastProcess"`
-	EventType         *string              `json:"eventType"`
-	ID                *string              `json:"id"`
+	Name              *string              `form:"name"`
+	Description       *string              `form:"description"`
+	Mode              *ModeType            `form:"mode"`
+	ResourceMode      *ResourceModeType    `form:"resourceMode"`
+	Encode            *EncodeType          `form:"encode"`
+	Drm               *DrmType             `form:"drm"`
+	Dvr               *DvrType             `form:"dvr"`
+	LastPresetID      *string              `form:"lastPresetId"`
+	LastFeedID        *string              `form:"lastFeedId"`
+	Poster            *string              `form:"poster"`
+	Thumbnail         *string              `form:"thumbnail"`
+	LinkStream        []*string            `form:"linkStream"`
+	LastPullInfo      *PullInfo            `form:"lastPullInfo"`
+	LastPushInfo      []*PushInfo          `form:"lastPushInfo"`
+	LinkPublishSocial []*PublishSocialLink `form:"linkPublishSocial"`
+	LastProcess       *string              `form:"lastProcess"`
+	EventType         *string              `form:"eventType"`
+	ID                *string              `form:"id"`
 }
 
 type PushInfo struct {
