@@ -29,8 +29,8 @@ func getC() Client {
 	return Client{b, uiza.Authorization}
 }
 
-// Region Data can be used to create/update live event
-func getRegion() (*uiza.RegionData, error) {
+// GetRegion can be used to set region for creating/updating live event
+func GetRegion() (*uiza.RegionData, error) {
 	return getC().getRegion()
 }
 
