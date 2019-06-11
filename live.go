@@ -58,6 +58,7 @@ type LiveCreateParams struct {
 	Name              *string              `form:"name"`
 	Description       *string              `form:"description"`
 	Mode              *ModeType            `form:"mode"`
+	Region            string              `json:"region"`
 	ResourceMode      *ResourceModeType    `form:"resourceMode"`
 	Encode            *EncodeType          `form:"encode"`
 	Dvr               *DvrType             `form:"dvr"`
@@ -136,6 +137,7 @@ type LiveUpdateParams struct {
 	Description       *string              `form:"description"`
 	Mode              *ModeType            `form:"mode"`
 	ResourceMode      *ResourceModeType    `form:"resourceMode"`
+	Region            string              `json:"region"`
 	Encode            *EncodeType          `form:"encode"`
 	Drm               *DrmType             `form:"drm"`
 	Dvr               *DvrType             `form:"dvr"`
