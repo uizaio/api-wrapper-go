@@ -18,6 +18,7 @@ const (
 	stopFeedURL     = "/api/public/v4/live/entity/feed"
 	convertToVODURL = "/api/public/v4/live/entity/dvr/convert-to-vod"
 	recordedURL     = "/api/public/v4/live/entity/dvr"
+	regionURL       = "/api/public/v4/live/region"
 )
 
 // Get Backend Client
@@ -26,6 +27,19 @@ func getC() Client {
 	b.SetClientType(uiza.LiveClientType)
 	b.SetAppID(uiza.AppID)
 	return Client{b, uiza.Authorization}
+}
+
+// Region Data can be used to create/update live event
+func getRegion() (*uiza.RegionData, error) {
+	return getC().getRegion()
+}
+
+func (c Client) getRegion() (*uiza.RegionData, error) {
+	regionData := &uiza.RegionResponse{}
+
+	err := c.B.Call(http.MethodGet, regionURL, c.Key, nil, regionData)
+
+	return regionData.Data, err
 }
 
 func Retrieve(params *uiza.LiveRetrieveParams) (*uiza.LiveData, error) {
