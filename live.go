@@ -91,6 +91,16 @@ type LiveIDResponse struct {
 	Data *LiveIDData `json:"data"`
 }
 
+type RegionResponse struct {
+	Data *RegionData `json:data`	
+}
+
+type RegionData struct {
+	Singapore					string							`json:SINGAPORE`
+	Vietnam						string							`json:VIETNAM`
+	Googlecloud				string							`json:GOOGLECLOUD`
+}
+
 type LiveResponse struct {
 	Data *LiveData `json:"data"`
 }
@@ -101,6 +111,7 @@ type LiveData struct {
 	Description       string              `json:"description"`
 	Mode              ModeType            `json:"mode"`
 	ResourceMode      ResourceModeType    `json:"resourceMode"`
+	Region            string              `json:"region"`
 	Encode            EncodeType          `json:"encode"`
 	ChannelName       string              `json:"channelName"`
 	LastPresetId      string              `json:"lastPresetId"`
