@@ -1,5 +1,9 @@
 package uiza
 
+import (
+	"encoding/json"
+)
+
 type ResourceModeType string
 
 const (
@@ -120,7 +124,8 @@ type LiveData struct {
 	Poster            string              `json:"poster"`
 	Thumbnail         string              `json:"thumbnail"`
 	LinkPublishSocial []PublishSocialLink `json:"linkPublishSocial"`
-	LinkStream        []string            `json:"linkStream"`
+	LinkStreamRaw     string              `json:"linkStream"`
+	LinkStream        []string
 	LastPullInfo      PullInfo            `json:"lastPullInfo"`
 	LastPushInfo      []PushInfo          `json:"lastPushInfo"`
 	LastProcess       string              `json:"lastProcess"`
@@ -183,4 +188,26 @@ type LiveRecordedData struct {
 	CreatedAt      string `json:"createdAt"`
 	UpdatedAt      string `json:"updatedAt"`
 	EntityName     string `json:"entityName"`
+}
+
+// UnmarshalJSON handles deserialization of a Customer.
+// This custom unmarshaling is needed because the resulting
+// property may be an id or the full struct if it was expanded.
+func (c *LiveData) UnmarshalJSON(data []byte) error {
+
+	type liveData LiveData
+	var v liveData
+
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+
+	
+	*c = LiveData(v)
+	var LinkStream []string
+	if err := json.Unmarshal([]byte(c.LinkStreamRaw), &LinkStream); err != nil {
+		return err
+	}
+	c.LinkStream = LinkStream
+	return nil
 }
