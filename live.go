@@ -50,8 +50,8 @@ type PublishSocialLink struct {
 	streamKey string
 }
 type PullInfo struct {
-	PrimaryInputUri   string `json:"primaryInputUri"`
-	SecondaryInputUri string `json:"secondaryInputUri"`
+	PrimaryInputUri   string `json:"primaryInputUri" form:"primaryInputUri"`
+	SecondaryInputUri string `json:"secondaryInputUri" form:"secondaryInputUri"`
 }
 type LiveCreateParams struct {
 	Params            `form:"*"`
@@ -142,8 +142,8 @@ type LiveUpdateParams struct {
 }
 
 type PushInfo struct {
-	StreamKey string `json:"streamKey"`
-	StreamUrl string `json:"streamUrl"`
+	StreamKey string `form:"streamKey" json:"streamKey"`
+	StreamUrl string `form:"streamUrl" json:"streamUrl"`
 }
 
 type LiveListRecordedParams struct {

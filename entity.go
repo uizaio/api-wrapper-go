@@ -92,10 +92,11 @@ type EntityGetAWSUploadKeyData struct {
 	TempAccessSecret string `json:"temp_access_secret"`
 }
 type ExtendMetadata struct {
-	MovieCategory string  `json:"movie_category,omitempty"`
-	IMDBScore     float64 `json:"imdb_score,omitempty"`
-	PublishedYear string  `json:"published_year,omitempty"`
+	MovieCategory string  `json:"movie_category,omitempty" form:"movie_category"`
+	IMDBScore     float64 `json:"movie_category,omitempty" form:"imdb_score"`
+	PublishedYear string  `json:"movie_category,omitempty" form:"published_year"`
 }
+
 type EntityData struct {
 	ID               string            `json:"id,omitempty"`
 	Name             string            `json:"name,omitempty"`
@@ -153,9 +154,9 @@ type EntityUpdateParams struct {
 	Poster           *string         `form:"poster"`
 	Thumbnail        *string         `form:"thumbnail"`
 	ExtendMetadata   *ExtendMetadata `form:"extendMetadata"`
-	MasterTaskID     *string         `form:"masterTaskId,omitempty"`
-	StandardTaskID   *string         `form:"standardTaskId,omitempty"`
-	ReadyToPublish   *PublishType    `form:"readyToPublish,omitempty"`
+	MasterTaskID     *string         `form:"masterTaskId"`
+	StandardTaskID   *string         `form:"standardTaskId"`
+	ReadyToPublish   *PublishType    `form:"readyToPublish"`
 }
 
 type EntityIdResponse struct {

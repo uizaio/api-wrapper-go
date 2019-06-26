@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/url"
 	"reflect"
 	"strconv"
@@ -78,6 +79,7 @@ func (se *structEncoder) encode(values *Values, v reflect.Value, keyParts []stri
 		}
 
 		se.fieldEncs[i](values, fieldV, fieldKeyParts, f.isPtr, f.options)
+
 		if f.isAppender && (!f.isPtr || !fieldV.IsNil()) {
 			fieldV.Interface().(Appender).AppendTo(values, fieldKeyParts)
 		}
@@ -138,18 +140,20 @@ func boolEncoder(values *Values, v reflect.Value, keyParts []string, encodeZero 
 	if !val && !encodeZero {
 		return
 	}
+	p := mergeKeyPart(keyParts, val)
 
 	if options != nil {
 		switch {
 		case options.Empty:
-			values.Add(FormatKey(keyParts), "")
+			values.Add(FormatKey([]string{p.Key}), "")
 		}
 	} else {
-		values.Add(FormatKey(keyParts), strconv.FormatBool(val))
+		values.Add(FormatKey([]string{p.Key}), p.Value)
 	}
 }
 
 func buildArrayOrSliceEncoder(t reflect.Type) encoderFunc {
+
 	return func(values *Values, v reflect.Value, keyParts []string, _ bool, options *formOptions) {
 		if slice, ok := v.Interface().([]*string); ok {
 			if len(slice) == 0 {
@@ -186,7 +190,28 @@ func float32Encoder(values *Values, v reflect.Value, keyParts []string, encodeZe
 	if val == 0.0 && !encodeZero {
 		return
 	}
-	values.Add(FormatKey(keyParts), strconv.FormatFloat(val, 'f', 4, 32))
+	p := mergeKeyPart(keyParts, val)
+	values.Add(FormatKey([]string{p.Key}), p.Value)
+}
+
+func mergeKeyPart(keyParts []string, val interface{}) FormValue {
+	p := FormValue{}
+	for i := len(keyParts) - 1; i >= 0; i-- {
+		if p.Key != "" {
+			p.Value = FormValue{
+				Key:   p.Key,
+				Value: p.Value,
+			}
+			p.Key = keyParts[i]
+
+		} else {
+			p = FormValue{
+				Key:   keyParts[i],
+				Value: val,
+			}
+		}
+	}
+	return p
 }
 
 func float64Encoder(values *Values, v reflect.Value, keyParts []string, encodeZero bool, options *formOptions) {
@@ -194,7 +219,9 @@ func float64Encoder(values *Values, v reflect.Value, keyParts []string, encodeZe
 	if val == 0.0 && !encodeZero {
 		return
 	}
-	values.Add(FormatKey(keyParts), strconv.FormatFloat(val, 'f', 4, 64))
+	p := mergeKeyPart(keyParts, val)
+
+	values.Add(FormatKey([]string{p.Key}), p.Value)
 }
 
 func getCachedOrBuildStructEncoder(t reflect.Type) *structEncoder {
@@ -263,7 +290,8 @@ func intEncoder(values *Values, v reflect.Value, keyParts []string, encodeZero b
 	if val == 0 && !encodeZero {
 		return
 	}
-	values.Add(FormatKey(keyParts), val)
+	p := mergeKeyPart(keyParts, val)
+	values.Add(FormatKey([]string{p.Key}), p.Value)
 }
 
 func interfaceEncoder(values *Values, v reflect.Value, keyParts []string, encodeZero bool, _ *formOptions) {
@@ -298,7 +326,9 @@ func stringEncoder(values *Values, v reflect.Value, keyParts []string, encodeZer
 	if val == "" && !encodeZero {
 		return
 	}
-	values.Add(FormatKey(keyParts), val)
+
+	p := mergeKeyPart(keyParts, val)
+	values.Add(FormatKey([]string{p.Key}), p.Value)
 }
 
 func uintEncoder(values *Values, v reflect.Value, keyParts []string, encodeZero bool, options *formOptions) {
@@ -306,7 +336,8 @@ func uintEncoder(values *Values, v reflect.Value, keyParts []string, encodeZero 
 	if val == 0 && !encodeZero {
 		return
 	}
-	values.Add(FormatKey(keyParts), strconv.FormatUint(val, 10))
+	p := mergeKeyPart(keyParts, val)
+	values.Add(FormatKey([]string{p.Key}), p.Value)
 }
 
 // reflectValue is roughly the shared entry point of any AppendTo functions.
@@ -334,6 +365,7 @@ func makeStructEncoder(t reflect.Type) *structEncoder {
 
 	for i := 0; i < t.NumField(); i++ {
 		reflectField := t.Field(i)
+
 		tag := reflectField.Tag.Get(tagName)
 		if Strict && tag == "" {
 			panic(fmt.Sprintf(
@@ -368,6 +400,7 @@ func makeStructEncoder(t reflect.Type) *structEncoder {
 			isPtr:      fldKind == reflect.Ptr,
 			options:    options,
 		})
+
 		se.fieldEncs = append(se.fieldEncs,
 			getCachedOrBuildTypeEncoder(fldTyp))
 	}
@@ -454,9 +487,31 @@ type Values struct {
 // RawValues store raw value of objects.
 type RawValues interface{}
 
+func Append(f *FormValue, v RawValues) RawValues {
+	i := map[string]interface{}{}
+	i[v.(FormValue).Key] = v.(FormValue).Value
+	if reflect.ValueOf(f.Value).Type() == reflect.ValueOf(i).Type() {
+		f.Value.(map[string]interface{})[v.(FormValue).Key] = v.(FormValue).Value
+	} else {
+		i[f.Value.(FormValue).Key] = f.Value.(FormValue).Value
+	}
+	return i
+}
+
 // Add adds a key/value tuple to the form.
 func (f *Values) Add(key string, val RawValues) {
-	f.values = append(f.values, FormValue{key, val})
+	alreadyHave := false
+
+	for i, v := range f.values {
+		if v.Key == key {
+			f.values[i].Value = Append(&v, val)
+			alreadyHave = true
+		}
+	}
+
+	if !alreadyHave {
+		f.values = append(f.values, FormValue{key, val})
+	}
 }
 
 func (f *Values) MarshalJSON() ([]byte, error) {
