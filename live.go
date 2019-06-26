@@ -205,6 +205,9 @@ func (c *LiveData) UnmarshalJSON(data []byte) error {
 	
 	*c = LiveData(v)
 	var LinkStream []string
+	if c.LinkStreamRaw == "" {
+		return nil
+	}
 	if err := json.Unmarshal([]byte(c.LinkStreamRaw), &LinkStream); err != nil {
 		return err
 	}
