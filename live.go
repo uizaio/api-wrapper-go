@@ -62,7 +62,7 @@ type LiveCreateParams struct {
 	Name              *string              `form:"name"`
 	Description       *string              `form:"description"`
 	Mode              *ModeType            `form:"mode"`
-	Region            string              `json:"region"`
+	Region            string               `form:"region"`
 	ResourceMode      *ResourceModeType    `form:"resourceMode"`
 	Encode            *EncodeType          `form:"encode"`
 	Dvr               *DvrType             `form:"dvr"`
