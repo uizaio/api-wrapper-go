@@ -1,9 +1,5 @@
 # Uiza
 
-## Welcome to your new GoLang!
-
-...
-
 ## Installation
 Install api-wrapper-go with:
 ```golang
@@ -17,9 +13,9 @@ go get -u github.com/uizaio/api-wrapper-go
 
 ## Usage
 
-The library needs to be configured with your account's `WorkspaceAPIDomain` and `Key` (API key).
-See details [here](https://docs.uiza.io/#authentication).
-Set `Uiza.AppId` and `Uiza.Authorization` with your values:
+The library needs to be configured with your account's `Key` (API key).
+See details [here](https://docs.uiza.io/v4/#authentication).
+Set `Uiza.Authorization` with your values:
 
 ## Init
 
@@ -30,7 +26,6 @@ import (
 )
 
 func init() {
-  Uiza.AppID = "your-AppId"
   Uiza.Authorization = "your-API-key"
 }
 
@@ -41,12 +36,13 @@ func init() {
 You can custom your Backend Config by:
 
 ```golang
+package main
+
 import (
     Uiza "github.com/uizaio/api-wrapper-go"
 )
 
 func init() {
-  Uiza.AppID = "your-AppId"
   Uiza.Authorization = "your-API-key"
 
   // custom your transport of httpClient
@@ -75,27 +71,27 @@ func init() {
 ## Entity
 
 These below APIs used to take action with your media files (we called Entity)
-See details [here](https://docs.uiza.io/?go#video).
+See details [here](https://docs.uiza.io/v4/?go#video).
 
 ## Category
 
 Category has been splits into 3 types: folder, playlist and tag. These will make the management of entity more easier.
-See details [here](https://docs.uiza.io/?go#category).
+See details [here](https://docs.uiza.io/v4/?go#category).
 
 ## Storage
 
 You can add your storage (FTP, AWS S3) with UIZA. After synced, you can select your content easier from your storage to create entity.
-See details [here](https://docs.uiza.io/?go#storage).
+See details [here](https://docs.uiza.io/v4/?go#storage).
 
 ## Live
 
 These APIs used to create and manage live streaming event.
-See details [here](https://docs.uiza.io/?go#live-streaming).
+See details [here](https://docs.uiza.io/v4/?go#live-streaming).
 
 ## Callback
 
 Callback used to retrieve an information for Uiza to your server, so you can have a trigger notice about an entity is upload completed and .
-See details [here](https://docs.uiza.io/?go#callback).
+See details [here](https://docs.uiza.io/v4/?go#callback).
 
 ## Development
 
@@ -109,4 +105,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the Uiza project�s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/uizaio/api-wrapper-go/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the Uiza project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/uizaio/api-wrapper-go/blob/master/CODE_OF_CONDUCT.md).
