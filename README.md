@@ -1,9 +1,5 @@
 # Uiza
 
-## Welcome to your new GoLang!
-
-...
-
 ## Installation
 Install api-wrapper-go with:
 ```golang
@@ -40,6 +36,8 @@ func init() {
 You can custom your Backend Config by:
 
 ```golang
+package main
+
 import (
     Uiza "github.com/uizaio/api-wrapper-go"
 )
@@ -107,4 +105,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the Uiza project�s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/uizaio/api-wrapper-go/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the Uiza project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/uizaio/api-wrapper-go/blob/master/CODE_OF_CONDUCT.md).
