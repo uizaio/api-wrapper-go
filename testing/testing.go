@@ -7,15 +7,31 @@ import (
 )
 
 func init() {
-  uiza.Authorization = "uap-212f8ac7dcc7471c936babf43a1a252e-57078be1" // test key, input your own
+  uiza.Authorization = "uap-44d29caea2b74d938d0ec11963434dd8-"
 }
 
 func main() {
-  params := &uiza.LiveRetrieveParams{ID: uiza.String("471734b1-90b8-44c5-b24b-132ed9d7529b")}
-  response, err := live.Retrieve(params)
+  modeType := uiza.ModeTypePull
+  encodeType := uiza.EncodeTypeOne
+  dvrType := uiza.DvrTypeOne
+  resourceMode := uiza.ResourceModeSingle
+
+  params := &uiza.LiveCreateParams{
+    Name: uiza.String("test event"),
+    Mode: &modeType,
+    Encode: &encodeType,
+    Dvr: &dvrType,
+    Description: uiza.String("This is for test event"),
+    Thumbnail: uiza.String("//image1.jpeg"),
+    Region: "vn-southeast-1",
+    Poster: uiza.String("//image1.jpeg"),
+    LinkStream: []*string{uiza.String("https://playlist.m3u8")},
+    ResourceMode: &resourceMode,
+  }
+  response, err := live.Create(params)
   if err != nil {
     log.Printf("%v\n", err)
   } else {
-    log.Printf("%v\n", response.LinkStream)
+    log.Printf("%v\n", response)
   }
 }
