@@ -39,6 +39,13 @@ const (
 	DrmTypeOne  DrmType = 1
 )
 
+type OrderType string
+
+const (
+	Desc OrderType = "DESC"
+	Asc OrderType = "ASC"
+)
+
 type LiveRetrieveParams struct {
 	Params `form:"*"`
 	ID     *string `form:"id"`
@@ -142,7 +149,7 @@ type LiveUpdateParams struct {
 	Description       *string              `form:"description"`
 	Mode              *ModeType            `form:"mode"`
 	ResourceMode      *ResourceModeType    `form:"resourceMode"`
-	Region            string              `json:"region"`
+	Region            string               `form:"region"`
 	Encode            *EncodeType          `form:"encode"`
 	Drm               *DrmType             `form:"drm"`
 	Dvr               *DvrType             `form:"dvr"`
@@ -165,8 +172,11 @@ type PushInfo struct {
 }
 
 type LiveListRecordedParams struct {
-	Params `form:"*"`
-	ID     *string `json:"id"`
+	Params                     `form:"*"`
+	Limit         int          `form:"limit"`
+	Page          int          `form:"page"`
+	OrderBy       string       `form:"order_by`
+	OrderType     OrderType    `form:"order_type"`
 }
 
 type LiveListRecordedResponse struct {

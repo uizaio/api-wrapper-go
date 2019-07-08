@@ -25,7 +25,6 @@ const (
 func getC() Client {
 	b := uiza.GetBackend(uiza.APIBackend)
 	b.SetClientType(uiza.LiveClientType)
-	b.SetAppID(uiza.AppID)
 	return Client{b, uiza.Authorization}
 }
 
@@ -133,6 +132,7 @@ func ListRecorded(params *uiza.LiveListRecordedParams) ([]*uiza.LiveRecordedData
 	return getC().ListRecorded(params)
 }
 
+// ListRecorded
 func (c Client) ListRecorded(params *uiza.LiveListRecordedParams) ([]*uiza.LiveRecordedData, error) {
 	liveListRecordedResponse := &uiza.LiveListRecordedResponse{}
 	err := c.B.Call(http.MethodGet, recordedURL, c.Key, params, liveListRecordedResponse)
