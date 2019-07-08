@@ -175,7 +175,7 @@ type LiveListRecordedParams struct {
 	Params                     `form:"*"`
 	Limit         int          `form:"limit"`
 	Page          int          `form:"page"`
-	OrderBy       string       `form:"order_by`
+	OrderBy       *string      `form:"order_by"`
 	OrderType     OrderType    `form:"order_type"`
 }
 

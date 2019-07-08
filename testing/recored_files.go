@@ -7,7 +7,7 @@ import (
 )
 
 func init() {
-  uiza.Authorization = "uap-9521cff34e86473095"
+  uiza.Authorization = "uap-9521cff34e864730"
 }
 
 func main() {
@@ -15,7 +15,7 @@ func main() {
   params := &uiza.LiveListRecordedParams{
     Limit: 9,
     Page: 140,
-    OrderBy: "createdAt", // not supported on server side yet
+    OrderBy: uiza.String("createdAt"), // not supported on server side yet
     OrderType: uiza.Desc, // not supported on server side yet
   }
   response, err := live.ListRecorded(params)
