@@ -21,8 +21,7 @@ import (
 )
 
 func init() {
-    Uiza.AppID = "your app id"
-    Uiza.Authorization = "your-API-key"
+        Uiza.Authorization = "your-API-key"
 }
 
 params := &uiza.UserCreateParams{
@@ -64,8 +63,7 @@ import (
 )
 
 func init() {
-    Uiza.AppID = "your app id"
-    Uiza.Authorization = "your-API-key"
+        Uiza.Authorization = "your-API-key"
 }
 params := &uiza.UserIDParams{ID: uiza.String("263bbbb8-c0c9-4e1f-9123-af3a3fd46b80")}
 response, _ := user.Retrieve(params)
@@ -101,8 +99,7 @@ import (
     "github.com/uizaio/api-wrapper-go/user"
 )
 func init() {
-    Uiza.AppID = "your app id"
-    Uiza.Authorization = "your-API-key"
+        Uiza.Authorization = "your-API-key"
 }
 
 params := &uiza.UserUpdateParams{
@@ -146,8 +143,7 @@ import (
     "github.com/uizaio/api-wrapper-go/user"
 )
 func init() {
-    Uiza.AppID = "your app id"
-    Uiza.Authorization = "your-API-key"
+        Uiza.Authorization = "your-API-key"
 }
 
 params := &uiza.UserListParams{}
@@ -214,8 +210,7 @@ import (
 )
 
 func init() {
-    Uiza.AppID = "your app id"
-    Uiza.Authorization = "your-API-key"
+        Uiza.Authorization = "your-API-key"
 }
 params := &uiza.UserIDParams{ID:uiza.String("d0b81f08-0a93-4b0e-a6b4-15027349b7d6")}
 response, _ := user.Delete(params)
@@ -245,8 +240,7 @@ import (
     "github.com/uizaio/api-wrapper-go/user"
 )
 func init() {
-    Uiza.AppID = "your app id"
-    Uiza.Authorization = "your-API-key"
+        Uiza.Authorization = "your-API-key"
 }
 
 params := &uiza.UserChangePasswordParams{
@@ -282,8 +276,7 @@ import (
 )
 
 func init() {
-    Uiza.AppID = "your app id"
-    Uiza.Authorization = "your-API-key"
+        Uiza.Authorization = "your-API-key"
 }
 params := &uiza.UserIDParams{}
 response, _ := user.LogOut(params)

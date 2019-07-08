@@ -12,7 +12,6 @@ import (
 )
 
 func init() {
-    Uiza.AppID = "your app id"
     Uiza.Authorization = "your-API-key"
 }
 
@@ -54,7 +53,6 @@ import (
 )
 
 func init() {
-    Uiza.AppID = "your app id"
     Uiza.Authorization = "your-API-key"
 }
 
@@ -94,7 +92,6 @@ import (
 )
 
 func init() {
-    Uiza.AppID = "your app id"
     Uiza.Authorization = "your-API-key"
 }
 
@@ -137,7 +134,6 @@ import (
 )
 
 func init() {
-    Uiza.AppID = "your app id"
     Uiza.Authorization = "your-API-key"
 }
 

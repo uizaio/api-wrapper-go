@@ -17,8 +17,7 @@ import (
 )
 
 func init() {
-    Uiza.AppID = "your app id"
-    Uiza.Authorization = "your-API-key"
+        Uiza.Authorization = "your-API-key"
 }
 
 dvrType := uiza.DvrTypeOne
@@ -80,8 +79,7 @@ import (
 )
 
 func init() {
-    Uiza.AppID = "your app id"
-    Uiza.Authorization = "your-API-key"
+        Uiza.Authorization = "your-API-key"
 }
 
 params := &uiza.LiveRetrieveParams{ID: uiza.String("247014d5-3dae-453f-97b2-93a441bc1c80")}
@@ -128,8 +126,7 @@ import (
 )
 
 func init() {
-    Uiza.AppID = "your app id"
-    Uiza.Authorization = "your-API-key"
+        Uiza.Authorization = "your-API-key"
 }
 
 dvrType := uiza.DvrTypeOne
@@ -175,7 +172,7 @@ Example Response
 
 ## Start a live feed
 These API use to start a live event that has been create success. The Live channel minute start count whenever the event start success.
-See details [here](https://docs.uiza.io/?shell#start-a-live-feed).
+See details [here](https://docs.uiza.io/v4?shell#start-a-live-feed).
 
 Example Request
 ```golang
@@ -185,8 +182,7 @@ import (
 )
 
 func init() {
-    Uiza.AppID = "your app id"
-    Uiza.Authorization = "your-API-key"
+        Uiza.Authorization = "your-API-key"
 }
 
 params := &uiza.LiveIDParams{ID: uiza.String("c6b23cc3-e47d-4e87-8f40-5da64221ad4e")}
@@ -204,7 +200,7 @@ Example Response
 
 ## Get view of live feed
 This API use to get a live view status . This view only show when event has been started and being processing.
-See details [here](https://docs.uiza.io/?shell#get-view-of-live-feed).
+See details [here](https://docs.uiza.io/v4?shell#get-view-of-live-feed).
 
 Example Request
 ```golang
@@ -214,8 +210,7 @@ import (
 )
 
 func init() {
-    Uiza.AppID = "your app id"
-    Uiza.Authorization = "your-API-key"
+        Uiza.Authorization = "your-API-key"
 }
 
 params := &uiza.LiveIDParams{ID: uiza.String("Your live ID")}
@@ -234,7 +229,7 @@ Example Response
 
 ## Stop a live feed
 Stop live event.
-See details [here](https://docs.uiza.io/?shell#stop-a-live-feed).
+See details [here](https://docs.uiza.io/v4?shell#stop-a-live-feed).
 
 Example Request
 ```golang
@@ -245,8 +240,7 @@ import (
 )
 
 func init() {
-    Uiza.AppID = "your app id"
-    Uiza.Authorization = "your-API-key"
+        Uiza.Authorization = "your-API-key"
 }
 
 params := &uiza.LiveIDParams{ID: uiza.String("c6b23cc3-e47d-4e87-8f40-5da64221ad4e")}
@@ -274,8 +268,7 @@ import (
 )
 
 func init() {
-    Uiza.AppID = "your app id"
-    Uiza.Authorization = "your-API-key"
+        Uiza.Authorization = "your-API-key"
 }
 
 params := &uiza.LiveListRecordedParams{Page:uiza.Int64(1), Limit:uiza.Int64(2)}
@@ -335,8 +328,7 @@ import (
 )
 
 func init() {
-    Uiza.AppID = "your app id"
-    Uiza.Authorization = "your-API-key"
+        Uiza.Authorization = "your-API-key"
 }
 
 param := &uiza.LiveIDParams{ID: uiza.String("Your Recorded ID ")}
@@ -366,8 +358,7 @@ import (
 )
 
 func init() {
-    Uiza.AppID = "your app id"
-    Uiza.Authorization = "your-API-key"
+        Uiza.Authorization = "your-API-key"
 }
 
 param := &uiza.LiveIDParams{ID: uiza.String("Your Recorded ID ")}

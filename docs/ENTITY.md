@@ -15,8 +15,7 @@ import (
 )
 
 func init() {
-    Uiza.AppID = "your app id"
-    Uiza.Authorization = "your-API-key"
+        Uiza.Authorization = "your-API-key"
 }
 var typeHTTP = uiza.InputTypeHTTP
 params :=  &uiza.EntityCreateParams{
@@ -62,8 +61,7 @@ import (
 )
 
 func init() {
-    Uiza.AppID = "your app id"
-    Uiza.Authorization = "your-API-key"
+        Uiza.Authorization = "your-API-key"
 }
 params := &uiza.EntityRetrieveParams{ID: uiza.String("Your entity ID")}
 response, _ := entity.Retrieve(params)
@@ -102,8 +100,7 @@ import (
 )
 
 func init() {
-    Uiza.AppID = "your app id"
-    Uiza.Authorization = "your-API-key"
+        Uiza.Authorization = "your-API-key"
 }
 
 params := &uiza.EntityListParams{}
@@ -167,8 +164,7 @@ import (
     "github.com/uizaio/api-wrapper-go/entity"
 )
 func init() {
-    Uiza.AppID = "your app id"
-    Uiza.Authorization = "your-API-key"
+        Uiza.Authorization = "your-API-key"
 }
 params := &uiza.EntityUpdateParams{
     ID: uiza.String("Your entity ID"),
@@ -219,8 +215,7 @@ import (
 )
 
 func init() {
-    Uiza.AppID = "your app id"
-    Uiza.Authorization = "your-API-key"
+        Uiza.Authorization = "your-API-key"
 }
 params := &uiza.EntityDeleteParams{ID: uiza.String("Your entity ID")}
 response, _ := entity.Delete(params)
@@ -245,8 +240,7 @@ import (
     "github.com/uizaio/api-wrapper-go/entity"
 )
 func init() {
-    Uiza.AppID = "your app id"
-    Uiza.Authorization = "your-API-key"
+        Uiza.Authorization = "your-API-key"
 }
 
 params := &uiza.EntitySearchParams{Keyword: uiza.String("Sample")}
@@ -320,8 +314,7 @@ import (
 )
 
 func init() {
-    Uiza.AppID = "your app id"
-    Uiza.Authorization = "your-API-key"
+        Uiza.Authorization = "your-API-key"
 }
 params := &uiza.EntityPublishParams{ID: uiza.String("Your entity ID")}
 response, _ := entity.Publish(params)
@@ -346,8 +339,7 @@ import (
     "github.com/uizaio/api-wrapper-go/entity"
 )
 func init() {
-    Uiza.AppID = "your app id"
-    Uiza.Authorization = "your-API-key"
+        Uiza.Authorization = "your-API-key"
 }
 
 params := &uiza.EntityPublishParams{ID: uiza.String("Your entity ID")}
@@ -374,8 +366,7 @@ import (
 )
 
 func init() {
-    Uiza.AppID = "your app id"
-    Uiza.Authorization = "your-API-key"
+        Uiza.Authorization = "your-API-key"
 }
 response, _ := entity.GetAWSUploadKey()
 log.Printf("%v\n", response)

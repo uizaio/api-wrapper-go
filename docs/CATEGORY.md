@@ -9,7 +9,6 @@ import (
 )
 
 func init() {
-    Uiza.AppID = "your app id"
     Uiza.Authorization = "your-API-key"
 }
 
@@ -54,7 +53,6 @@ import (
 )
 
 func init() {
-    Uiza.AppID = "your app id"
     Uiza.Authorization = "your-API-key"
 }
 
@@ -95,7 +93,6 @@ import (
 	"github.com/uizaio/api-wrapper-go/category"
 )
 func init() {
-    Uiza.AppID = "your app id"
     Uiza.Authorization = "your-API-key"
 }
 	
@@ -141,7 +138,6 @@ import (
 )
 
 func init() {
-    Uiza.AppID = "your app id"
     Uiza.Authorization = "your-API-key"
 }
 params := &uiza.CategoryDeleteParams{ID: uiza.String("197166f9-8566-4f39-9402-c8bddcee080c")}
@@ -165,8 +161,7 @@ import (
 	"github.com/uizaio/api-wrapper-go/category"
 )
 func init() {
-    Uiza.AppID = "your app id"
-    Uiza.Authorization = "your-API-key"
+        Uiza.Authorization = "your-API-key"
 }
 	
 params :=  &uiza.CategoryRelationParams{
@@ -207,8 +202,7 @@ import (
 )
 
 func init() {
-    Uiza.AppID = "your app id"
-    Uiza.Authorization = "your-API-key"
+        Uiza.Authorization = "your-API-key"
 }
 params :=  &uiza.CategoryRelationParams{
     EntityId: uiza.String("14152268-e409-4111-adb8-bf88a2435b62"),

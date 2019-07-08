@@ -17,9 +17,9 @@ go get -u github.com/uizaio/api-wrapper-go
 
 ## Usage
 
-The library needs to be configured with your account's `WorkspaceAPIDomain` and `Key` (API key).
+The library needs to be configured with your App's `Key` (API key).
 See details [here](https://docs.uiza.io/#authentication).
-Set `Uiza.AppId` and `Uiza.Authorization` with your values:
+Set `Uiza.Authorization` with that value.
 
 ## Init
 
@@ -30,7 +30,6 @@ import (
 )
 
 func init() {
-  Uiza.AppID = "your-AppId"
   Uiza.Authorization = "your-API-key"
 }
 
@@ -46,7 +45,6 @@ import (
 )
 
 func init() {
-  Uiza.AppID = "your-AppId"
   Uiza.Authorization = "your-API-key"
 
   // custom your transport of httpClient
@@ -75,27 +73,27 @@ func init() {
 ## Entity
 
 These below APIs used to take action with your media files (we called Entity)
-See details [here](https://docs.uiza.io/?go#video).
+See details [here](https://docs.uiza.io/v4?go#video).
 
 ## Category
 
 Category has been splits into 3 types: folder, playlist and tag. These will make the management of entity more easier.
-See details [here](https://docs.uiza.io/?go#category).
+See details [here](https://docs.uiza.io/v4?go#category).
 
 ## Storage
 
 You can add your storage (FTP, AWS S3) with UIZA. After synced, you can select your content easier from your storage to create entity.
-See details [here](https://docs.uiza.io/?go#storage).
+See details [here](https://docs.uiza.io/v4?go#storage).
 
 ## Live
 
 These APIs used to create and manage live streaming event.
-See details [here](https://docs.uiza.io/?go#live-streaming).
+See details [here](https://docs.uiza.io/v4?go#live-streaming).
 
 ## Callback
 
 Callback used to retrieve an information for Uiza to your server, so you can have a trigger notice about an entity is upload completed and .
-See details [here](https://docs.uiza.io/?go#callback).
+See details [here](https://docs.uiza.io/v4?go#callback).
 
 ## Development
 

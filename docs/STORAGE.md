@@ -18,8 +18,7 @@ import (
 
 
 func init() {
-    Uiza.AppID = "your app id"
-    Uiza.Authorization = "your-API-key"
+        Uiza.Authorization = "your-API-key"
 }
 
 var storageType = uiza.StorageTypeFtp
@@ -60,8 +59,7 @@ import (
     "github.com/uizaio/api-wrapper-go/storage"
 )
 func init() {
-    Uiza.AppID = "your app id"
-    Uiza.Authorization = "your-API-key"
+        Uiza.Authorization = "your-API-key"
 }
 
 params := &uiza.StorageRetrieveParams{ID: uiza.String("Your entity ID")}
@@ -106,8 +104,7 @@ import (
 )
 
 func init() {
-    Uiza.AppID = "your app id"
-    Uiza.Authorization = "your-API-key"
+        Uiza.Authorization = "your-API-key"
 }
 var storageType = uiza.StorageTypeFtp
 params :=  &uiza.StorageUpdateParams{
@@ -154,8 +151,7 @@ import (
 )
 
 func init() {
-    Uiza.AppID = "your app id"
-    Uiza.Authorization = "your-API-key"
+        Uiza.Authorization = "your-API-key"
 }
 params := &uiza.StorageRemoveParams{ID: uiza.String("Your entity ID")}
 response, _ := storage.Remove(params)
